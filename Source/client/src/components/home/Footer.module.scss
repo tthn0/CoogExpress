@@ -1,0 +1,71 @@
+@use "./colors" as colors;
+
+#container {
+  margin: 0 auto;
+  padding: 5em 0;
+  display: grid;
+  grid-template-columns: 4fr repeat(3, 3fr);
+  gap: 5em;
+  border-top: 1px solid colors.$grey10;
+
+  @media screen and (max-width: 992px) {
+    grid-template-columns: 21fr repeat(3, 13fr);
+  }
+
+  @media screen and (max-width: 820px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4em;
+    padding: 4em 0;
+
+    #branding {
+      grid-column: 1 / 4;
+      grid-row: 1 / 2;
+      border-bottom: 1px solid colors.$grey10;
+      padding-bottom: 4em;
+    }
+  }
+}
+
+#logo {
+  height: 1.5em;
+}
+
+#paragraph {
+  margin-top: 1em;
+  font-weight: 350;
+  color: colors.$grey40;
+}
+
+#github {
+  text-decoration: none;
+  transition: 0.25s ease;
+  font-weight: 600;
+  color: colors.$grey40;
+  &:hover {
+    color: colors.$grey60;
+  }
+}
+
+.heading {
+  color: colors.$white;
+  font-weight: 500;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  margin-top: 1em;
+}
+
+.link {
+  text-decoration: none;
+  color: colors.$grey40;
+  transition: 0.25s ease;
+  &:hover {
+    color: colors.$grey60;
+  }
+}

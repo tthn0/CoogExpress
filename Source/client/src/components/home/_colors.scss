@@ -1,0 +1,14 @@
+@function set-opacity($color, $opacity) {
+  $red: red($color);
+  $green: green($color);
+  $blue: blue($color);
+  @return rgba($red, $green, $blue, $opacity);
+}
+
+$white: aliceblue;
+$grey80: set-opacity($white, 0.8);
+$grey60: set-opacity($white, 0.6);
+$grey40: set-opacity($white, 0.4);
+$grey25: set-opacity($white, 0.25);
+$grey10: set-opacity($white, 0.1);
+$background: #05020d;

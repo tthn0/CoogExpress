@@ -1,0 +1,65 @@
+@use "./colors" as colors;
+@use "./fonts" as fonts;
+
+#container {
+  width: min(80em, 85%);
+  margin: 0 auto;
+  color: colors.$white;
+  font-family: fonts.$inter;
+  font-size: fonts.$fluidFontSize;
+
+  #main {
+    margin: 0 auto;
+    padding: 12em 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12em;
+  }
+
+  @media screen and (max-width: 992px) {
+    width: 87.5%;
+    font-size: calc(fonts.$fluidFontSize * 0.975);
+
+    #main {
+      padding: 11em 0;
+      gap: 11em;
+    }
+  }
+
+  @media screen and (max-width: 820px) {
+    width: 90%;
+    font-size: calc(fonts.$fluidFontSize * 0.95);
+
+    #main {
+      padding: 10em 0;
+      gap: 10em;
+    }
+  }
+
+  @media screen and (max-width: 660px) {
+    font-size: calc(fonts.$fluidFontSize * 0.925);
+
+    #main {
+      padding: 9em 0;
+      gap: 9em;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    font-size: calc(fonts.$fluidFontSize * 0.9);
+
+    #main {
+      padding: 8em 0;
+      gap: 8em;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: calc(fonts.$fluidFontSize * 0.875);
+
+    #main {
+      padding: 7em 0;
+      gap: 7em;
+    }
+  }
+}

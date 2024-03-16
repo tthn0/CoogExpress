@@ -1,0 +1,67 @@
+@use "./colors" as colors;
+
+#container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 0;
+}
+
+#logo {
+  height: 2em;
+}
+
+#desktopLinks {
+  display: flex;
+  border-radius: 100em;
+  background: colors.$grey10;
+}
+
+.link {
+  display: inline-block;
+  text-decoration: none;
+  color: colors.$grey60;
+  font-weight: 500;
+  padding: 0.65em 1.75em;
+  border-radius: 100em;
+  transition: 0.25s ease;
+  &:hover {
+    background: colors.$grey10;
+  }
+}
+
+%navButton {
+  padding: 0.5em 1.75em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.25s ease;
+}
+
+#loginButton {
+  @extend %navButton;
+  background: none;
+  color: colors.$white;
+  border: 1px solid colors.$grey25;
+  margin-right: 1em;
+  &:hover {
+    background: colors.$grey25;
+  }
+}
+
+#registerButton {
+  @extend %navButton;
+  background: colors.$white;
+  color: black;
+  border: none;
+  &:hover {
+    background: colors.$grey80;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  #desktopLinks,
+  #desktopButtons {
+    display: none;
+  }
+}

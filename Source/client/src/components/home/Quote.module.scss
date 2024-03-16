@@ -1,0 +1,66 @@
+@use "./colors" as colors;
+
+#container {
+  width: 75%;
+  margin: 0 auto;
+}
+
+#quote {
+  color: colors.$white;
+  font-size: 1.5em;
+  font-weight: 350;
+  text-align: center;
+  margin: 0;
+}
+
+#author {
+  margin-top: 1em;
+  font-size: 1.25em;
+  text-align: center;
+  color: colors.$grey40;
+}
+
+%bold {
+  font-weight: 550;
+}
+
+#blue {
+  @extend %bold;
+  color: #599dff;
+}
+
+#pink {
+  @extend %bold;
+  color: #b77dde;
+}
+
+@media screen and (max-width: 992px) {
+  #container {
+    width: 90%;
+  }
+
+  #quote {
+    font-size: 1.4em;
+  }
+  #author {
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  #quote {
+    font-size: 1.3em;
+  }
+  #author {
+    font-size: 1.15em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #quote {
+    font-size: 1.2em;
+  }
+  #author {
+    font-size: 1.1em;
+  }
+}

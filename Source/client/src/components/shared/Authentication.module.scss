@@ -1,0 +1,9 @@
+@use "./fonts" as fonts;
+
+#container {
+  display: flex;
+  align-items: stretch;
+  height: 100dvh;
+  font-family: fonts.$montserrat;
+  font-size: fonts.$fluidFontSize;
+}

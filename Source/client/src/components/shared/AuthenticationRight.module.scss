@@ -1,0 +1,94 @@
+@use "./colors" as colors;
+
+#container {
+  background: colors.$darker;
+  flex-grow: 3;
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
+}
+
+#top {
+  flex-grow: 1;
+  position: relative;
+}
+
+#centered {
+  width: min(40em, 85%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#heading {
+  font-size: 2.25em;
+  font-weight: 500;
+  color: colors.$white;
+}
+
+#description {
+  margin-top: 0.75em;
+  line-height: 1.6em;
+  color: colors.$white;
+}
+
+#form {
+  margin-top: 2.75em;
+}
+
+#prompt {
+  margin-top: 2em;
+  font-size: 0.9em;
+  color: colors.$white;
+}
+
+#submit {
+  margin-top: 2em;
+  width: 100%;
+  background: linear-gradient(
+    100deg,
+    colors.$leftBlue 0%,
+    colors.$rightBlue 100%
+  );
+  color: colors.$white;
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.7em 0;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.25s ease;
+  &:hover {
+    filter: hue-rotate(15deg);
+  }
+}
+
+#bottom {
+  padding: 1.25em 0;
+  background: colors.$dark;
+}
+
+#footerText {
+  text-align: center;
+  color: colors.$white;
+}
+
+#footerActionLink {
+  color: colors.$hyperlink;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.25s ease;
+  &:hover {
+    filter: brightness(1.25);
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  #container {
+    flex-grow: 1;
+  }
+
+  #centered {
+    width: min(44em, 90%);
+  }
+}

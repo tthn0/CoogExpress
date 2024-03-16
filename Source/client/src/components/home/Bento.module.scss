@@ -1,0 +1,71 @@
+@use "./colors" as colors;
+
+#container {
+  border-radius: 1em;
+  padding: 2.5em;
+
+  @media screen and (max-width: 992px) {
+    padding: 2em;
+  }
+
+  @media screen and (max-width: 576px) {
+    padding: 1.5em;
+  }
+}
+
+#heading {
+  font-size: 1.25em;
+  font-weight: 675;
+}
+
+#description {
+  margin-top: 0.5em;
+  color: colors.$grey40;
+}
+
+#buttonContainer {
+  display: flex;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+#link {
+  display: inline-block;
+  text-decoration: none;
+  color: colors.$grey60;
+  font-weight: 450;
+  transition: 0.25s ease;
+  &:hover {
+    color: colors.$grey80;
+  }
+}
+
+%button {
+  width: 10em;
+  height: 3em;
+  border-radius: 100em;
+  font-weight: 450;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+#primaryButton {
+  @extend %button;
+  background: colors.$white;
+  color: black;
+  border: none;
+  &:hover {
+    background: colors.$grey80;
+  }
+}
+
+#secondaryButton {
+  @extend %button;
+  background: none;
+  color: colors.$white;
+  border: 1px solid colors.$grey25;
+  &:hover {
+    background: colors.$grey10;
+  }
+}
