@@ -13,7 +13,7 @@ npm start
 ### Run Server Locally
 
 > [!IMPORTANT]
-> Make sure `Source/server/config/example.env` is renamed to `.env` and is properly configured.
+> Make sure `Source/config/example.env` is renamed to `.env` and is properly configured.
 
 ```bash
 cd Source/server
