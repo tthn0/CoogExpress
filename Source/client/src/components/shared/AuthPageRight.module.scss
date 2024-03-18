@@ -63,6 +63,32 @@
   }
 }
 
+// https://css-loaders.com/dots/
+#loader {
+  height: 1ch;
+  margin: 0.5ch auto;
+  aspect-ratio: 5;
+  $color: no-repeat radial-gradient(circle closest-side, #fff 90%, #0000);
+  background: $color 0% 50%, $color 50% 50%, $color 100% 50%;
+  background-size: calc(100% / 3) 100%;
+  animation: l7 1s infinite linear;
+
+  @keyframes l7 {
+    33% {
+      background-size: calc(100% / 3) 0%, calc(100% / 3) 100%,
+        calc(100% / 3) 100%;
+    }
+    50% {
+      background-size: calc(100% / 3) 100%, calc(100% / 3) 0%,
+        calc(100% / 3) 100%;
+    }
+    66% {
+      background-size: calc(100% / 3) 100%, calc(100% / 3) 100%,
+        calc(100% / 3) 0%;
+    }
+  }
+}
+
 #bottom {
   padding: 1.25em 0;
   background: colors.$dark;

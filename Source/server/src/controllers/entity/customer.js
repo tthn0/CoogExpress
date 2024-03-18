@@ -13,6 +13,7 @@ export default {
     const {
       first_name,
       last_name,
+      username,
       email,
       password_hash,
       phone_number,
@@ -36,6 +37,7 @@ export default {
         INSERT INTO user (
           first_name,
           last_name,
+          username,
           email,
           password_hash,
           phone_number,
@@ -45,7 +47,7 @@ export default {
           created_at,
           last_login,
           deleted
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID(), NOW(), NOW(), false);
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID(), NOW(), NOW(), false);
 
         INSERT INTO customer (
           user_id,
@@ -62,6 +64,7 @@ export default {
         zip,
         first_name,
         last_name,
+        username,
         email,
         password_hash,
         phone_number,
@@ -77,6 +80,7 @@ export default {
       id,
       first_name,
       last_name,
+      username,
       email,
       password_hash,
       phone_number,
@@ -102,6 +106,7 @@ export default {
         SET
           user.first_name = ?,
           user.last_name = ?,
+          user.username = ?,
           user.email = ?,
           user.password_hash = ?,
           user.phone_number = ?,
@@ -121,6 +126,7 @@ export default {
         zip,
         first_name,
         last_name,
+        username,
         email,
         password_hash,
         phone_number,

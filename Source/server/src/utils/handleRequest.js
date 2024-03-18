@@ -33,6 +33,21 @@ const parseRequest = async (req) => {
 };
 
 const routeRequest = async (req, res) => {
+  // Set CORS headers
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+
+  // Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    res.writeHead(200);
+    res.end();
+    return;
+  }
+
   const method = req.method;
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;

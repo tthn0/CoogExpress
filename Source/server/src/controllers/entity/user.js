@@ -12,6 +12,7 @@ export default {
   //   const {
   //     first_name,
   //     last_name,
+  //     username,
   //     email,
   //     password_hash,
   //     phone_number,
@@ -22,6 +23,7 @@ export default {
   //     `INSERT INTO user (
   //       first_name,
   //       last_name,
+  //       username,
   //       email,
   //       password_hash,
   //       phone_number,
@@ -30,10 +32,11 @@ export default {
   //       created_at,
   //       last_login,
   //       deleted
-  //     ) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), false)`,
+  //     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), false)`,
   //     [
   //       first_name,
   //       last_name,
+  //       username,
   //       email,
   //       password_hash,
   //       phone_number,
@@ -46,6 +49,7 @@ export default {
   //   const {
   //     first_name,
   //     last_name,
+  //     username,
   //     email,
   //     password_hash,
   //     phone_number,
@@ -57,6 +61,7 @@ export default {
   //     `UPDATE user SET
   //       first_name = ?,
   //       last_name = ?,
+  //       username = ?,
   //       email = ?,
   //       password_hash = ?,
   //       phone_number = ?,
@@ -66,6 +71,7 @@ export default {
   //     [
   //       first_name,
   //       last_name,
+  //       username,
   //       email,
   //       password_hash,
   //       phone_number,

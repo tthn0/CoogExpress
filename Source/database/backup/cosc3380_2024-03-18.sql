@@ -7,7 +7,7 @@
 #
 # Host: cosc3380.mysql.database.azure.com (MySQL 8.0.34)
 # Database: cosc3380
-# Generation Time: 2024-03-17 12:44:56 +0000
+# Generation Time: 2024-03-18 12:53:25 +0000
 # ************************************************************
 
 
@@ -487,6 +487,7 @@ CREATE TABLE `user` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `first_name` varchar(63) NOT NULL,
   `last_name` varchar(63) NOT NULL,
+  `username` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `phone_number` char(10) NOT NULL,
@@ -506,10 +507,10 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password_hash`, `phone_number`, `phone_country_code`, `address_id`, `profile_picture`, `created_at`, `last_login`, `deleted`)
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `email`, `password_hash`, `phone_number`, `phone_country_code`, `address_id`, `profile_picture`, `created_at`, `last_login`, `deleted`)
 VALUES
-	(1,'Thomas','Nguyen','thomas@tthn.us','password','0000000000','1',1,NULL,'2024-03-17 12:30:45','2024-03-17 12:30:45',0),
-	(2,'John','Cena','john@cena.com','ucantseeme','1112223337','1',101,NULL,'2024-03-16 20:47:07','2024-03-16 20:47:07',0);
+	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,NULL,'2024-03-17 12:30:45','2024-03-17 12:30:45',0),
+	(2,'John','Cena','jc','john@cena.com','ucantseeme','1112223337','1',101,NULL,'2024-03-16 20:47:07','2024-03-16 20:47:07',0);
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -525,6 +526,7 @@ AS SELECT
    `u`.`id` AS `user_id`,
    `u`.`first_name` AS `first_name`,
    `u`.`last_name` AS `last_name`,
+   `u`.`username` AS `username`,
    `u`.`email` AS `email`,
    `u`.`password_hash` AS `password_hash`,
    `u`.`phone_number` AS `phone_number`,
@@ -554,6 +556,7 @@ AS SELECT
    `u`.`id` AS `user_id`,
    `u`.`first_name` AS `first_name`,
    `u`.`last_name` AS `last_name`,
+   `u`.`username` AS `username`,
    `u`.`email` AS `email`,
    `u`.`password_hash` AS `password_hash`,
    `u`.`phone_number` AS `phone_number`,

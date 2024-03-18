@@ -8,27 +8,32 @@ const comparePassword = async (password1, password2) => {
 
 export default {
   post: async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     const [customer_view, employee_view] = await Promise.all([
-      queryDatabase(`SELECT * FROM customer_view WHERE email = ?`, [email]),
-      queryDatabase(`SELECT * FROM employee_view WHERE email = ?`, [email]),
+      queryDatabase(`SELECT * FROM customer_view WHERE username = ?`, [
+        username,
+      ]),
+      queryDatabase(`SELECT * FROM employee_view WHERE username = ?`, [
+        username,
+      ]),
     ]);
 
-    let token;
-    if (customer_view.length === 0 && employee_view.length === 0) {
-      token = null;
-    } else {
-      const user = customer_view.length ? customer_view[0] : employee_view[0];
-      const isValidPassword = await comparePassword(
-        user.password_hash,
-        password
-      );
-      token = isValidPassword
-        ? jwt.sign(user, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRY,
-          })
-        : null;
-    }
-    return { token };
+    let data = { token: null };
+
+    const userExists = customer_view.length || employee_view.length;
+    if (!userExists) return data;
+
+    const user = customer_view.length ? customer_view[0] : employee_view[0];
+    const isValidPassword = await comparePassword(user.password_hash, password);
+    if (!isValidPassword) return data;
+
+    queryDatabase(`UPDATE user SET last_login = NOW() WHERE username = ?`, [
+      username,
+    ]);
+    data.token = jwt.sign(user, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRY,
+    });
+
+    return data;
   },
 };

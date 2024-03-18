@@ -1,6 +1,6 @@
 @use "./colors" as colors;
 
-#container {
+.container {
   margin-bottom: 1em;
   position: relative;
 
@@ -10,7 +10,7 @@
   }
 }
 
-#iconContainer {
+.iconContainer {
   position: absolute;
   transform: translateY(-50%);
   top: 50%;
@@ -20,7 +20,7 @@
   }
 }
 
-#input {
+.input {
   background: colors.$dark;
   color: colors.$white;
   padding: 1.5em 0 0.5em 2.75em;
@@ -30,7 +30,7 @@
   outline: none;
 }
 
-#label {
+.label {
   position: absolute;
   transform: translateY(-50%);
   top: 50%;
@@ -41,8 +41,8 @@
   transition: 0.3s ease;
 }
 
-#input:focus + #label,
-#input:not(:placeholder-shown) + #label {
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
   transform-origin: top left;
   transform: translateY(-92.5%) scale(0.7);
 }

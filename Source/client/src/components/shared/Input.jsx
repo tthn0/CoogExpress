@@ -12,12 +12,12 @@ export default function Input({
   icon,
 }) {
   return (
-    <div id={styles.container}>
-      <span id={styles.iconContainer}>
+    <div className={styles.container}>
+      <span className={styles.iconContainer}>
         <FontAwesomeIcon icon={icon} />
       </span>
       <input
-        id={styles.input}
+        className={styles.input}
         type={type}
         name={name}
         placeholder=" " // Required for floating label effect
@@ -28,7 +28,7 @@ export default function Input({
         autoComplete="off"
         required
       />
-      <label id={styles.label} htmlFor={name}>
+      <label className={styles.label} htmlFor={name}>
         {label}
       </label>
     </div>

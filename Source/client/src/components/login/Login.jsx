@@ -1,16 +1,18 @@
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
-import Authentication from "../shared/Authentication";
+import AuthPage from "../shared/AuthPage";
 
 const props = {
   heading: "Welcome Back",
   description:
     "Sign in to view your personalized dashboard where you can view your previous shipments, track packages, and explore additional features tailored just for you.",
-  handleSubmit: (navigate) => {
+  handleSubmit: (attemptLogin, setIsLoading) => {
     return (e) => {
       e.preventDefault();
-      console.log(e.target.username.value);
-      console.log(e.target.password.value);
-      navigate("/profile");
+      setIsLoading(true);
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+      const callback = () => setIsLoading(false);
+      attemptLogin(username, password, callback);
     };
   },
   inputPropArray: [
@@ -42,5 +44,5 @@ const props = {
 };
 
 export default function Login() {
-  return <Authentication {...props} />;
+  return <AuthPage {...props} />;
 }

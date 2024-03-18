@@ -1,17 +1,17 @@
 import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
-import Authentication from "../shared/Authentication";
+import AuthPage from "../shared/AuthPage";
 
 const props = {
   heading: "Client Registration",
   description:
     "We make it quick and easy for our valued customers to send their packages in a convenient manner. Take the first step by registering below!",
-  handleSubmit: (navigate) => {
+  handleSubmit: (attemptLogin, setIsLoading) => {
     return (e) => {
       e.preventDefault();
       console.log(e.target.username.value);
       console.log(e.target.email.value);
       console.log(e.target.password.value);
-      navigate("/profile");
+      alert("This feature hasn't been implemented yet.");
     };
   },
   inputPropArray: [
@@ -44,7 +44,7 @@ const props = {
       maxLength: 63, // 2^6 - 1
       pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,63}$",
       title:
-        "Password must be between 8 and 63 characters long (inclusive) and must contain at least one lowercase letter, at least one uppercase letter, and at least one number.",
+        "Password must be between 8 and 63 characters long (inclusive) and must contain at least one lowercase letter, at least one uppercase letter, at least one number, and contain no special symbols.",
       icon: faLock,
     },
   ],
@@ -74,5 +74,5 @@ const props = {
 };
 
 export default function Register() {
-  return <Authentication {...props} />;
+  return <AuthPage {...props} />;
 }

@@ -1,43 +1,44 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import "./components/shared/_reset.scss";
 
-import History from "./components/history";
+import Dashboard from "./components/dashboard";
+// import History from "./components/history";
 import Home from "./components/home";
 import Login from "./components/login";
-// import Profile from "./components/profile";
-// import Quote from "./components/quote";
 import Register from "./components/register";
 
-const router = createBrowserRouter([
+import AuthProvider from "./contexts/AuthProvider";
+import ProtectedRoute from "./contexts/ProtectedRoute";
+import RedirectIfLoggedIn from "./contexts/RedirectIfLoggedIn";
+
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
   },
   {
-    path: "/history",
-    element: <History />,
+    path: "/dashboard",
+    element: <ProtectedRoute children={<Dashboard />} />,
   },
+  // {
+  //   path: "/history",
+  //   element: <History />,
+  // },
   {
     path: "/login",
-    element: <Login />,
+    element: <RedirectIfLoggedIn children={<Login />} />,
   },
-  // {
-  //   path: "/profile",
-  //   element: <Profile />,
-  // },
-  // {
-  //   path: "/quote",
-  //   element: <Quote />,
-  // },
   {
     path: "/register",
-    element: <Register />,
+    element: <RedirectIfLoggedIn children={<Register />} />,
   },
 ]);
 
-function App() {
-  return <RouterProvider router={router} />;
-}
+// TODO
+// Update authentication router:
+// https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c
 
-export default App;
+export default function App() {
+  return <AuthProvider children={<RouterProvider router={router} />} />;
+}

@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 import http from "http";
-import handleRequest from "./src/utils/handleRequest.js";
+import handleRequest from "./utils/handleRequest.js";
 
-dotenv.config({ path: "../config/.env" });
+const __dirname = import.meta.dirname;
+dotenv.config({ path: __dirname + "/../.env" });
 
 const server = http.createServer(handleRequest);
 const PORT = process.env.SERVER_PORT;
