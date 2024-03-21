@@ -11,7 +11,6 @@ export default {
   },
   post: async (req, res) => {
     const {
-      shipment_id,
       start_address_id,
       end_address_id,
       driver_employee_id,
@@ -22,7 +21,6 @@ export default {
     } = req.body;
     return await queryDatabase(
       `INSERT INTO route(
-        shipment_id,
         start_address_id,
         end_address_id,
         driver_employee_id,
@@ -30,10 +28,9 @@ export default {
         end_timestamp,
         type,
         distance
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+      ) VALUES (?, ?, ?, ?, ?, ?, ?);
       `,
       [
-        shipment_id,
         start_address_id,
         end_address_id,
         driver_employee_id,
@@ -47,7 +44,6 @@ export default {
   put: async (req, res) => {
     const {
       id,
-      shipment_id,
       start_address_id,
       end_address_id,
       driver_employee_id,
@@ -60,18 +56,16 @@ export default {
       `
       UPDATE route
       SET
-        route.shipment_id = ?,
         route.start_address_id = ?,
         route.end_address_id = ?,
         route.driver_employee_id = ?,
         route.start_timestamp = ?,
         route.end_timestamp = ?,
         route.type = ?,
-        route.distance = ?,
+        route.distance = ?
       WHERE route.id = ?;
       `,
       [
-        shipment_id,
         start_address_id,
         end_address_id,
         driver_employee_id,

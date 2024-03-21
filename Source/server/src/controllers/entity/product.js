@@ -76,7 +76,7 @@ export default {
         product.length = ?,
         product.height = ?,
         product.weight = ?,
-        product.image = ?,
+        product.image = ?
       WHERE product.id = ?;
       `,
       [
