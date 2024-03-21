@@ -1,7 +1,14 @@
 @use "./colors" as colors;
 @use "./fonts" as fonts;
 
-#container {
+#outerContainer {
+  background-image: url("./images/background.jpg");
+  background-size: clamp(40em, 100%, 80em);
+  background-repeat: no-repeat;
+  background-position: center 0;
+}
+
+#innerContainer {
   width: min(80em, 85%);
   margin: 0 auto;
   color: colors.$white;
