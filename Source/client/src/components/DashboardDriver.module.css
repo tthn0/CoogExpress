@@ -1,0 +1,55 @@
+.dashboard {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  input, button {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .tableContainer {
+    overflow-x: scroll;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  
