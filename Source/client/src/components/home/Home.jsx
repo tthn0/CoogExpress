@@ -12,37 +12,29 @@ import Stats from "./Stats";
 export default function Home() {
   useEffect(() => {
     document.body.style.backgroundColor = "#05020d";
-    document.body.style.backgroundImage = "url(background.jpg)";
-    document.body.style.backgroundSize = "clamp(40em, 100%, 80em)";
-    document.body.style.backgroundRepeat = "no-repeat";
-    document.body.style.backgroundPosition = "center 0";
-    return () => {
-      document.body.style.backgroundColor = "";
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundSize = "";
-      document.body.style.backgroundRepeat = "";
-      document.body.style.backgroundPosition = "";
-    };
+    return () => (document.body.style.backgroundColor = "");
   }, []);
 
   return (
-    <div id={styles.container}>
-      <Nav />
-      <main id={styles.main}>
-        <Hero />
-        <Stats />
-        <History />
-        <Quote />
-        <Boxes />
-      </main>
-      <Footer
-        categories={{
-          product: ["Infrastructure", "Previews", "Analytics", "Enterprise"],
-          explore: ["Pricing", "Partners", "Audits", "Resources"],
-          company: ["About", "Careers", "Blog", "Legal"],
-        }}
-        repoLink="https://github.com/tthn0/CoogExpress"
-      />
+    <div id={styles.outerContainer}>
+      <div id={styles.innerContainer}>
+        <Nav />
+        <main id={styles.main}>
+          <Hero />
+          <Stats />
+          <History />
+          <Quote />
+          <Boxes />
+        </main>
+        <Footer
+          categories={{
+            product: ["Infrastructure", "Previews", "Analytics", "Enterprise"],
+            explore: ["Pricing", "Partners", "Audits", "Resources"],
+            company: ["About", "Careers", "Blog", "Legal"],
+          }}
+          repoLink="https://github.com/tthn0/CoogExpress"
+        />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,54 @@
+@use "./colors" as colors;
+
+.button {
+  background: linear-gradient(
+    100deg,
+    colors.$leftBlue 0%,
+    colors.$rightBlue 100%
+  );
+  width: 100%;
+  padding: 0.7em 0;
+  color: colors.$white;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: 0.25s ease;
+  &:hover {
+    filter: hue-rotate(15deg);
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  &:hover {
+    filter: none;
+  }
+}
+
+// https://css-loaders.com/dots/
+.loader {
+  height: 1ch;
+  margin: 0.5ch auto;
+  aspect-ratio: 5;
+  $color: no-repeat radial-gradient(circle closest-side, #fff 90%, #0000);
+  background: $color 0% 50%, $color 50% 50%, $color 100% 50%;
+  background-size: calc(100% / 3) 100%;
+  animation: l7 1s infinite linear;
+
+  @keyframes l7 {
+    33% {
+      background-size: calc(100% / 3) 0%, calc(100% / 3) 100%,
+        calc(100% / 3) 100%;
+    }
+    50% {
+      background-size: calc(100% / 3) 100%, calc(100% / 3) 0%,
+        calc(100% / 3) 100%;
+    }
+    66% {
+      background-size: calc(100% / 3) 100%, calc(100% / 3) 100%,
+        calc(100% / 3) 0%;
+    }
+  }
+}

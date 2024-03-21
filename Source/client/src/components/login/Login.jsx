@@ -1,11 +1,16 @@
-import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { faUserCircle, faLock } from "@fortawesome/free-solid-svg-icons";
+import { styles } from "../shared/AuthPageRight";
+import AuthContext from "../../contexts/AuthContext";
 import AuthPage from "../shared/AuthPage";
+import Button from "../shared/Button";
+import Input from "../shared/Input";
 
-const props = {
-  heading: "Welcome Back",
-  description:
-    "Sign in to view your personalized dashboard where you can view your previous shipments, track packages, and explore additional features tailored just for you.",
-  handleSubmit: (attemptLogin, setIsLoading) => {
+export default function Login() {
+  const { attemptLogin } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSubmit = () => {
     return (e) => {
       e.preventDefault();
       setIsLoading(true);
@@ -14,35 +19,44 @@ const props = {
       const callback = () => setIsLoading(false);
       attemptLogin(username, password, callback);
     };
-  },
-  inputPropArray: [
-    {
-      type: "text",
-      name: "username",
-      label: "Username",
-      icon: faUser,
-    },
-    {
-      type: "password",
-      name: "password",
-      label: "Password",
-      icon: faLock,
-    },
-  ],
-  promptFragment: (
-    <span
-      style={{ fontWeight: 600, cursor: "pointer" }}
-      onClick={() => alert("This feature hasn't been implemented yet.")}
-    >
-      Forgot password?
-    </span>
-  ),
-  buttonText: "Login",
-  footerText: "Don't have an account?",
-  footerActionText: "Sign up",
-  footerActionLink: "/register",
-};
-
-export default function Login() {
-  return <AuthPage {...props} />;
+  };
+  const form = (
+    <form className={styles.form} onSubmit={handleSubmit()}>
+      <Input
+        containerClassName={styles.input}
+        type="text"
+        name="username"
+        label="Username"
+        icon={faUserCircle}
+      />
+      <Input
+        containerClassName={styles.input}
+        type="password"
+        name="password"
+        label="Password"
+        icon={faLock}
+      />
+      <p id={styles.prompt}>
+        <Link to="#" className={styles.link}>
+          Forgot password?
+        </Link>
+      </p>
+      <Button
+        className={styles.submit}
+        type="submit"
+        text="Login"
+        isLoading={isLoading}
+      />
+    </form>
+  );
+  return (
+    <AuthPage
+      heading="Welcome Back"
+      description="Sign in to view your personalized dashboard where you can view your previous shipments, track packages, and explore additional features tailored just for you."
+      footerText="Don't have an account?"
+      footerActionText="Sign up"
+      footerActionLink="/register"
+      children={form}
+    />
+  );
 }

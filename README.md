@@ -27,9 +27,12 @@ npm start
 ### Temporary Todo List
 
 - **Thomas**:
-  - Register page functionality.
-  - Improve dashboard UI.
-  - Update environment variables before deploying.
+  - Customer dashboard UI.
+    - Fix CSS leak.
+    - Fetch real package data.
+  - Backup database on every commit.
+  - Test deployment.
+    - Update environment variables.
 - **Everyone**:
   - Brainstorm triggers.
   - Brainstorm business rules / semantic constraints.

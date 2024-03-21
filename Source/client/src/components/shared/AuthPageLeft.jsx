@@ -13,7 +13,7 @@ export default function AuthPageLeft() {
           <img id={styles.logo} src={logo3x} alt="Logo" />
         </picture>
       </Link>
-      <div id={styles.mesh}>{/* Mesh gradient wadded thru CSS */}</div>
+      <div id={styles.mesh}>{/* Mesh gradient added thru CSS */}</div>
       <div id={styles.worldContainer}>
         <img src={world} alt="" />
       </div>

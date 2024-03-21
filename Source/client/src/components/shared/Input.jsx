@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Input.module.scss";
 
 export default function Input({
+  containerClassName,
   type,
   name,
   label,
@@ -12,7 +13,7 @@ export default function Input({
   icon,
 }) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${containerClassName}`}>
       <span className={styles.iconContainer}>
         <FontAwesomeIcon icon={icon} />
       </span>

@@ -11,9 +11,12 @@ const SERVER_PORT =
   process.env.NODE_ENV === "development"
     ? process.env.REACT_APP_DEVELOPMENT_SERVER_PORT
     : process.env.REACT_APP_PRODUCTION_SERVER_PORT;
-const LOGIN_URL = `${SERVER_HOST}:${SERVER_PORT}/login`;
+const SERVER_BASE_URL = `${SERVER_HOST}:${SERVER_PORT}`;
+
+export { SERVER_BASE_URL };
 
 const getToken = async (username, password) => {
+  const LOGIN_URL = `${SERVER_BASE_URL}/login`;
   try {
     const response = await fetch(LOGIN_URL, {
       method: "POST",
@@ -56,9 +59,9 @@ export default function AuthProvider({ children }) {
   const [isUserLoading, setLoadingUser] = useState(true);
 
   useEffect(() => {
+    const now = new Date().getTime();
     const token = Cookies.get("token");
-    const validToken =
-      token && jwtDecode(token).exp * 1000 > new Date().getTime();
+    const validToken = token && jwtDecode(token).exp * 1000 > now;
     if (validToken) setUser(jwtDecode(token));
     setLoadingUser(false);
     // TODO

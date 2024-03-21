@@ -1,9 +1,8 @@
 @use "./fonts" as fonts;
+@use "./colors" as colors;
 
 #container {
   display: flex;
   align-items: stretch;
   height: 100dvh;
-  font-family: fonts.$montserrat;
-  font-size: fonts.$fluidFontSize;
 }

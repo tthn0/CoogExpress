@@ -1,7 +1,11 @@
 @use "./colors" as colors;
+@use "./fonts" as fonts;
 
 #container {
   background: colors.$darker;
+  color: colors.$white;
+  font-family: fonts.$montserrat;
+  font-size: fonts.$fluidFontSize;
   flex-grow: 3;
   display: flex;
   flex-direction: column;
@@ -24,69 +28,33 @@
 #heading {
   font-size: 2.25em;
   font-weight: 500;
-  color: colors.$white;
 }
 
 #description {
   margin-top: 0.75em;
-  line-height: 1.6em;
-  color: colors.$white;
 }
 
-#form {
-  margin-top: 2.75em;
+.form {
+  margin-top: 1.5em;
+}
+
+.input {
+  margin-top: 1em;
 }
 
 #prompt {
   margin-top: 2em;
   font-size: 0.9em;
-  color: colors.$white;
 }
 
-#submit {
+.link {
+  color: colors.$white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.submit {
   margin-top: 2em;
-  width: 100%;
-  background: linear-gradient(
-    100deg,
-    colors.$leftBlue 0%,
-    colors.$rightBlue 100%
-  );
-  color: colors.$white;
-  border: none;
-  border-radius: 0.5em;
-  padding: 0.7em 0;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.25s ease;
-  &:hover {
-    filter: hue-rotate(15deg);
-  }
-}
-
-// https://css-loaders.com/dots/
-#loader {
-  height: 1ch;
-  margin: 0.5ch auto;
-  aspect-ratio: 5;
-  $color: no-repeat radial-gradient(circle closest-side, #fff 90%, #0000);
-  background: $color 0% 50%, $color 50% 50%, $color 100% 50%;
-  background-size: calc(100% / 3) 100%;
-  animation: l7 1s infinite linear;
-
-  @keyframes l7 {
-    33% {
-      background-size: calc(100% / 3) 0%, calc(100% / 3) 100%,
-        calc(100% / 3) 100%;
-    }
-    50% {
-      background-size: calc(100% / 3) 100%, calc(100% / 3) 0%,
-        calc(100% / 3) 100%;
-    }
-    66% {
-      background-size: calc(100% / 3) 100%, calc(100% / 3) 100%,
-        calc(100% / 3) 0%;
-    }
-  }
 }
 
 #bottom {
@@ -96,7 +64,6 @@
 
 #footerText {
   text-align: center;
-  color: colors.$white;
 }
 
 #footerActionLink {
@@ -113,7 +80,6 @@
   #container {
     flex-grow: 1;
   }
-
   #centered {
     width: min(44em, 90%);
   }

@@ -201,6 +201,24 @@ tbody .highlighted {
   }
 }
 
+.userContainer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.imageContainer {
+  width: 3rem;
+  height: 3rem;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
 .first,
 .date {
   font-weight: 400;
