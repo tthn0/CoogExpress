@@ -84,15 +84,61 @@ export default function AuthProvider({ children }) {
     if (callback) callback();
   };
 
-  // const updateUser = async (username, password) => {
-  //   // TODO
-  //   // Update the user object in the state
-  //   // Update the token cookie
-  //   // Fetch to the server using PUT method
-  // };
+  const updateUser = async (newUser) => {
+    const dateToSqlDatetime = (date) =>
+      date.toISOString().slice(0, 19).replace("T", " ");
+
+    const endpoint = user.role ? "employee" : "customer";
+    try {
+      const response = await fetch(`${SERVER_BASE_URL}/${endpoint}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...newUser,
+          id: user.role ? user.employee_id : user.customer_id,
+          date_of_birth: user.role
+            ? dateToSqlDatetime(new Date(user.date_of_birth))
+            : null,
+        }),
+      });
+      const data = await response.json();
+      if (data.errno) {
+        alert(`Error: ${data.message}. Check the console for more details.`);
+        console.error(data);
+      } else {
+        console.log(newUser);
+        attemptLogin(newUser.username, newUser.password_hash);
+        alert("User updated successfully!");
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}. Check the console for more details.`);
+      console.log(error);
+    }
+  };
+
+  const deleteUser = async () => {
+    const endpoint = user.role ? "employee" : "customer";
+    await fetch(`${SERVER_BASE_URL}/${endpoint}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: user.role ? user.employee_id : user.customer_id,
+      }),
+    });
+    logout();
+  };
 
   return (
-    <AuthContext.Provider value={{ user, isUserLoading, attemptLogin, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isUserLoading,
+        attemptLogin,
+        updateUser,
+        deleteUser,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -5,6 +5,7 @@ import DashboardCustomer from "./components/dashboardCustomer";
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
+import Profile from "./components/profile";
 import AuthProvider from "./contexts/AuthProvider";
 import ProtectedRoute from "./contexts/ProtectedRoute";
 import RedirectIfLoggedIn from "./contexts/RedirectIfLoggedIn";
@@ -21,6 +22,10 @@ const router = createHashRouter([
   {
     path: "/dashboard/customer",
     element: <ProtectedRoute children={<DashboardCustomer />} />,
+  },
+  {
+    path: "/profile",
+    element: <ProtectedRoute children={<Profile />} />,
   },
   {
     path: "/login",

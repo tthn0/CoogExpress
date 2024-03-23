@@ -10,12 +10,14 @@ export default {
   post: async (req, res) => {
     const { username, password } = req.body;
     const [customer_view, employee_view] = await Promise.all([
-      queryDatabase(`SELECT * FROM customer_view WHERE username = ?`, [
-        username,
-      ]),
-      queryDatabase(`SELECT * FROM employee_view WHERE username = ?`, [
-        username,
-      ]),
+      queryDatabase(
+        `SELECT * FROM customer_view WHERE username = ? AND deleted != 1`,
+        [username]
+      ),
+      queryDatabase(
+        `SELECT * FROM employee_view WHERE username = ? AND deleted != 1`,
+        [username]
+      ),
     ]);
 
     let data = { token: null };

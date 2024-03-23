@@ -27,9 +27,7 @@ npm start
 ### Temporary Todo List
 
 - **Thomas**:
-  - Customer dashboard UI.
-    - Fix CSS leak.
-    - Fetch real package data.
+  - Change customer dashboard UI to light mode.
   - Backup database on every commit.
   - Test deployment.
     - Update environment variables.

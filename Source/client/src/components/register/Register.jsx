@@ -231,6 +231,7 @@ export default function Register() {
           // pattern="^[a-zA-Z]+$"
           // title="Alphanumeric characters only"
           icon={faBuilding}
+          required={false}
         />
         <Input
           containerClassName={styles.input}
@@ -239,8 +240,8 @@ export default function Register() {
           label="City"
           minLength="2"
           maxLength="30"
-          pattern="^[a-zA-Z]+$"
-          title="Alphabetic characters only"
+          // pattern="^[a-zA-Z]+$"
+          // title="Alphabetic characters only"
           icon={faLocationDot}
         />
         <Input

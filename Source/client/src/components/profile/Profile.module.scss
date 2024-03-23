@@ -1,0 +1,107 @@
+@use "./fonts" as fonts;
+
+.container {
+  min-height: 100dvh;
+  color: white;
+  padding: 50px 0;
+  background: aliceblue;
+  font-size: fonts.$fluidFontSize;
+  font-family: fonts.$inter;
+}
+
+.profilePictureContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* Keeps it circular */
+  background-color: #f8f8f8; /* Lighter background for the profile picture */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4a90e2; /* Vibrant blue text color */
+  margin-right: 20px;
+  background-size: cover;
+  background-position: center;
+}
+
+.inputFileContainer {
+  display: flex;
+  align-items: center;
+}
+
+.inputFileButton {
+  padding: 10px 15px;
+  background-color: #9c27b0; /* Vibrant purple */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.inputFileButton:hover {
+  background-color: #e91e63; /* Lighter pink on hover */
+}
+
+.flexRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between elements */
+}
+
+.flexCol {
+  flex: 1;
+  min-width: 250px; /* Minimum width for each input group */
+}
+
+.innerContainer {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.95
+  ); /* Lighter, almost white background with slight transparency */
+  padding: 20px;
+  border-radius: 20px;
+  color: #333; /* Darker text color for readability */
+  margin: 20px auto;
+  width: 90%; /* Adjust based on preference */
+  max-width: 1200px; /* Maximum width of the form container */
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 5px;
+  color: #673ab7; /* Deep purple for labels */
+}
+
+.formInput {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #bdbdbd; /* Lighter gray border for inputs */
+  box-sizing: border-box;
+}
+
+.formButton {
+  background-color: #00bcd4; /* Cyan for the primary button */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.formButton:hover {
+  background-color: #4a90e2; /* Lighter blue on hover */
+}

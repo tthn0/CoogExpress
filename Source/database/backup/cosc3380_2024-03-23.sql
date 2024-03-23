@@ -5,9 +5,9 @@
 # https://sequel-ace.com/
 # https://github.com/Sequel-Ace/Sequel-Ace
 #
-# Host: cosc3380.mysql.database.azure.com (MySQL 8.0.34)
+# Host: cosc3380.mysql.database.azure.com (MySQL 8.0.35)
 # Database: cosc3380
-# Generation Time: 2024-03-21 11:48:18 +0000
+# Generation Time: 2024-03-23 12:47:45 +0000
 # ************************************************************
 
 
@@ -64,9 +64,7 @@ VALUES
 	(21,'707 Mango St',NULL,'Orlando','FL','32801'),
 	(22,'808 Papaya St','Suite 200','San Antonio','TX','78201'),
 	(23,'909 Fig St',NULL,'Nashville','TN','37201'),
-	(24,'1010 Coconut St',NULL,'Raleigh','NC','27601'),
-	(101,'123 Main St',NULL,'City','ST','12345'),
-	(115,'3380 ComSci Rd',NULL,'Orlando','FL','80219');
+	(24,'1010 Coconut St',NULL,'Raleigh','NC','27601');
 
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -93,15 +91,6 @@ CREATE TABLE `billing` (
   CONSTRAINT `fk_billing_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `billing` WRITE;
-/*!40000 ALTER TABLE `billing` DISABLE KEYS */;
-
-INSERT INTO `billing` (`id`, `customer_id`, `address_id`, `card_number`, `cvc`, `expiration_month`, `expiration_year`, `cardholder_name`)
-VALUES
-	(1,4,3,'2400967423008574','9671','12','2026','John');
-
-/*!40000 ALTER TABLE `billing` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table branch
@@ -139,8 +128,7 @@ VALUES
 	(7,7,NULL,'Springfield Branch','7890123456','springfield@coog.express','08:00:00','17:00:00'),
 	(8,8,NULL,'Oak Ridge Branch','8901234567','oak.ridge@coog.express','09:00:00','18:00:00'),
 	(9,9,NULL,'Elmwood Branch','9012345678','elmwood@coog.express','08:30:00','17:30:00'),
-	(10,10,NULL,'Cedar Hill Branch','0123456789','cedar.hill@coog.express','08:00:00','17:00:00'),
-	(11,115,NULL,'Jersey Village Branch','9876542121','jersey.village@coog.express','09:00:00','18:00:00');
+	(10,10,NULL,'Cedar Hill Branch','0123456789','cedar.hill@coog.express','08:00:00','17:00:00');
 
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -168,8 +156,9 @@ LOCK TABLES `customer` WRITE;
 
 INSERT INTO `customer` (`id`, `user_id`, `preferred_branch_id`, `preferred_communication_method`)
 VALUES
-	(1,2,NULL,NULL),
-	(4,62,NULL,NULL);
+	(7,69,NULL,NULL),
+	(8,70,NULL,NULL),
+	(9,71,NULL,NULL);
 
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -288,15 +277,6 @@ CREATE TABLE `employee_schedule` (
   CONSTRAINT `fk_employee_schedule_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `employee_schedule` WRITE;
-/*!40000 ALTER TABLE `employee_schedule` DISABLE KEYS */;
-
-INSERT INTO `employee_schedule` (`id`, `employee_id`, `start_timestamp`, `end_timestamp`)
-VALUES
-	(1,1,'2016-08-10 06:15:00','2017-08-10 06:15:00');
-
-/*!40000 ALTER TABLE `employee_schedule` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 
@@ -367,20 +347,27 @@ LOCK TABLES `package` WRITE;
 
 INSERT INTO `package` (`id`, `sender_customer_id`, `receiver_customer_id`, `source_branch_id`, `destination_address_id`, `type`, `width`, `length`, `height`, `weight`, `special_handling_instructions`, `delivery_instructions`, `base_shipping_cost`, `additional_fees`)
 VALUES
-	(1,1,4,1,1,'Mail',10.50,15.20,8.30,2.50,'Fragile','Handle with care',10.00,0.00),
-	(2,1,4,1,2,'Parcel',20.80,12.30,6.50,5.80,NULL,'Leave at front door',15.00,2.50),
-	(3,1,4,2,3,'Mail',8.20,11.40,7.10,1.90,NULL,'Do not bend',8.00,1.00),
-	(4,1,4,2,4,'Parcel',18.60,9.70,5.90,4.30,NULL,NULL,12.00,1.75),
-	(5,1,4,3,5,'Mail',7.50,10.80,6.60,2.10,NULL,'Deliver between 2-4 PM',9.00,0.50),
-	(6,1,4,3,6,'Parcel',16.30,14.50,8.10,6.20,'Perishable',NULL,17.00,2.25),
-	(7,1,4,4,7,'Mail',9.90,13.60,7.20,2.80,NULL,NULL,10.00,1.00),
-	(8,1,4,4,8,'Parcel',22.00,11.20,6.40,7.50,NULL,NULL,18.00,2.75),
-	(9,4,1,5,9,'Mail',6.80,9.30,5.80,2.40,'Urgent',NULL,9.50,0.75),
-	(10,4,1,5,10,'Parcel',19.50,13.40,7.80,5.00,NULL,'Call before delivery',15.50,2.00),
-	(12,4,1,2,4,'Parcel',10.00,20.00,30.00,50.00,NULL,NULL,11.00,25.00);
+	(24,8,7,1,1,'Parcel',1.00,1.00,1.00,1.00,NULL,'Knock on door',8.99,3.50),
+	(25,7,8,1,2,'Mail',1.00,1.00,1.00,1.00,'Fragile','Ring doorbell',4.99,2.50),
+	(26,7,9,1,3,'Mail',1.00,1.00,1.00,1.00,NULL,NULL,19.99,3.49);
 
 /*!40000 ALTER TABLE `package` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `package_insert_trigger` AFTER INSERT ON `package` FOR EACH ROW BEGIN
+    DECLARE source_branch_address_id INT;
+
+    -- Lookup the address_id of the branch associated with the package
+    SELECT address_id INTO source_branch_address_id FROM branch WHERE id = NEW.source_branch_id;
+
+    -- Insert the package details into the tracking_history table
+    INSERT INTO tracking_history (package_id, address_id, timestamp, status)
+    VALUES (NEW.id, source_branch_address_id, NOW(), 'Pending');
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
 
@@ -425,8 +412,7 @@ VALUES
 	(12,'SKU223344556','UPC223344556',74.99,'Highlighters','Description for Product 12',18.70,30.10,8.90,3.80,NULL,0),
 	(13,'SKU334455667','UPC334455667',84.99,'Pencils','Description for Product 13',20.00,32.40,9.30,4.10,NULL,0),
 	(14,'SKU445566778','UPC445566778',64.99,'Markers','Description for Product 14',16.90,27.80,7.60,3.20,NULL,0),
-	(15,'SKU556677889','UPC556677889',94.99,'Pens','Description for Product 15',22.60,36.50,10.10,4.70,NULL,0),
-	(17,'SKU123456780','UPC123456780',37.99,'test2','New Product',5.00,9.00,2.00,26.00,NULL,0);
+	(15,'SKU556677889','UPC556677889',94.99,'Pens','Description for Product 15',22.60,36.50,10.10,4.70,NULL,0);
 
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -459,15 +445,6 @@ CREATE TABLE `receipt` (
   CONSTRAINT `fk_receipt_package_id` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `receipt` WRITE;
-/*!40000 ALTER TABLE `receipt` DISABLE KEYS */;
-
-INSERT INTO `receipt` (`id`, `customer_id`, `package_id`, `branch_id`, `billing_id`, `subtotal`, `tax`, `total`, `timestamp`, `notes`)
-VALUES
-	(1,4,1,1,1,400.00,2.00,402.00,'2016-08-10 06:15:00','Goodbye World');
-
-/*!40000 ALTER TABLE `receipt` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table route
@@ -493,15 +470,6 @@ CREATE TABLE `route` (
   CONSTRAINT `fk_route_start_address_id` FOREIGN KEY (`start_address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `route` WRITE;
-/*!40000 ALTER TABLE `route` DISABLE KEYS */;
-
-INSERT INTO `route` (`id`, `start_address_id`, `end_address_id`, `driver_employee_id`, `start_timestamp`, `end_timestamp`, `type`, `distance`)
-VALUES
-	(3,3,4,1,'2016-08-10 06:15:00','2016-08-10 06:15:00','Standard',26.00);
-
-/*!40000 ALTER TABLE `route` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table shipment
@@ -520,15 +488,6 @@ CREATE TABLE `shipment` (
   CONSTRAINT `fk_shipment_route_id` FOREIGN KEY (`route_id`) REFERENCES `route` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `shipment` WRITE;
-/*!40000 ALTER TABLE `shipment` DISABLE KEYS */;
-
-INSERT INTO `shipment` (`id`, `package_id`, `route_id`)
-VALUES
-	(1,4,3);
-
-/*!40000 ALTER TABLE `shipment` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table tracking_history
@@ -541,7 +500,7 @@ CREATE TABLE `tracking_history` (
   `package_id` int unsigned NOT NULL,
   `address_id` int unsigned NOT NULL,
   `timestamp` timestamp NOT NULL,
-  `status` enum('Pre-Shipment','In Transit','Out for Delivery','Delivered') NOT NULL,
+  `status` enum('Pending','Shipping','Delivered') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `package_id` (`package_id`),
   KEY `address_id` (`address_id`),
@@ -554,7 +513,11 @@ LOCK TABLES `tracking_history` WRITE;
 
 INSERT INTO `tracking_history` (`id`, `package_id`, `address_id`, `timestamp`, `status`)
 VALUES
-	(1,1,3,'2016-08-10 06:15:00','Delivered');
+	(7,24,1,'2024-03-23 10:44:17','Pending'),
+	(8,24,1,'2024-03-24 11:19:17','Shipping'),
+	(9,25,2,'2024-03-23 10:44:17','Pending'),
+	(10,25,1,'2024-03-24 13:12:17','Delivered'),
+	(11,26,1,'2024-03-23 10:54:34','Pending');
 
 /*!40000 ALTER TABLE `tracking_history` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -569,19 +532,20 @@ CREATE TABLE `user` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `first_name` varchar(63) NOT NULL,
   `last_name` varchar(63) NOT NULL,
-  `username` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `username` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `email` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `phone_number` char(10) NOT NULL,
   `phone_country_code` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `address_id` int unsigned NOT NULL,
-  `profile_picture` longblob,
+  `profile_picture` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `last_login` datetime NOT NULL,
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_email` (`email`),
   UNIQUE KEY `unique_phone_number` (`phone_number`),
+  UNIQUE KEY `unique_username` (`username`),
   KEY `address_id` (`address_id`),
   CONSTRAINT `fk_user_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -591,10 +555,10 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `email`, `password_hash`, `phone_number`, `phone_country_code`, `address_id`, `profile_picture`, `created_at`, `last_login`, `deleted`)
 VALUES
-	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,NULL,'2024-03-17 12:30:45','2024-03-21 11:46:59',0),
-	(2,'John','Cena','jc','john@cena.com','ucantseeme','1112223337','1',101,NULL,'2024-03-16 20:47:07','2024-03-21 11:19:25',0),
-	(62,'Alan','Turing','alan','alan@turing.com','password','3112223337','1',101,NULL,'2024-03-20 02:28:14','2024-03-20 02:28:14',1),
-	(63,'Ada','Lovelace','ada','ada@lovelace.com','password','5555033849','1',101,NULL,'2024-03-20 20:22:46','2024-03-20 20:22:46',0);
+	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,'https://i.imgur.com/LTFKZRV.jpeg','2024-03-17 12:30:45','2024-03-23 12:32:28',0),
+	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',2,'https://i.imgur.com/ZpuUDs8.jpeg','2024-03-23 10:31:51','2024-03-23 12:32:39',0),
+	(70,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','9287482974','1',3,NULL,'2024-03-23 10:33:11','2024-03-23 10:33:11',0),
+	(71,'Grace','Hopper','grace','grace@hopper.com','hopper','9823427342','1',4,NULL,'2024-03-23 10:54:05','2024-03-23 10:54:06',0);
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -658,20 +622,20 @@ AS SELECT
    `sender`.`phone_number` AS `sender_phone_number`,
    `sender`.`phone_country_code` AS `sender_phone_country_code`,
    `sender`.`profile_picture` AS `sender_profile_picture`,
-   `recipient`.`first_name` AS `recipient_first_name`,
-   `recipient`.`last_name` AS `recipient_last_name`,
-   `recipient`.`username` AS `recipient_username`,
-   `recipient`.`email` AS `recipient_email`,
-   `recipient`.`phone_number` AS `recipient_phone_number`,
-   `recipient`.`phone_country_code` AS `recipient_phone_country_code`,
-   `recipient`.`profile_picture` AS `recipient_profile_picture`,
+   `receiver`.`first_name` AS `receiver_first_name`,
+   `receiver`.`last_name` AS `receiver_last_name`,
+   `receiver`.`username` AS `receiver_username`,
+   `receiver`.`email` AS `receiver_email`,
+   `receiver`.`phone_number` AS `receiver_phone_number`,
+   `receiver`.`phone_country_code` AS `receiver_phone_country_code`,
+   `receiver`.`profile_picture` AS `receiver_profile_picture`,
    `b`.`name` AS `source_branch_name`,
    `a`.`line1` AS `destination_address_line1`,
    `a`.`line2` AS `destination_address_line2`,
    `a`.`city` AS `destination_address_city`,
    `a`.`state` AS `destination_address_state`,
-   `a`.`zip` AS `destination_address_zip`
-FROM ((((`package` `p` join `customer_view` `sender`) join `customer_view` `recipient`) join `branch` `b`) join `address` `a`) where ((`p`.`sender_customer_id` = `sender`.`customer_id`) and (`p`.`receiver_customer_id` = `recipient`.`customer_id`) and (`p`.`source_branch_id` = `b`.`id`) and (`p`.`destination_address_id` = `a`.`id`));
+   `a`.`zip` AS `destination_address_zip`,(select `th`.`status`
+FROM `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` desc limit 1) AS `status`,(select `th`.`timestamp` from `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` limit 1) AS `initiated_at`,(select `th`.`timestamp` from `tracking_history` `th` where ((`th`.`package_id` = `p`.`id`) and (`th`.`status` = 'Delivered')) order by `th`.`timestamp` desc limit 1) AS `delivered_at` from ((((`package` `p` join `customer_view` `sender`) join `customer_view` `receiver`) join `branch` `b`) join `address` `a`) where ((`p`.`sender_customer_id` = `sender`.`customer_id`) and (`p`.`receiver_customer_id` = `receiver`.`customer_id`) and (`p`.`source_branch_id` = `b`.`id`) and (`p`.`destination_address_id` = `a`.`id`));
 
 # Dump of view employee_view
 # ------------------------------------------------------------
@@ -705,8 +669,11 @@ AS SELECT
    `a`.`line2` AS `line2`,
    `a`.`city` AS `city`,
    `a`.`state` AS `state`,
-   `a`.`zip` AS `zip`
-FROM ((`user` `u` join `address` `a`) join `employee` `e`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`));
+   `a`.`zip` AS `zip`,
+   `su`.`first_name` AS `supervisor_first_name`,
+   `su`.`last_name` AS `supervisor_last_name`,
+   `su`.`profile_picture` AS `supervisor_profile_picture`
+FROM ((((`user` `u` join `address` `a`) join `employee` `e`) join `employee` `s`) join `user` `su`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`) and (`e`.`supervisor_employee_id` = `s`.`id`) and (`s`.`user_id` = `su`.`id`));
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
