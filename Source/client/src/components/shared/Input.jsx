@@ -11,6 +11,7 @@ export default function Input({
   pattern,
   title,
   icon,
+  required = true,
 }) {
   return (
     <div className={`${styles.container} ${containerClassName}`}>
@@ -27,7 +28,7 @@ export default function Input({
         pattern={pattern}
         title={title}
         autoComplete="off"
-        required
+        required={required}
       />
       <label className={styles.label} htmlFor={name}>
         {label}

@@ -27,123 +27,118 @@ export default {
       destination_address_line2,
       destination_address_city,
       destination_address_state,
-      destination_address_zip
+      destination_address_zip,
     } = req.body;
 
-    const sender = await queryDatabase(
-      "SELECT * FROM customer_view WHERE username = ?", [sender_username]
-    );
-    const receiver = await queryDatabase(
-      "SELECT * FROM customer_view WHERE username = ?", [receiver_username]
-    );
+    const [sender, receiver, address] = await Promise.all([
+      queryDatabase("SELECT * FROM customer_view WHERE username = ?", [
+        sender_username,
+      ]),
+      queryDatabase("SELECT * FROM customer_view WHERE username = ?", [
+        receiver_username,
+      ]),
+      queryDatabase(
+        `SELECT * 
+        FROM address 
+        WHERE
+          line1 = ? AND
+          line2 = ? AND
+          city = ? AND
+          state = ? AND
+          zip = ?;`,
+        [
+          destination_address_line1,
+          destination_address_line2,
+          destination_address_city,
+          destination_address_state,
+          destination_address_zip,
+        ]
+      ),
+    ]);
 
-    if (sender.length == 0 || receiver.length == 0) {
+    if (sender.length == 0) {
       return {
-        error: "usernames must be valid"
-      }
+        error: "Sender username must be valid.",
+      };
+    } else if (receiver.length == 0) {
+      return {
+        error: "Receiver username must be valid.",
+      };
     }
-
-    let address = await queryDatabase(
-      `SELECT * 
-      FROM address 
-      WHERE
-        line1 = ? AND
-        line2 = ? AND
-        city = ? AND
-        state = ? AND
-        zip = ?;
-        `,
-       [
-        destination_address_line1, 
-        destination_address_line2,
-        destination_address_city,
-        destination_address_state,
-        destination_address_zip
-       ]
-    )
-    console.log(address);
 
     let address_id;
 
-
-    if(address.length){
+    if (address.length) {
       address_id = address[0].id;
     } else {
-      console.log("Creating new address")
-      address = await queryDatabase(`
-        INSERT INTO address(
+      address = await queryDatabase(
+        `INSERT INTO address(
           line1,
           line2,
           city,
           state,
           zip
-        ) VALUES (?, ?, ?, ?, ?)
-      `,
-      [
-        destination_address_line1, 
-        destination_address_line2,
-        destination_address_city,
-        destination_address_state,
-        destination_address_zip
-      ])
+        ) VALUES (?, ?, ?, ?, ?);`,
+        [
+          destination_address_line1,
+          destination_address_line2,
+          destination_address_city,
+          destination_address_state,
+          destination_address_zip,
+        ]
+      );
       address_id = address.insertId;
     }
 
-     const new_package = await queryDatabase(`
-        INSERT INTO package(
-          sender_customer_id,
-          receiver_customer_id,
-          source_branch_id,
-          destination_address_id,
-          type,
-          width,
-          length,
-          height,
-          weight,
-          special_handling_instructions,
-          delivery_instructions,
-          base_shipping_cost,
-          additional_fees
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-     `,
-     [
-      sender[0].customer_id,
-      receiver[0].customer_id,
-      source_branch_id,
-      address_id,
-      type,
-      width,
-      length,
-      height,
-      weight,
-      special_handling_instructions,
-      delivery_instructions,
-      base_shipping_cost,
-      additional_fees,
-     ])
-
-    //  new_package.insertId
-
-    const branch = await queryDatabase(
-      `SELECT address_id FROM branch WHERE id = ?`,
-      source_branch_id
+    const new_package = await queryDatabase(
+      `INSERT INTO package(
+        sender_customer_id,
+        receiver_customer_id,
+        source_branch_id,
+        destination_address_id,
+        type,
+        width,
+        length,
+        height,
+        weight,
+        special_handling_instructions,
+        delivery_instructions,
+        base_shipping_cost,
+        additional_fees
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      [
+        sender[0].customer_id,
+        receiver[0].customer_id,
+        source_branch_id,
+        address_id,
+        type,
+        width,
+        length,
+        height,
+        weight,
+        special_handling_instructions,
+        delivery_instructions,
+        base_shipping_cost,
+        additional_fees,
+      ]
     );
 
-    const branch_address_id = branch[0].address_id;
+    // const branch = await queryDatabase(
+    //   `SELECT address_id FROM branch WHERE id = ?`,
+    //   source_branch_id
+    // );
 
-    await queryDatabase(
-      `INSERT INTO tracking_history (
-        package_id,
-        address_id,
-        timestamp,
-        status
-      ) VALUES (?, ?, NOW(), ?);`,
-      [
-        new_package.insertId,
-        branch_address_id,
-        "Pre-Shipment",
-      ]
-    )
+    // const branch_address_id = branch[0].address_id;
+
+    // await queryDatabase(
+    //   `INSERT INTO tracking_history (
+    //     package_id,
+    //     address_id,
+    //     timestamp,
+    //     status
+    //   ) VALUES (?, ?, NOW(), ?);`,
+    //   [new_package.insertId, branch_address_id, "Pre-Shipment"]
+    // );
 
     return new_package;
   },
