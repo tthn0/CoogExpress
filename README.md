@@ -29,10 +29,5 @@ npm start
 - **Thomas**:
   - Change customer dashboard UI to light mode.
   - Backup database on every commit.
-  - Test deployment.
-    - Update environment variables.
-- **Everyone**:
-  - Brainstorm triggers.
-  - Brainstorm business rules / semantic constraints.
-    - Password format.
-    - For a customer to ship a package, they must have a card on file.
+  - Update README:
+    - Include deploy instructions.

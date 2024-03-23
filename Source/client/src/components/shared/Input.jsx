@@ -3,6 +3,7 @@ import styles from "./Input.module.scss";
 
 export default function Input({
   containerClassName,
+  className,
   type,
   name,
   label,
@@ -19,7 +20,7 @@ export default function Input({
         <FontAwesomeIcon icon={icon} />
       </span>
       <input
-        className={styles.input}
+        className={`${styles.input} ${className}`}
         type={type}
         name={name}
         placeholder=" " // Required for floating label effect

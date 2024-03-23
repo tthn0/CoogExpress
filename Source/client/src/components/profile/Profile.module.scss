@@ -9,6 +9,16 @@
   font-family: fonts.$inter;
 }
 
+.container .h1 {
+  font-size: 2em;
+  font-weight: 550;
+}
+
+.container .h3 {
+  font-size: 1.25em;
+  font-weight: 550;
+}
+
 .profilePictureContainer {
   display: flex;
   justify-content: center;

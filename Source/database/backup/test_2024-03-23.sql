@@ -6,8 +6,8 @@
 # https://github.com/Sequel-Ace/Sequel-Ace
 #
 # Host: cosc3380.mysql.database.azure.com (MySQL 8.0.35)
-# Database: cosc3380
-# Generation Time: 2024-03-23 12:47:45 +0000
+# Database: test
+# Generation Time: 2024-03-23 18:44:39 +0000
 # ************************************************************
 
 
@@ -33,7 +33,7 @@ CREATE TABLE `address` (
   `state` char(2) NOT NULL,
   `zip` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_address` (`line1`,`city`,`state`,`zip`)
+  UNIQUE KEY `unique_address` (`line1`,`line2`,`city`,`state`,`zip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `address` WRITE;
@@ -41,30 +41,40 @@ LOCK TABLES `address` WRITE;
 
 INSERT INTO `address` (`id`, `line1`, `line2`, `city`, `state`, `zip`)
 VALUES
-	(1,'123 Main St','Apt 1','New York','NY','10001'),
-	(2,'456 Elm St',NULL,'Los Angeles','CA','90001'),
-	(3,'789 Oak St',NULL,'Chicago','IL','60601'),
 	(4,'10 Pine St','Suite 100','San Francisco','CA','94101'),
-	(5,'555 Maple Ave',NULL,'Miami','FL','33101'),
-	(6,'111 Cedar St',NULL,'Seattle','WA','98101'),
-	(7,'222 Birch St',NULL,'Boston','MA','02101'),
-	(8,'333 Walnut St',NULL,'Philadelphia','PA','19101'),
-	(9,'444 Cherry St','Unit B','Austin','TX','78701'),
-	(10,'555 Orange St',NULL,'Atlanta','GA','30301'),
-	(11,'666 Lemon St','Apt 2B','Denver','CO','80201'),
-	(12,'777 Peach St',NULL,'Houston','TX','77001'),
-	(13,'888 Grape St','Suite 300','Portland','OR','97201'),
-	(14,'999 Pineapple St',NULL,'San Diego','CA','92101'),
 	(15,'101 Apple St',NULL,'Detroit','MI','48201'),
+	(24,'1010 Coconut St',NULL,'Raleigh','NC','27601'),
+	(6,'111 Cedar St',NULL,'Seattle','WA','98101'),
+	(27,'123 Maain St',NULL,'City','ST','77084'),
+	(28,'123 Maain St',NULL,'City','ST','77084'),
+	(29,'123 Maain St',NULL,'City','ST','77084'),
+	(30,'123 Main St',NULL,'Houston','TX','77084'),
+	(31,'123 Main St',NULL,'Houston','TX','77084'),
+	(32,'123 Main St',NULL,'Houston','TX','77084'),
+	(26,'123 Main St','','Houston','TX','77084'),
+	(25,'123 Main St','','New York','NY','10001'),
+	(1,'123 Main St','Apt 1','New York','NY','10001'),
 	(16,'202 Banana St','Apt 3C','Phoenix','AZ','85001'),
+	(7,'222 Birch St',NULL,'Boston','MA','02101'),
 	(17,'303 Pear St',NULL,'Dallas','TX','75201'),
+	(8,'333 Walnut St',NULL,'Philadelphia','PA','19101'),
 	(18,'404 Watermelon St',NULL,'Charlotte','NC','28201'),
+	(9,'444 Cherry St','Unit B','Austin','TX','78701'),
+	(2,'456 Elm St',NULL,'Los Angeles','CA','90001'),
 	(19,'505 Kiwi St','Unit D','Minneapolis','MN','55401'),
+	(5,'555 Maple Ave',NULL,'Miami','FL','33101'),
+	(10,'555 Orange St',NULL,'Atlanta','GA','30301'),
 	(20,'606 Avocado St',NULL,'Las Vegas','NV','89101'),
+	(11,'666 Lemon St','Apt 2B','Denver','CO','80201'),
 	(21,'707 Mango St',NULL,'Orlando','FL','32801'),
+	(12,'777 Peach St',NULL,'Houston','TX','77001'),
+	(3,'789 Oak St',NULL,'Chicago','IL','60601'),
+	(33,'789 Oak St',NULL,'Chicago','IL','60601'),
+	(34,'789 Oak St',NULL,'Chicago','IL','60601'),
 	(22,'808 Papaya St','Suite 200','San Antonio','TX','78201'),
+	(13,'888 Grape St','Suite 300','Portland','OR','97201'),
 	(23,'909 Fig St',NULL,'Nashville','TN','37201'),
-	(24,'1010 Coconut St',NULL,'Raleigh','NC','27601');
+	(14,'999 Pineapple St',NULL,'San Diego','CA','92101');
 
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -226,7 +236,10 @@ LOCK TABLES `employee` WRITE;
 
 INSERT INTO `employee` (`id`, `user_id`, `branch_id`, `supervisor_employee_id`, `date_of_birth`, `gender`, `driver_license_number`, `role`, `shirt_size`)
 VALUES
-	(1,1,1,1,'2024-03-17','Male','1234567890123','Manager','M');
+	(1,1,1,1,'2024-03-17','Male','1234567890123','Manager','M'),
+	(4,2,1,1,'2024-03-17','Male','1748937484391','Associate','M'),
+	(5,3,1,1,'2024-03-17','Male','3875758838383','Associate','S'),
+	(6,4,1,1,'2024-03-17','Male','494947483938','Driver','S');
 
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -555,10 +568,14 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `email`, `password_hash`, `phone_number`, `phone_country_code`, `address_id`, `profile_picture`, `created_at`, `last_login`, `deleted`)
 VALUES
-	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,'https://i.imgur.com/LTFKZRV.jpeg','2024-03-17 12:30:45','2024-03-23 12:32:28',0),
-	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',2,'https://i.imgur.com/ZpuUDs8.jpeg','2024-03-23 10:31:51','2024-03-23 12:32:39',0),
-	(70,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','9287482974','1',3,NULL,'2024-03-23 10:33:11','2024-03-23 10:33:11',0),
-	(71,'Grace','Hopper','grace','grace@hopper.com','hopper','9823427342','1',4,NULL,'2024-03-23 10:54:05','2024-03-23 10:54:06',0);
+	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-03-23 14:27:09',0),
+	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-03-23 13:42:02',0),
+	(3,'Sam','Li','sam','sam@li.com','li','2222222222','1',34,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:44:00','2024-03-23 18:43:24',0),
+	(4,'Salim','Sanogho','salim','salim@sanogho.com','sanogho','3333333333','1',5,'https://cdn.discordapp.com/avatars/1013124526768406658/ece88637647dbdf3cc441279bc9355be.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
+	(5,'Nikolas','velazquez','nikolas','nikolas@velazquez.com','velazquez','4444444444','1',6,'https://cdn.discordapp.com/avatars/234144333161299978/c0411ce9c43f2397d4626b650159fdce.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
+	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',2,'https://i.imgur.com/xfHGknl.jpeg','2024-03-23 10:31:51','2024-03-23 15:41:52',0),
+	(70,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','9287482974','1',3,NULL,'2024-03-23 10:33:11','2024-03-23 14:25:06',0),
+	(71,'Grace','Hopper','grace','grace@hopper.com','hopper','9823427342','1',4,NULL,'2024-03-23 10:54:05','2024-03-23 14:25:14',0);
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;

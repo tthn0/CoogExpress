@@ -60,6 +60,7 @@ const routeRequest = async (req, res) => {
     } catch (error) {
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ Error: error.message }));
+      console.error(error);
     }
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });

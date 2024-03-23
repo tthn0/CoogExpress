@@ -56,22 +56,22 @@ export default {
       ),
     ]);
 
-    if (sender.length == 0) {
-      return {
-        error: "Sender username must be valid.",
-      };
-    } else if (receiver.length == 0) {
-      return {
-        error: "Receiver username must be valid.",
-      };
-    }
+    // if (sender.length == 0) {
+    //   return {
+    //     error: "Sender username must be valid.",
+    //   };
+    // } else if (receiver.length == 0) {
+    //   return {
+    //     error: "Receiver username must be valid.",
+    //   };
+    // }
 
     let address_id;
 
     if (address.length) {
       address_id = address[0].id;
     } else {
-      address = await queryDatabase(
+      const address = await queryDatabase(
         `INSERT INTO address(
           line1,
           line2,
@@ -90,7 +90,7 @@ export default {
       address_id = address.insertId;
     }
 
-    const new_package = await queryDatabase(
+    return await queryDatabase(
       `INSERT INTO package(
         sender_customer_id,
         receiver_customer_id,
@@ -107,8 +107,8 @@ export default {
         additional_fees
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
-        sender[0].customer_id,
-        receiver[0].customer_id,
+        sender[0]?.customer_id,
+        receiver[0]?.customer_id,
         source_branch_id,
         address_id,
         type,
@@ -122,25 +122,6 @@ export default {
         additional_fees,
       ]
     );
-
-    // const branch = await queryDatabase(
-    //   `SELECT address_id FROM branch WHERE id = ?`,
-    //   source_branch_id
-    // );
-
-    // const branch_address_id = branch[0].address_id;
-
-    // await queryDatabase(
-    //   `INSERT INTO tracking_history (
-    //     package_id,
-    //     address_id,
-    //     timestamp,
-    //     status
-    //   ) VALUES (?, ?, NOW(), ?);`,
-    //   [new_package.insertId, branch_address_id, "Pre-Shipment"]
-    // );
-
-    return new_package;
   },
   put: async (req, res) => {
     // const {
