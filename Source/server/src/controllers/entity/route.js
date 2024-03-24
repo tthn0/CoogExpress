@@ -3,43 +3,35 @@ import queryDatabase from "../../utils/queryDatabase.js";
 export default {
   get: async (req, res) => {
     const { id } = req.params;
-    const sql = id
-      ? "SELECT * FROM route WHERE id = ?"
-      : "SELECT * FROM route";
+    const sql = id ? "SELECT * FROM route WHERE id = ?" : "SELECT * FROM route";
     const params = id ? [id] : [];
     return await queryDatabase(sql, params);
   },
   post: async (req, res) => {
-    const {
-      start_address_id,
-      end_address_id,
-      driver_employee_id,
-      start_timestamp,
-      end_timestamp,
-      type,
-      distance
-    } = req.body;
-    return await queryDatabase(
+    const { start_address_id, distance, packages } = req.body;
+    const route = await queryDatabase(
       `INSERT INTO route(
         start_address_id,
-        end_address_id,
-        driver_employee_id,
-        start_timestamp,
-        end_timestamp,
-        type,
         distance
-      ) VALUES (?, ?, ?, ?, ?, ?, ?);
+      ) VALUES (?, ?);
       `,
-      [
-        start_address_id,
-        end_address_id,
-        driver_employee_id,
-        start_timestamp,
-        end_timestamp,
-        type,
-        distance
-      ]
+      [start_address_id, distance]
     );
+    const responses = await Promise.all(
+      packages?.map((packageId) => {
+        return queryDatabase(
+          `INSERT INTO shipment(
+            package_id,
+            route_id
+          ) VALUES (?, ?);`,
+          [packageId, route.insertId]
+        );
+      })
+    );
+    for (const response of responses) {
+      if (response.errno) return response;
+    }
+    return route;
   },
   put: async (req, res) => {
     const {
@@ -49,8 +41,7 @@ export default {
       driver_employee_id,
       start_timestamp,
       end_timestamp,
-      type,
-      distance
+      distance,
     } = req.body;
     return await queryDatabase(
       `
@@ -61,7 +52,6 @@ export default {
         route.driver_employee_id = ?,
         route.start_timestamp = ?,
         route.end_timestamp = ?,
-        route.type = ?,
         route.distance = ?
       WHERE route.id = ?;
       `,
@@ -71,9 +61,8 @@ export default {
         driver_employee_id,
         start_timestamp,
         end_timestamp,
-        type,
         distance,
-        id
+        id,
       ]
     );
   },

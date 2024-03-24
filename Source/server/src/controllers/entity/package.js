@@ -20,6 +20,7 @@ export default {
       delivery_instructions,
       base_shipping_cost,
       additional_fees,
+      speed,
       sender_username,
       receiver_username,
       source_branch_id,
@@ -55,16 +56,6 @@ export default {
         ]
       ),
     ]);
-
-    // if (sender.length == 0) {
-    //   return {
-    //     error: "Sender username must be valid.",
-    //   };
-    // } else if (receiver.length == 0) {
-    //   return {
-    //     error: "Receiver username must be valid.",
-    //   };
-    // }
 
     let address_id;
 
@@ -104,8 +95,9 @@ export default {
         special_handling_instructions,
         delivery_instructions,
         base_shipping_cost,
-        additional_fees
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+        additional_fees,
+        speed
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         sender[0]?.customer_id,
         receiver[0]?.customer_id,
@@ -120,6 +112,7 @@ export default {
         delivery_instructions,
         base_shipping_cost,
         additional_fees,
+        speed,
       ]
     );
   },

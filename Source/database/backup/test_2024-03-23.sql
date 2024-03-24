@@ -7,7 +7,7 @@
 #
 # Host: cosc3380.mysql.database.azure.com (MySQL 8.0.35)
 # Database: test
-# Generation Time: 2024-03-23 18:44:39 +0000
+# Generation Time: 2024-03-24 04:11:31 +0000
 # ************************************************************
 
 
@@ -51,6 +51,10 @@ VALUES
 	(30,'123 Main St',NULL,'Houston','TX','77084'),
 	(31,'123 Main St',NULL,'Houston','TX','77084'),
 	(32,'123 Main St',NULL,'Houston','TX','77084'),
+	(35,'123 Main St',NULL,'Houston','TX','77084'),
+	(36,'123 Main St',NULL,'Houston','TX','77084'),
+	(37,'123 Main St',NULL,'Houston','TX','77084'),
+	(38,'123 Main St',NULL,'New York','NY','10001'),
 	(26,'123 Main St','','Houston','TX','77084'),
 	(25,'123 Main St','','New York','NY','10001'),
 	(1,'123 Main St','Apt 1','New York','NY','10001'),
@@ -132,7 +136,7 @@ VALUES
 	(1,1,NULL,'Sunset Park Branch','1234567890','sunset.park@coog.express','08:00:00','17:00:00'),
 	(2,2,NULL,'Maple Grove Branch','2345678901','maple.grove@coog.express','09:00:00','18:00:00'),
 	(3,3,NULL,'Pineview Branch','3456789012','pineview@coog.express','08:30:00','17:30:00'),
-	(4,4,NULL,'Lakeview Branch','4567890123','lakeview@coog.express','08:00:00','17:00:00'),
+	(4,4,1,'Lakeview Branch','4567890123','lakeview@coog.express','08:00:00','17:00:00'),
 	(5,5,NULL,'Riverfront Branch','5678901234','riverfront@coog.express','09:00:00','18:00:00'),
 	(6,6,NULL,'Highland Park Branch','6789012345','highland.park@coog.express','08:30:00','17:30:00'),
 	(7,7,NULL,'Springfield Branch','7890123456','springfield@coog.express','08:00:00','17:00:00'),
@@ -204,6 +208,53 @@ DELIMITER ;
 /*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
+
+
+# Dump of table email_queue
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `email_queue`;
+
+CREATE TABLE `email_queue` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_first_name` varchar(63) DEFAULT NULL,
+  `user_email` varchar(255) DEFAULT NULL,
+  `email_subject` varchar(255) DEFAULT NULL,
+  `email_body` varchar(1000) DEFAULT NULL,
+  `processed` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+LOCK TABLES `email_queue` WRITE;
+/*!40000 ALTER TABLE `email_queue` DISABLE KEYS */;
+
+INSERT INTO `email_queue` (`id`, `user_first_name`, `user_email`, `email_subject`, `email_body`, `processed`)
+VALUES
+	(3,'Thomas','thomas@tthn.us','Inventory Threshold Alert at: Lakeview Branch','Dear Thomas\n\nThe inventory for \"Folders\" has reached below the threshold. Please purchase new products for this branch\nThreshold: 200\nCurrent Inventory: 199',0),
+	(4,'Thomas','thomas@tthn.us','Inventory Threshold Alert at: Lakeview Branch','Dear Thomas\n\nThe inventory for \"Folders\" has reached below the threshold. Please purchase new products for this branch\nThreshold: 200\nCurrent Inventory: 198',0),
+	(5,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace\n\n! A new tracking history has been created for you.\n Tracking history ID: 35',0),
+	(6,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace\n\n! A new tracking history has been created for you.\n Tracking history ID: 36',0),
+	(8,'Thomas','thomas@tthn.us','CoogExpress Management: Inventory Alert at Lakeview Branch','Dear Thomas\n\nThe inventory for \"Folders\" has reached the threshold at your branch. Please order new inventory as soon as possible for this branch\nThreshold: 200\nCurrent Inventory: 200',0),
+	(9,'Thomas','thomas@tthn.us','CoogExpress Management: Inventory Alert at Lakeview Branch',NULL,0),
+	(10,'Thomas','thomas@tthn.us','CoogExpress Management: Inventory Alert at Lakeview Branch','Dear Thomas\n\nThe inventory for \"Folders\" has reached the threshold at your branch. Please order new inventory as soon as possible for this branch\nThreshold: 200\nCurrent Inventory: 200',0),
+	(11,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace\n\n! A new tracking history has been created for you.\n Tracking history ID: 37',0),
+	(12,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 38',0),
+	(13,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 39',0),
+	(14,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 40',0),
+	(15,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 41',0),
+	(16,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 42',0),
+	(17,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 43',0),
+	(18,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 44',0),
+	(19,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 45',0),
+	(20,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 46',0),
+	(21,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 47',0),
+	(22,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 48',0),
+	(23,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 49',0),
+	(24,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 50',0),
+	(25,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 51',0);
+
+/*!40000 ALTER TABLE `email_queue` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table employee
@@ -306,6 +357,7 @@ CREATE TABLE `inventory` (
   `quantity_in_stock` int unsigned NOT NULL,
   `stock_alert_threshold` int unsigned DEFAULT NULL,
   `last_stock_update` timestamp NOT NULL,
+  `been_notified` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `branch_id` (`branch_id`),
   KEY `product_id` (`product_id`),
@@ -316,12 +368,61 @@ CREATE TABLE `inventory` (
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
 
-INSERT INTO `inventory` (`id`, `branch_id`, `product_id`, `quantity_in_stock`, `stock_alert_threshold`, `last_stock_update`)
+INSERT INTO `inventory` (`id`, `branch_id`, `product_id`, `quantity_in_stock`, `stock_alert_threshold`, `last_stock_update`, `been_notified`)
 VALUES
-	(1,4,4,3000,200,'2016-08-10 06:15:00');
+	(1,4,4,201,200,'2016-08-10 06:15:00',0);
 
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `notify_manager_inventory` BEFORE UPDATE ON `inventory` FOR EACH ROW BEGIN
+	DECLARE product_name VARCHAR(63);
+    DECLARE branch_name VARCHAR(63);
+    DECLARE manager_email VARCHAR(255);
+    DECLARE manager_name VARCHAR(63);
+    DECLARE email_subject VARCHAR(255);
+	DECLARE email_body VARCHAR(1000);
+    
+    SELECT P.name, U.email, U.first_name, B.name
+    INTO product_name, manager_email, manager_name, branch_name
+    FROM inventory I, product P, branch B, user U, employee E
+    WHERE 
+		I.product_id = P.id AND
+        I.branch_id = B.id AND
+        B.manager_employee_id = E.id AND
+        E.user_id = U.id AND
+        I.id = NEW.id;
+        
+	IF manager_name IS NULL THEN
+		SIGNAL SQLSTATE '01000' SET MESSAGE_TEXT = 'WARNING MESSAGE: manager_name is NULL';
+    END IF;
+    
+	IF NEW.quantity_in_stock <= NEW.stock_alert_threshold AND OLD.been_notified = FALSE THEN	-- If inventory is less than threshold and not been notified.
+		SET NEW.been_notified = TRUE;
+        
+        SET email_subject = CONCAT('CoogExpress Management: Inventory Alert at ', branch_name);
+        SET email_body = CONCAT('Dear ', manager_name, '
+
+The inventory for "', product_name, '" has reached the threshold at your branch. Please order new inventory as soon as possible for this branch
+Threshold: ', NEW.stock_alert_threshold, '
+Current Inventory: ', NEW.quantity_in_stock);
+        
+		INSERT INTO email_queue (
+			user_first_name,
+            user_email,
+            email_subject,
+            email_body,
+            processed
+        ) VALUES (manager_name, manager_email, email_subject, email_body, false);
+	ELSEIF NEW.quantity_in_stock > NEW.stock_alert_threshold AND NEW.been_notified = TRUE THEN	-- If inventory has been restocked
+		SET NEW.been_notified = FALSE;
+	END IF;
+    
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
 # Dump of table package
@@ -344,6 +445,7 @@ CREATE TABLE `package` (
   `delivery_instructions` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `base_shipping_cost` decimal(5,2) unsigned NOT NULL,
   `additional_fees` decimal(5,2) unsigned NOT NULL,
+  `speed` enum('Standard','Express','Overnight') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sender_customer_id` (`sender_customer_id`),
   KEY `receiver_customer_id` (`receiver_customer_id`),
@@ -358,29 +460,17 @@ CREATE TABLE `package` (
 LOCK TABLES `package` WRITE;
 /*!40000 ALTER TABLE `package` DISABLE KEYS */;
 
-INSERT INTO `package` (`id`, `sender_customer_id`, `receiver_customer_id`, `source_branch_id`, `destination_address_id`, `type`, `width`, `length`, `height`, `weight`, `special_handling_instructions`, `delivery_instructions`, `base_shipping_cost`, `additional_fees`)
+INSERT INTO `package` (`id`, `sender_customer_id`, `receiver_customer_id`, `source_branch_id`, `destination_address_id`, `type`, `width`, `length`, `height`, `weight`, `special_handling_instructions`, `delivery_instructions`, `base_shipping_cost`, `additional_fees`, `speed`)
 VALUES
-	(24,8,7,1,1,'Parcel',1.00,1.00,1.00,1.00,NULL,'Knock on door',8.99,3.50),
-	(25,7,8,1,2,'Mail',1.00,1.00,1.00,1.00,'Fragile','Ring doorbell',4.99,2.50),
-	(26,7,9,1,3,'Mail',1.00,1.00,1.00,1.00,NULL,NULL,19.99,3.49);
+	(24,8,7,1,1,'Parcel',1.00,1.00,1.00,1.00,NULL,'Knock on door',8.99,3.50,'Standard'),
+	(25,7,8,1,2,'Mail',1.00,1.00,1.00,1.00,'Fragile','Ring doorbell',4.99,2.50,'Express'),
+	(26,7,9,1,3,'Mail',1.00,1.00,1.00,1.00,NULL,NULL,19.99,3.49,'Overnight'),
+	(39,7,9,1,35,'Mail',1.00,2.00,3.00,4.00,'Nope','Hi',13.18,4.72,'Standard'),
+	(40,7,9,1,36,'Parcel',1.00,2.00,3.00,4.00,'Hello','World',14.03,3.82,'Express'),
+	(41,9,8,1,38,'Mail',2.00,3.00,4.00,5.00,'Nothing','Nada',10.05,2.27,'Express');
 
 /*!40000 ALTER TABLE `package` ENABLE KEYS */;
 UNLOCK TABLES;
-
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `package_insert_trigger` AFTER INSERT ON `package` FOR EACH ROW BEGIN
-    DECLARE source_branch_address_id INT;
-
-    -- Lookup the address_id of the branch associated with the package
-    SELECT address_id INTO source_branch_address_id FROM branch WHERE id = NEW.source_branch_id;
-
-    -- Insert the package details into the tracking_history table
-    INSERT INTO tracking_history (package_id, address_id, timestamp, status)
-    VALUES (NEW.id, source_branch_address_id, NOW(), 'Pending');
-END */;;
-DELIMITER ;
-/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
 
@@ -468,11 +558,10 @@ DROP TABLE IF EXISTS `route`;
 CREATE TABLE `route` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `start_address_id` int unsigned NOT NULL,
-  `end_address_id` int unsigned NOT NULL,
-  `driver_employee_id` int unsigned NOT NULL,
+  `end_address_id` int unsigned DEFAULT NULL,
+  `driver_employee_id` int unsigned DEFAULT NULL,
   `start_timestamp` timestamp NULL DEFAULT NULL,
   `end_timestamp` timestamp NULL DEFAULT NULL,
-  `type` enum('Standard','Express','Overnight') NOT NULL,
   `distance` decimal(5,2) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `start_address_id` (`start_address_id`),
@@ -495,12 +584,31 @@ CREATE TABLE `shipment` (
   `package_id` int unsigned NOT NULL,
   `route_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_package_id_route_id` (`package_id`,`route_id`),
   KEY `package_id` (`package_id`),
   KEY `route_id` (`route_id`),
   CONSTRAINT `fk_shipment_package_id` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_shipment_route_id` FOREIGN KEY (`route_id`) REFERENCES `route` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `shipment_insert_trigger` AFTER INSERT ON `shipment` FOR EACH ROW BEGIN
+    DECLARE current_address_id INT;
+
+    SELECT address_id
+    INTO current_address_id
+    FROM tracking_history
+    WHERE package_id = NEW.package_id
+    ORDER BY timestamp DESC
+    LIMIT 1;
+
+    INSERT INTO tracking_history (package_id, address_id, timestamp, status)
+    VALUES (NEW.package_id, current_address_id, NOW(), 'Standby');
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
 # Dump of table tracking_history
@@ -513,7 +621,7 @@ CREATE TABLE `tracking_history` (
   `package_id` int unsigned NOT NULL,
   `address_id` int unsigned NOT NULL,
   `timestamp` timestamp NOT NULL,
-  `status` enum('Pending','Shipping','Delivered') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `status` enum('Pending','Standby','Shipping','Delivered') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `package_id` (`package_id`),
   KEY `address_id` (`address_id`),
@@ -530,10 +638,50 @@ VALUES
 	(8,24,1,'2024-03-24 11:19:17','Shipping'),
 	(9,25,2,'2024-03-23 10:44:17','Pending'),
 	(10,25,1,'2024-03-24 13:12:17','Delivered'),
-	(11,26,1,'2024-03-23 10:54:34','Pending');
+	(11,26,1,'2024-03-23 10:54:34','Pending'),
+	(31,24,2,'2024-03-23 23:21:19','Pending'),
+	(32,24,2,'2024-03-23 23:22:58','Delivered'),
+	(34,24,2,'2024-03-23 23:26:45','Delivered'),
+	(35,39,1,'2024-03-24 01:38:03','Pending'),
+	(36,40,1,'2024-03-24 02:00:44','Pending'),
+	(37,40,2,'2024-03-24 02:46:10','Shipping'),
+	(38,40,2,'2024-03-24 02:51:16','Shipping'),
+	(39,41,1,'2024-03-24 03:09:11','Pending');
 
 /*!40000 ALTER TABLE `tracking_history` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `notify_customer` AFTER INSERT ON `tracking_history` FOR EACH ROW BEGIN
+	DECLARE customer_email VARCHAR(255);
+    DECLARE customer_first_name VARCHAR(63);
+    DECLARE email_subject VARCHAR(255);
+    DECLARE email_body VARCHAR(1000);
+
+	SELECT U.email, U.first_name INTO customer_email, customer_first_name
+    FROM tracking_history TH
+    JOIN package P ON TH.package_id = P.id
+    JOIN customer C ON P.receiver_customer_id = C.id
+    JOIN user U ON C.user_id = U.id
+    WHERE TH.id = NEW.id;
+    
+    SET email_subject = "CoogExpress: New tracking history!";
+    SET email_body = CONCAT('Hello, ', customer_first_name, '!
+
+ A new tracking history has been created for you.
+ Tracking history ID: ', NEW.id);
+    INSERT INTO email_queue (
+		user_first_name,
+		user_email,
+        email_subject,
+        email_body,
+        processed
+    ) VALUES (customer_first_name, customer_email, email_subject, email_body, false);
+    
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
 # Dump of table user
@@ -570,10 +718,10 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `email`, `passw
 VALUES
 	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-03-23 14:27:09',0),
 	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-03-23 13:42:02',0),
-	(3,'Sam','Li','sam','sam@li.com','li','2222222222','1',34,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:44:00','2024-03-23 18:43:24',0),
+	(3,'Sam','Li','sam','sam@li.com','li','2222222222','1',34,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:44:00','2024-03-24 02:58:30',0),
 	(4,'Salim','Sanogho','salim','salim@sanogho.com','sanogho','3333333333','1',5,'https://cdn.discordapp.com/avatars/1013124526768406658/ece88637647dbdf3cc441279bc9355be.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
 	(5,'Nikolas','velazquez','nikolas','nikolas@velazquez.com','velazquez','4444444444','1',6,'https://cdn.discordapp.com/avatars/234144333161299978/c0411ce9c43f2397d4626b650159fdce.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
-	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',2,'https://i.imgur.com/xfHGknl.jpeg','2024-03-23 10:31:51','2024-03-23 15:41:52',0),
+	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',2,'https://i.imgur.com/xfHGknl.jpeg','2024-03-23 10:31:51','2024-03-24 03:57:46',0),
 	(70,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','9287482974','1',3,NULL,'2024-03-23 10:33:11','2024-03-23 14:25:06',0),
 	(71,'Grace','Hopper','grace','grace@hopper.com','hopper','9823427342','1',4,NULL,'2024-03-23 10:54:05','2024-03-23 14:25:14',0);
 
@@ -632,6 +780,7 @@ AS SELECT
    `p`.`delivery_instructions` AS `delivery_instructions`,
    `p`.`base_shipping_cost` AS `base_shipping_cost`,
    `p`.`additional_fees` AS `additional_fees`,
+   `p`.`speed` AS `speed`,
    `sender`.`first_name` AS `sender_first_name`,
    `sender`.`last_name` AS `sender_last_name`,
    `sender`.`username` AS `sender_username`,
@@ -674,7 +823,6 @@ AS SELECT
    `u`.`last_login` AS `last_login`,
    `u`.`deleted` AS `deleted`,
    `e`.`id` AS `employee_id`,
-   `e`.`branch_id` AS `branch_id`,
    `e`.`supervisor_employee_id` AS `supervisor_employee_id`,
    `e`.`date_of_birth` AS `date_of_birth`,
    `e`.`gender` AS `gender`,
@@ -689,8 +837,11 @@ AS SELECT
    `a`.`zip` AS `zip`,
    `su`.`first_name` AS `supervisor_first_name`,
    `su`.`last_name` AS `supervisor_last_name`,
-   `su`.`profile_picture` AS `supervisor_profile_picture`
-FROM ((((`user` `u` join `address` `a`) join `employee` `e`) join `employee` `s`) join `user` `su`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`) and (`e`.`supervisor_employee_id` = `s`.`id`) and (`s`.`user_id` = `su`.`id`));
+   `su`.`profile_picture` AS `supervisor_profile_picture`,
+   `b`.`id` AS `branch_id`,
+   `b`.`name` AS `branch_name`,
+   `b`.`address_id` AS `branch_address_id`
+FROM (((((`user` `u` join `address` `a`) join `employee` `e`) join `employee` `s`) join `user` `su`) join `branch` `b`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`) and (`e`.`supervisor_employee_id` = `s`.`id`) and (`s`.`user_id` = `su`.`id`) and (`e`.`branch_id` = `b`.`id`));
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

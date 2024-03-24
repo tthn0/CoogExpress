@@ -1,13 +1,40 @@
 @use "./fonts" as fonts;
 
-#container {
+#outerContainer {
   font-family: fonts.$inter;
   font-size: fonts.$fluidFontSize;
+  width: min(60em, 95%);
+  margin: 4em auto;
+}
+
+#optionContainer {
+}
+
+.option {
+  color: white;
+  padding: 0.75em 1.5em;
+  border-radius: 0.75em;
+  transition: 0.3s ease;
+
+  &:first-of-type {
+    margin-right: 1em;
+    background: linear-gradient(45deg, #4fa2f8, #63d2f6);
+  }
+
+  &:last-of-type {
+    background: linear-gradient(45deg, #ee8936, #f6c755);
+  }
+
+  &:hover {
+    filter: hue-rotate(-10deg);
+  }
+}
+
+#formContainer {
+  margin-top: 2em;
   background: rgb(250, 250, 250);
   padding: 2em;
   border-radius: 1em;
-  width: min(60em, 95%);
-  margin: 4em auto;
 }
 
 #heading {
@@ -34,17 +61,21 @@
   color: black !important;
 }
 
-.packageTypeContainer {
+.buttonContainer {
   margin-top: 1em;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 1em;
+  display: flex;
+  gap: 1em;
+
+  button {
+    flex: 1;
+  }
 }
 
 .button {
   background: rgb(235, 235, 235);
   padding: 1em;
   border-radius: 0.5em;
+  transition: 0.3s ease;
 
   &:hover {
     background: rgb(60, 60, 60);
@@ -70,6 +101,31 @@
   height: 8em;
   border-radius: 0.5em;
   background: rgb(235, 235, 235);
+}
+
+.h3 {
+  font-size: 1.2em;
+  font-weight: 525;
+  margin-top: 0.75em;
+}
+
+#table {
+  margin-top: 1em;
+  border-collapse: collapse;
+  border: 1px solid black;
+  width: 100%;
+
+  th {
+    background: rgb(120, 120, 120);
+    color: white;
+    padding: 0.75em;
+    border: 1px solid black;
+  }
+
+  td {
+    padding: 0.75em;
+    border: 1px solid black;
+  }
 }
 
 .submit {
