@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Ace SQL dump
-# Version 20062
+# Version 20064
 #
 # https://sequel-ace.com/
 # https://github.com/Sequel-Ace/Sequel-Ace
 #
 # Host: cosc3380.mysql.database.azure.com (MySQL 8.0.35)
 # Database: test
-# Generation Time: 2024-03-24 04:11:31 +0000
+# Generation Time: 2024-04-04 12:13:10 +0000
 # ************************************************************
 
 
@@ -54,17 +54,35 @@ VALUES
 	(35,'123 Main St',NULL,'Houston','TX','77084'),
 	(36,'123 Main St',NULL,'Houston','TX','77084'),
 	(37,'123 Main St',NULL,'Houston','TX','77084'),
+	(50,'123 Main St',NULL,'Houston','TX','77084'),
+	(51,'123 Main St',NULL,'Houston','TX','77084'),
+	(52,'123 Main St',NULL,'Houston','TX','77084'),
+	(57,'123 Main St',NULL,'Houston','TX','77084'),
+	(58,'123 Main St',NULL,'Houston','TX','77084'),
+	(59,'123 Main St',NULL,'Houston','TX','77084'),
+	(60,'123 Main St',NULL,'Houston','TX','77084'),
+	(61,'123 Main St',NULL,'Houston','TX','77084'),
+	(62,'123 Main St',NULL,'Houston','TX','77084'),
+	(63,'123 Main St',NULL,'Houston','TX','77084'),
+	(64,'123 Main St',NULL,'Houston','TX','77084'),
+	(65,'123 Main St',NULL,'Houston','TX','77084'),
 	(38,'123 Main St',NULL,'New York','NY','10001'),
 	(26,'123 Main St','','Houston','TX','77084'),
 	(25,'123 Main St','','New York','NY','10001'),
 	(1,'123 Main St','Apt 1','New York','NY','10001'),
+	(49,'123 Real Street ','','Houston','TX','77012'),
+	(56,'12312','123','houston','tx','77057'),
+	(55,'1234 Houston St','','Houston','TX','77777'),
 	(16,'202 Banana St','Apt 3C','Phoenix','AZ','85001'),
 	(7,'222 Birch St',NULL,'Boston','MA','02101'),
+	(48,'29384','92938','98239','TX','29384'),
 	(17,'303 Pear St',NULL,'Dallas','TX','75201'),
 	(8,'333 Walnut St',NULL,'Philadelphia','PA','19101'),
 	(18,'404 Watermelon St',NULL,'Charlotte','NC','28201'),
 	(9,'444 Cherry St','Unit B','Austin','TX','78701'),
 	(2,'456 Elm St',NULL,'Los Angeles','CA','90001'),
+	(39,'456 Elm St',NULL,'Los Angeles','CA','90001'),
+	(40,'456 Elm St',NULL,'Los Angeles','CA','90001'),
 	(19,'505 Kiwi St','Unit D','Minneapolis','MN','55401'),
 	(5,'555 Maple Ave',NULL,'Miami','FL','33101'),
 	(10,'555 Orange St',NULL,'Atlanta','GA','30301'),
@@ -78,7 +96,9 @@ VALUES
 	(22,'808 Papaya St','Suite 200','San Antonio','TX','78201'),
 	(13,'888 Grape St','Suite 300','Portland','OR','97201'),
 	(23,'909 Fig St',NULL,'Nashville','TN','37201'),
-	(14,'999 Pineapple St',NULL,'San Diego','CA','92101');
+	(14,'999 Pineapple St',NULL,'San Diego','CA','92101'),
+	(46,'ddddddd','ddddddd','Sugarland','TX','56478'),
+	(44,'meow','meow','meow','me','12345');
 
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -105,6 +125,15 @@ CREATE TABLE `billing` (
   CONSTRAINT `fk_billing_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `billing` WRITE;
+/*!40000 ALTER TABLE `billing` DISABLE KEYS */;
+
+INSERT INTO `billing` (`id`, `customer_id`, `address_id`, `card_number`, `cvc`, `expiration_month`, `expiration_year`, `cardholder_name`)
+VALUES
+	(5,7,1,'1234123412341234','234','12','2004','Bitch Boy');
+
+/*!40000 ALTER TABLE `billing` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table branch
@@ -133,19 +162,21 @@ LOCK TABLES `branch` WRITE;
 
 INSERT INTO `branch` (`id`, `address_id`, `manager_employee_id`, `name`, `phone_number`, `email`, `opening_time`, `closing_time`)
 VALUES
-	(1,1,NULL,'Sunset Park Branch','1234567890','sunset.park@coog.express','08:00:00','17:00:00'),
-	(2,2,NULL,'Maple Grove Branch','2345678901','maple.grove@coog.express','09:00:00','18:00:00'),
-	(3,3,NULL,'Pineview Branch','3456789012','pineview@coog.express','08:30:00','17:30:00'),
+	(1,1,1,'Sunset Park Branch','1234567890','sunset.park@coog.express','08:00:00','17:00:00'),
+	(2,2,1,'Maple Grove Branch','2345678901','maple.grove@coog.express','09:00:00','18:00:00'),
+	(3,3,1,'Pineview Branch','3456789012','pineview@coog.express','08:30:00','17:30:00'),
 	(4,4,1,'Lakeview Branch','4567890123','lakeview@coog.express','08:00:00','17:00:00'),
-	(5,5,NULL,'Riverfront Branch','5678901234','riverfront@coog.express','09:00:00','18:00:00'),
-	(6,6,NULL,'Highland Park Branch','6789012345','highland.park@coog.express','08:30:00','17:30:00'),
-	(7,7,NULL,'Springfield Branch','7890123456','springfield@coog.express','08:00:00','17:00:00'),
-	(8,8,NULL,'Oak Ridge Branch','8901234567','oak.ridge@coog.express','09:00:00','18:00:00'),
-	(9,9,NULL,'Elmwood Branch','9012345678','elmwood@coog.express','08:30:00','17:30:00'),
-	(10,10,NULL,'Cedar Hill Branch','0123456789','cedar.hill@coog.express','08:00:00','17:00:00');
+	(5,5,1,'Riverfront Branch','5678901234','riverfront@coog.express','09:00:00','18:00:00'),
+	(6,6,1,'Highland Park Branch','6789012345','highland.park@coog.express','08:30:00','17:30:00'),
+	(7,7,1,'Springfield Branch','7890123456','springfield@coog.express','08:00:00','17:00:00'),
+	(8,8,1,'Oak Ridge Branch','8901234567','oak.ridge@coog.express','09:00:00','18:00:00'),
+	(9,9,1,'Elmwood Branch','9012345678','elmwood@coog.express','08:30:00','17:30:00'),
+	(10,10,1,'Cedar Hill Branch','0123456789','cedar.hill@coog.express','08:00:00','17:00:00');
 
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
 
 
 # Dump of table customer
@@ -172,7 +203,12 @@ INSERT INTO `customer` (`id`, `user_id`, `preferred_branch_id`, `preferred_commu
 VALUES
 	(7,69,NULL,NULL),
 	(8,70,NULL,NULL),
-	(9,71,NULL,NULL);
+	(9,71,NULL,NULL),
+	(11,74,NULL,NULL),
+	(13,76,NULL,NULL),
+	(14,77,NULL,NULL),
+	(15,78,NULL,NULL),
+	(16,79,NULL,NULL);
 
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -251,7 +287,21 @@ VALUES
 	(22,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 48',0),
 	(23,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 49',0),
 	(24,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 50',0),
-	(25,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 51',0);
+	(25,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 51',0),
+	(26,'Alan','alan@turing.com','CoogExpress: New tracking history!','Hello, Alan!\n\n A new tracking history has been created for you.\n Tracking history ID: 52',0),
+	(27,'Alan','alan@turing.com','CoogExpress: New tracking history!','Hello, Alan!\n\n A new tracking history has been created for you.\n Tracking history ID: 53',0),
+	(28,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 54',0),
+	(29,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 55',0),
+	(30,'ben','b@b.com','CoogExpress: New tracking history!','Hello, ben!\n\n A new tracking history has been created for you.\n Tracking history ID: 56',0),
+	(31,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 57',0),
+	(32,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 58',0),
+	(33,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 59',0),
+	(34,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 60',0),
+	(35,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 61',0),
+	(36,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 62',0),
+	(37,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 63',0),
+	(38,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 64',0),
+	(39,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 65',0);
 
 /*!40000 ALTER TABLE `email_queue` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -467,10 +517,34 @@ VALUES
 	(26,7,9,1,3,'Mail',1.00,1.00,1.00,1.00,NULL,NULL,19.99,3.49,'Overnight'),
 	(39,7,9,1,35,'Mail',1.00,2.00,3.00,4.00,'Nope','Hi',13.18,4.72,'Standard'),
 	(40,7,9,1,36,'Parcel',1.00,2.00,3.00,4.00,'Hello','World',14.03,3.82,'Express'),
-	(41,9,8,1,38,'Mail',2.00,3.00,4.00,5.00,'Nothing','Nada',10.05,2.27,'Express');
+	(41,9,8,1,38,'Mail',2.00,3.00,4.00,5.00,'Nothing','Nada',10.05,2.27,'Express'),
+	(45,13,7,1,26,'Parcel',1.00,1.00,1.00,1.00,'Bro',NULL,11.95,4.10,'Standard'),
+	(46,14,7,1,51,'Mail',1.00,1.00,1.00,1.00,'Bro','Hello',5.29,2.48,'Express'),
+	(47,14,8,1,52,'Mail',1.00,1.00,1.00,1.00,'Bro','Hello',5.29,2.48,'Express'),
+	(48,15,11,1,57,'Parcel',1.00,1.00,1.00,1.00,'Hello World','Hi',0.00,0.00,'Express'),
+	(49,11,15,1,58,'Parcel',11.00,1.00,1.00,1.00,'Hello','World',0.00,0.00,'Express'),
+	(50,7,11,1,60,'Parcel',1.00,3.00,4.00,5.00,'Hello','World',0.00,0.00,'Express'),
+	(51,11,14,1,61,'Mail',1.00,2.00,3.00,4.00,'Nothing','Special',0.00,0.00,'Standard'),
+	(52,14,11,1,62,'Mail',1.00,2.00,3.00,4.00,'Hello','World',0.00,0.00,'Standard'),
+	(53,14,11,1,65,'Mail',1.00,2.00,3.00,4.00,'Hello','World',0.00,0.00,'Standard');
 
 /*!40000 ALTER TABLE `package` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `package_insert_trigger` AFTER INSERT ON `package` FOR EACH ROW BEGIN
+    DECLARE source_branch_address_id INT;
+
+    -- Lookup the address_id of the branch associated with the package
+    SELECT address_id INTO source_branch_address_id FROM branch WHERE id = NEW.source_branch_id;
+
+    -- Insert the package details into the tracking_history table
+    INSERT INTO tracking_history (package_id, address_id, timestamp, status)
+    VALUES (NEW.id, source_branch_address_id, NOW(), 'Pending');
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
 
@@ -557,21 +631,31 @@ DROP TABLE IF EXISTS `route`;
 
 CREATE TABLE `route` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `start_address_id` int unsigned NOT NULL,
-  `end_address_id` int unsigned DEFAULT NULL,
+  `source_branch_id` int unsigned NOT NULL,
+  `destination_branch_id` int unsigned DEFAULT NULL,
   `driver_employee_id` int unsigned DEFAULT NULL,
   `start_timestamp` timestamp NULL DEFAULT NULL,
   `end_timestamp` timestamp NULL DEFAULT NULL,
-  `distance` decimal(5,2) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `start_address_id` (`start_address_id`),
-  KEY `end_address_id` (`end_address_id`),
+  KEY `start_address_id` (`source_branch_id`),
+  KEY `end_address_id` (`destination_branch_id`),
   KEY `driver_employee_id` (`driver_employee_id`),
   CONSTRAINT `fk_route_driver_employee_id` FOREIGN KEY (`driver_employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_route_end_address_id` FOREIGN KEY (`end_address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_route_start_address_id` FOREIGN KEY (`start_address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_route_end_address_id` FOREIGN KEY (`destination_branch_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_route_start_address_id` FOREIGN KEY (`source_branch_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `route` WRITE;
+/*!40000 ALTER TABLE `route` DISABLE KEYS */;
+
+INSERT INTO `route` (`id`, `source_branch_id`, `destination_branch_id`, `driver_employee_id`, `start_timestamp`, `end_timestamp`)
+VALUES
+	(1,1,NULL,NULL,NULL,NULL),
+	(2,1,NULL,NULL,NULL,NULL),
+	(3,1,NULL,NULL,NULL,NULL);
+
+/*!40000 ALTER TABLE `route` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table shipment
@@ -591,6 +675,19 @@ CREATE TABLE `shipment` (
   CONSTRAINT `fk_shipment_route_id` FOREIGN KEY (`route_id`) REFERENCES `route` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `shipment` WRITE;
+/*!40000 ALTER TABLE `shipment` DISABLE KEYS */;
+
+INSERT INTO `shipment` (`id`, `package_id`, `route_id`)
+VALUES
+	(27,48,3),
+	(25,50,2),
+	(24,51,1),
+	(26,52,2),
+	(23,53,1);
+
+/*!40000 ALTER TABLE `shipment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
@@ -646,7 +743,21 @@ VALUES
 	(36,40,1,'2024-03-24 02:00:44','Pending'),
 	(37,40,2,'2024-03-24 02:46:10','Shipping'),
 	(38,40,2,'2024-03-24 02:51:16','Shipping'),
-	(39,41,1,'2024-03-24 03:09:11','Pending');
+	(39,41,1,'2024-03-24 03:09:11','Pending'),
+	(52,45,1,'2024-03-26 21:01:07','Pending'),
+	(53,46,1,'2024-03-26 21:42:09','Pending'),
+	(54,47,1,'2024-03-26 21:42:41','Pending'),
+	(55,48,1,'2024-04-04 09:49:03','Pending'),
+	(56,49,1,'2024-04-04 09:54:07','Pending'),
+	(57,50,1,'2024-04-04 09:59:37','Pending'),
+	(58,51,1,'2024-04-04 10:00:08','Pending'),
+	(59,52,1,'2024-04-04 10:00:55','Pending'),
+	(60,53,1,'2024-04-04 10:02:07','Pending'),
+	(61,53,1,'2024-04-04 10:10:22','Standby'),
+	(62,51,1,'2024-04-04 10:10:22','Standby'),
+	(63,50,1,'2024-04-04 10:30:44','Standby'),
+	(64,52,1,'2024-04-04 10:30:44','Standby'),
+	(65,48,1,'2024-04-04 11:24:32','Standby');
 
 /*!40000 ALTER TABLE `tracking_history` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -716,48 +827,23 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `email`, `password_hash`, `phone_number`, `phone_country_code`, `address_id`, `profile_picture`, `created_at`, `last_login`, `deleted`)
 VALUES
-	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-03-23 14:27:09',0),
-	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-03-23 13:42:02',0),
-	(3,'Sam','Li','sam','sam@li.com','li','2222222222','1',34,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:44:00','2024-03-24 02:58:30',0),
+	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-03-31 01:54:42',0),
+	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-04-01 13:11:41',0),
+	(3,'Sam','Li','sam','sam@li.com','li','2222222222','1',34,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:44:00','2024-04-04 09:24:48',0),
 	(4,'Salim','Sanogho','salim','salim@sanogho.com','sanogho','3333333333','1',5,'https://cdn.discordapp.com/avatars/1013124526768406658/ece88637647dbdf3cc441279bc9355be.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
 	(5,'Nikolas','velazquez','nikolas','nikolas@velazquez.com','velazquez','4444444444','1',6,'https://cdn.discordapp.com/avatars/234144333161299978/c0411ce9c43f2397d4626b650159fdce.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
-	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',2,'https://i.imgur.com/xfHGknl.jpeg','2024-03-23 10:31:51','2024-03-24 03:57:46',0),
-	(70,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','9287482974','1',3,NULL,'2024-03-23 10:33:11','2024-03-23 14:25:06',0),
-	(71,'Grace','Hopper','grace','grace@hopper.com','hopper','9823427342','1',4,NULL,'2024-03-23 10:54:05','2024-03-23 14:25:14',0);
+	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',40,'https://i.pravatar.cc/400?img=11','2024-03-23 10:31:51','2024-04-02 10:15:54',0),
+	(70,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','9287482974','1',3,'https://i.pravatar.cc/400?img=49','2024-03-23 10:33:11','2024-03-24 05:18:11',0),
+	(71,'Grace','Hopper','grace','grace@hopper.com','hopper','9823427342','1',4,'https://i.pravatar.cc/400?img=38','2024-03-23 10:54:05','2024-03-24 05:18:17',0),
+	(74,'meow','meow','meow','meow@gmail.com','meowmeow','1234567899','1',44,NULL,'2024-03-24 05:09:53','2024-03-24 05:09:53',0),
+	(76,'Sterling','Gore','SterlingGore','gorest02@gmail.com','Stg2002~1','8327038992','1',46,'https://i.imgur.com/Ld72LRD.png','2024-03-26 20:45:54','2024-03-26 21:01:39',0),
+	(77,'Diana','Nguyen','dianasaur','dianasaur@school.com','password','8327746889','1',49,'https://i.imgur.com/AA4iET3.png','2024-03-26 21:40:19','2024-03-26 21:48:05',0),
+	(78,'ben','tuason','ben','b@b.com','26dosis123','1234567890','1',55,NULL,'2024-03-27 13:45:27','2024-03-27 13:45:27',0),
+	(79,'Nikolas','Velazquez','niko','nevelaz2@cougarnet.uh.edu','helloworld','1234569291','1',56,NULL,'2024-03-28 21:00:31','2024-03-28 21:00:31',0);
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-# Dump of view customer_view
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `customer_view`; DROP VIEW IF EXISTS `customer_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `customer_view`
-AS SELECT
-   `u`.`id` AS `user_id`,
-   `u`.`first_name` AS `first_name`,
-   `u`.`last_name` AS `last_name`,
-   `u`.`username` AS `username`,
-   `u`.`email` AS `email`,
-   `u`.`password_hash` AS `password_hash`,
-   `u`.`phone_number` AS `phone_number`,
-   `u`.`phone_country_code` AS `phone_country_code`,
-   `u`.`profile_picture` AS `profile_picture`,
-   `u`.`created_at` AS `created_at`,
-   `u`.`last_login` AS `last_login`,
-   `u`.`deleted` AS `deleted`,
-   `c`.`id` AS `customer_id`,
-   `c`.`preferred_branch_id` AS `preferred_branch_id`,
-   `c`.`preferred_communication_method` AS `preferred_communication_method`,
-   `a`.`id` AS `address_id`,
-   `a`.`line1` AS `line1`,
-   `a`.`line2` AS `line2`,
-   `a`.`city` AS `city`,
-   `a`.`state` AS `state`,
-   `a`.`zip` AS `zip`
-FROM ((`user` `u` join `address` `a`) join `customer` `c`) where ((`u`.`id` = `c`.`user_id`) and (`u`.`address_id` = `a`.`id`));
 
 # Dump of view package_view
 # ------------------------------------------------------------
@@ -801,7 +887,7 @@ AS SELECT
    `a`.`city` AS `destination_address_city`,
    `a`.`state` AS `destination_address_state`,
    `a`.`zip` AS `destination_address_zip`,(select `th`.`status`
-FROM `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` desc limit 1) AS `status`,(select `th`.`timestamp` from `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` limit 1) AS `initiated_at`,(select `th`.`timestamp` from `tracking_history` `th` where ((`th`.`package_id` = `p`.`id`) and (`th`.`status` = 'Delivered')) order by `th`.`timestamp` desc limit 1) AS `delivered_at` from ((((`package` `p` join `customer_view` `sender`) join `customer_view` `receiver`) join `branch` `b`) join `address` `a`) where ((`p`.`sender_customer_id` = `sender`.`customer_id`) and (`p`.`receiver_customer_id` = `receiver`.`customer_id`) and (`p`.`source_branch_id` = `b`.`id`) and (`p`.`destination_address_id` = `a`.`id`));
+FROM `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` desc limit 1) AS `status`,(select `th`.`timestamp` from `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` limit 1) AS `initiated_at`,(select `th`.`timestamp` from `tracking_history` `th` where ((`th`.`package_id` = `p`.`id`) and (`th`.`status` = 'Delivered')) order by `th`.`timestamp` desc limit 1) AS `delivered_at` from ((((`package` `p` join `customer_view` `sender`) join `customer_view` `receiver`) join `branch` `b`) join `address` `a`) where ((`p`.`sender_customer_id` = `sender`.`customer_id`) and (`p`.`receiver_customer_id` = `receiver`.`customer_id`) and (`p`.`source_branch_id` = `b`.`id`) and (`p`.`destination_address_id` = `a`.`id`)) order by `p`.`id`;
 
 # Dump of view employee_view
 # ------------------------------------------------------------
@@ -842,6 +928,65 @@ AS SELECT
    `b`.`name` AS `branch_name`,
    `b`.`address_id` AS `branch_address_id`
 FROM (((((`user` `u` join `address` `a`) join `employee` `e`) join `employee` `s`) join `user` `su`) join `branch` `b`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`) and (`e`.`supervisor_employee_id` = `s`.`id`) and (`s`.`user_id` = `su`.`id`) and (`e`.`branch_id` = `b`.`id`));
+
+# Dump of view branch_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `branch_view`; DROP VIEW IF EXISTS `branch_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `branch_view`
+AS SELECT
+   `b`.`id` AS `branch_id`,
+   `b`.`name` AS `name`,
+   `b`.`phone_number` AS `phone_number`,
+   `b`.`email` AS `email`,
+   `b`.`opening_time` AS `opening_time`,
+   `b`.`closing_time` AS `closing_time`,
+   `a`.`id` AS `address_id`,
+   `a`.`line1` AS `line1`,
+   `a`.`line2` AS `line2`,
+   `a`.`city` AS `city`,
+   `a`.`state` AS `state`,
+   `a`.`zip` AS `zip`,
+   `e`.`employee_id` AS `manager_employee_id`,
+   `e`.`first_name` AS `manager_first_name`,
+   `e`.`last_name` AS `manager_last_name`,
+   `e`.`username` AS `manager_username`,
+   `e`.`email` AS `manager_email`,
+   `e`.`phone_number` AS `manager_phone_number`,
+   `e`.`phone_country_code` AS `manager_phone_country_code`,
+   `e`.`profile_picture` AS `manager_profile_picture`
+FROM ((`branch` `b` join `employee_view` `e`) join `address` `a`) where ((`b`.`address_id` = `a`.`id`) and (`b`.`manager_employee_id` = `e`.`employee_id`));
+
+# Dump of view customer_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `customer_view`; DROP VIEW IF EXISTS `customer_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `customer_view`
+AS SELECT
+   `u`.`id` AS `user_id`,
+   `u`.`first_name` AS `first_name`,
+   `u`.`last_name` AS `last_name`,
+   `u`.`username` AS `username`,
+   `u`.`email` AS `email`,
+   `u`.`password_hash` AS `password_hash`,
+   `u`.`phone_number` AS `phone_number`,
+   `u`.`phone_country_code` AS `phone_country_code`,
+   `u`.`profile_picture` AS `profile_picture`,
+   `u`.`created_at` AS `created_at`,
+   `u`.`last_login` AS `last_login`,
+   `u`.`deleted` AS `deleted`,
+   `c`.`id` AS `customer_id`,
+   `c`.`preferred_branch_id` AS `preferred_branch_id`,
+   `c`.`preferred_communication_method` AS `preferred_communication_method`,
+   `a`.`id` AS `address_id`,
+   `a`.`line1` AS `line1`,
+   `a`.`line2` AS `line2`,
+   `a`.`city` AS `city`,
+   `a`.`state` AS `state`,
+   `a`.`zip` AS `zip`
+FROM ((`user` `u` join `address` `a`) join `customer` `c`) where ((`u`.`id` = `c`.`user_id`) and (`u`.`address_id` = `a`.`id`));
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

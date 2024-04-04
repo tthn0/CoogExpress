@@ -1,13 +1,8 @@
-import queryDatabase from "../../utils/queryDatabase.js";
+import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    const { id } = req.params;
-    const sql = id
-      ? "SELECT * FROM receipt WHERE id = ?"
-      : "SELECT * FROM receipt";
-    const params = id ? [id] : [];
-    return await queryDatabase(sql, params);
+    return await getBasedOnQueryParams("receipt", req.params);
   },
   post: async (req, res) => {
     const {
@@ -19,7 +14,7 @@ export default {
       tax,
       total,
       timestamp,
-      notes
+      notes,
     } = req.body;
     return await queryDatabase(
       `INSERT INTO receipt(
@@ -32,8 +27,7 @@ export default {
         total,
         timestamp,
         notes
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         customer_id,
         package_id,
@@ -43,7 +37,7 @@ export default {
         tax,
         total,
         timestamp,
-        notes
+        notes,
       ]
     );
   },
@@ -58,11 +52,10 @@ export default {
       tax,
       total,
       timestamp,
-      notes
+      notes,
     } = req.body;
     return await queryDatabase(
-      `
-      UPDATE receipt
+      `UPDATE receipt
       SET
         receipt.customer_id = ?,
         receipt.package_id = ?,
@@ -73,8 +66,7 @@ export default {
         receipt.total = ?,
         receipt.timestamp = ?,
         receipt.notes = ?
-      WHERE receipt.id = ?;
-      `,
+      WHERE receipt.id = ?;`,
       [
         customer_id,
         package_id,
@@ -85,11 +77,11 @@ export default {
         total,
         timestamp,
         notes,
-        id
+        id,
       ]
     );
   },
-  delete: async (req, res) => {
-    return;
-  },
+  // delete: async (req, res) => {
+  //   return;
+  // },
 };

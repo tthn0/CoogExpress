@@ -1,0 +1,82 @@
+@use "fonts" as fonts;
+
+#container {
+  font-family: fonts.$inter;
+  font-size: fonts.$fluidFontSize;
+  background: #f0f0f0;
+  padding: 4em 0;
+}
+
+#innerContainer {
+  width: min(60em, 95%);
+  margin: 0 auto;
+  background: rgb(250, 250, 250);
+  padding: 2em;
+  border-radius: 1em;
+}
+
+#heading {
+  font-size: 2em;
+  font-weight: 550;
+}
+
+#paragraph {
+  margin-top: 0.25em;
+  color: grey;
+}
+
+.subHeading {
+  font-size: 1.5em;
+  font-weight: 550;
+  margin-top: 1.5em;
+}
+
+.h3 {
+  font-size: 1.2em;
+  font-weight: 525;
+  margin-top: 0.75em;
+}
+
+.inputContainer:not(:first-of-type) {
+  margin-top: 1em;
+}
+
+.input {
+  background: rgb(235, 235, 235) !important;
+  color: black !important;
+}
+
+.tableContainer {
+  overflow-x: scroll;
+}
+
+.button {
+  margin-top: 1em;
+}
+
+#form {
+  margin-top: 2em;
+}
+
+#table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  margin-top: 1em;
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  th {
+    padding: 0.75em;
+    background: #007bff;
+    color: white;
+    border: 1px solid black;
+  }
+
+  td {
+    padding: 0.75em;
+    border: 1px solid black;
+  }
+}

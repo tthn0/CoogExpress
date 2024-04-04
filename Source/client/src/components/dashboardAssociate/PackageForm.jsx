@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import {
   faUser,
   faRulerVertical,
@@ -16,31 +16,69 @@ import Button from "../shared/Button";
 import styles from "./DashboardAssociate.module.scss";
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
 
+const PACKAGE_TYPES = Object.freeze({
+  PARCEL: "Parcel",
+  MAIL: "Mail",
+});
+
+const PACKAGE_SPEEDS = Object.freeze({
+  STANDARD: "Standard",
+  EXPRESS: "Express",
+  OVERNIGHT: "Overnight",
+});
+
 export default function PackageForm() {
   const { user } = useContext(AuthContext);
+  const [base_shipping_cost, setBase_shipping_cost] = useState(0);
+  const [additional_fees, setAdditional_fees] = useState(0);
   const [form, setForm] = useState({
     source_branch_id: user.branch_id,
-    base_shipping_cost: Math.random() * 20,
-    additional_fees: Math.random() * 5,
+    base_shipping_cost: base_shipping_cost,
+    additional_fees: additional_fees,
+    type: null,
+    speed: null,
   });
   const [packageType, setPackageType] = useState(null);
   const [packageSpeed, setPackageSpeed] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef(null);
+  const packageTypeRef = useRef(null);
+  const packageSpeedRef = useRef(null);
 
   const updatePackageType = (e) => {
     e.preventDefault();
+    packageTypeRef.current = e.target;
     e.target.classList.add(styles.selectedButton);
     packageType?.classList.remove(styles.selectedButton);
     setPackageType(e.target);
     setForm((prev) => ({ ...prev, type: e.target.value }));
+
+    if (e.target.value === PACKAGE_TYPES.PARCEL) {
+      setBase_shipping_cost(4.99);
+    } else if (e.target.value === PACKAGE_TYPES.MAIL) {
+      setBase_shipping_cost(0.99);
+    } else {
+      throw new Error("Invalid package type");
+    }
   };
 
   const updatePackageSpeed = (e) => {
     e.preventDefault();
+    packageSpeedRef.current = e.target;
     e.target.classList.add(styles.selectedButton);
     packageSpeed?.classList.remove(styles.selectedButton);
     setPackageSpeed(e.target);
     setForm((prev) => ({ ...prev, speed: e.target.value }));
+
+    if (e.target.value === PACKAGE_SPEEDS.STANDARD) {
+      setAdditional_fees(0);
+    } else if (e.target.value === PACKAGE_SPEEDS.EXPRESS) {
+      setAdditional_fees(1.99);
+    } else if (e.target.value === PACKAGE_SPEEDS.OVERNIGHT) {
+      setAdditional_fees(4.99);
+    } else {
+      throw new Error("Invalid package speed");
+    }
   };
 
   const handleChange = (e) => {
@@ -50,7 +88,6 @@ export default function PackageForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
 
     setIsLoading(true);
 
@@ -66,6 +103,11 @@ export default function PackageForm() {
           console.log(data);
         } else {
           alert("Package created successfully!");
+          formRef.current.reset();
+          setBase_shipping_cost(0);
+          setAdditional_fees(0);
+          packageTypeRef.current?.classList.remove(styles.selectedButton);
+          packageSpeedRef.current?.classList.remove(styles.selectedButton);
         }
       })
       .catch((error) => {
@@ -81,7 +123,7 @@ export default function PackageForm() {
     <div id={styles.formContainer}>
       <h1 id={styles.heading}>Create New Package</h1>
       <p id={styles.paragraph}>Please enter in the package details below.</p>
-      <form onSubmit={handleSubmit} onChange={handleChange}>
+      <form ref={formRef} onSubmit={handleSubmit} onChange={handleChange}>
         <h2 className={styles.subHeading}>Customer Details</h2>
         <Input
           containerClassName={styles.inputContainer}
@@ -104,14 +146,14 @@ export default function PackageForm() {
         <div className={styles.buttonContainer}>
           <button
             className={styles.button}
-            value="Parcel"
+            value={PACKAGE_TYPES.PARCEL}
             onClick={updatePackageType}
           >
             📦 Parcel
           </button>
           <button
             className={styles.button}
-            value="Mail"
+            value={PACKAGE_TYPES.MAIL}
             onClick={updatePackageType}
           >
             📧 Mail
@@ -120,21 +162,21 @@ export default function PackageForm() {
         <div className={styles.buttonContainer}>
           <button
             className={styles.button}
-            value="Standard"
+            value={PACKAGE_SPEEDS.STANDARD}
             onClick={updatePackageSpeed}
           >
             🐌 Standard
           </button>
           <button
             className={styles.button}
-            value="Express"
+            value={PACKAGE_SPEEDS.EXPRESS}
             onClick={updatePackageSpeed}
           >
             🐢 Express
           </button>
           <button
             className={styles.button}
-            value="Overnight"
+            value={PACKAGE_SPEEDS.OVERNIGHT}
             onClick={updatePackageSpeed}
           >
             🐇 Overnight
@@ -234,12 +276,12 @@ export default function PackageForm() {
         ></textarea>
 
         <h2 className={styles.subHeading}>Summary</h2>
-        <h3 className={styles.h3}>Base shipping cost</h3>
-        <pre>$19.99</pre>
+        <h3 className={styles.h3}>Base Shipping Cost</h3>
+        <pre>${base_shipping_cost.toFixed(2)}</pre>
         <h3 className={styles.h3}>Additional Fees</h3>
-        <pre>$1.50</pre>
+        <pre>${additional_fees.toFixed(2)}</pre>
         <h3 className={styles.h3}>Total</h3>
-        <pre>$21.49</pre>
+        <pre>${(base_shipping_cost + additional_fees).toFixed(2)}</pre>
 
         <Button
           className={styles.submit}

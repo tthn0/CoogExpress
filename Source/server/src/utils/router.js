@@ -22,12 +22,12 @@ const router = {
   GET: {},
   PUT: {},
   DELETE: {},
-  registerRoute(method, endpoint, handler) {
-    this[method][endpoint] = handler;
-  },
   use(endpoint, controller) {
     for (const [method, handler] of Object.entries(controller))
       router[method](endpoint, handler);
+  },
+  registerRoute(method, endpoint, handler) {
+    this[method][endpoint] = handler;
   },
   get(endpoint, handler) {
     this.registerRoute("GET", endpoint, handler);
@@ -43,7 +43,7 @@ const router = {
   },
 };
 
-export default router;
+export { router };
 
 // Entity controllers
 router.use("/address", addressController);

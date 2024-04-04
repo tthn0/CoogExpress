@@ -3,6 +3,8 @@ import "./components/shared/_reset.scss";
 import Dashboard from "./components/dashboard";
 import DashboardAssociate from "./components/dashboardAssociate";
 import DashboardCustomer from "./components/dashboardCustomer";
+import DashboardDriver from "./components/dashboardDriver";
+// import DashboardManager from "./components/dashboardManager";
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
@@ -28,6 +30,14 @@ const router = createHashRouter([
     path: "/dashboard/customer",
     element: <ProtectedRoute children={<DashboardCustomer />} />,
   },
+  {
+    path: "/dashboard/driver",
+    element: <ProtectedRoute children={<DashboardDriver />} />,
+  },
+  // {
+  //   path: "/dashboard/manager",
+  //   element: <ProtectedRoute children={<DashboardManager />} />,
+  // },
   {
     path: "/profile",
     element: <ProtectedRoute children={<Profile />} />,

@@ -27,7 +27,12 @@ npm start
 ### Temporary Todo List
 
 - **Thomas**:
+  - Finish driver dashboard.
+  - Finish manager dashboard.
+  - Finish tracking history.
   - Change customer dashboard UI to light mode.
   - Backup database on every commit.
   - Update README:
     - Include deploy instructions.
+- **Others**:
+  - Find todos on Discord.

@@ -1,0 +1,117 @@
+.dashboard {
+  font-family: "Arial", sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.stats,
+.employees,
+.reportRequest,
+.newEmployeeSection {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.newEmployeeSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Spacing between form elements */
+  display: block;
+}
+
+.newEmployeeForm input[type="text"],
+.newEmployeeForm input[type="email"],
+.newEmployeeForm input[type="password"],
+.newEmployeeForm input[type="date"],
+.newEmployeeForm select {
+  width: calc(
+    50% - 15px
+  ); /* Adjust width as per requirement, with gap considered */
+  padding: 10px;
+  margin-bottom: 10px; /* Spacing between input fields */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.newEmployeeForm button {
+  padding: 10px 20px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.newEmployeeForm button:hover {
+  background-color: #003d82;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center; /* Aligns items vertically in the center */
+  cursor: pointer;
+}
+
+/* Style to make the checkbox look closer to the label */
+.checkboxLabel input[type="checkbox"] {
+  margin-right: 8px; /* Adjust the right margin to match the image */
+}
+
+@media (max-width: 768px) {
+  .newEmployeeForm input,
+  .newEmployeeForm select,
+  .newEmployeeForm button {
+    width: 100%;
+  }
+}
+
+/* Checkbox and Label Inline Style */
+.inlineCheckbox {
+  display: flex;
+  align-items: center;
+  margin-left: 0px; /* Or whatever spacing looks best from the image */
+  white-space: nowrap; /* Prevents wrapping */
+}
+
+/* Additional adjustments to checkbox size if necessary */
+.inlineCheckbox input[type="checkbox"] {
+  margin-right: 5px; /* Spacing between the checkbox and the label text */
+}
+
+/* Apply this style to align the group and checkbox horizontally */
+.formRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px; /* Adjust the gap to suit your design */
+}
+
+/* You may want to adjust the margin or padding on the .formControl to align items */
+.formControl {
+  margin-right: auto; /* This pushes the following elements to the right */
+}

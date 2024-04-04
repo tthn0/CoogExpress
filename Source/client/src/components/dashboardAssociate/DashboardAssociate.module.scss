@@ -1,13 +1,15 @@
 @use "./fonts" as fonts;
 
-#outerContainer {
+#container {
   font-family: fonts.$inter;
   font-size: fonts.$fluidFontSize;
-  width: min(60em, 95%);
-  margin: 4em auto;
+  background: #f0f0f0;
+  padding: 4em 0;
 }
 
-#optionContainer {
+#innerContainer {
+  width: min(60em, 95%);
+  margin: 0 auto;
 }
 
 .option {
@@ -42,7 +44,8 @@
   font-weight: 550;
 }
 
-#paragraph {
+.paragraph {
+  margin-top: 0.25em;
   color: grey;
 }
 
@@ -109,8 +112,12 @@
   margin-top: 0.75em;
 }
 
-#table {
+#tableContainer {
+  overflow-x: scroll;
   margin-top: 1em;
+}
+
+#table {
   border-collapse: collapse;
   border: 1px solid black;
   width: 100%;
@@ -130,4 +137,8 @@
 
 .submit {
   margin-top: 3em;
+}
+
+#select {
+  margin: 1em auto;
 }

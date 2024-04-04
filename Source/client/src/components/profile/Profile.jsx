@@ -86,7 +86,7 @@ export default function Profile() {
           </div>
         )}
         <div className={styles.innerContainer}>
-          <h1>Profile Management</h1>
+          <h1 className={styles.h1}>Profile Management</h1>
           <form onSubmit={handleSubmit}>
             <div className={styles.profilePictureContainer}>
               <div

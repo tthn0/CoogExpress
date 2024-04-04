@@ -1,13 +1,8 @@
-import queryDatabase from "../../utils/queryDatabase.js";
+import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    const { id } = req.params;
-    const sql = id
-      ? "SELECT * FROM employee_view WHERE employee_id = ?"
-      : "SELECT * FROM employee_view";
-    const params = id ? [id] : [];
-    return await queryDatabase(sql, params);
+    return await getBasedOnQueryParams("employee_view", req.params);
   },
   post: async (req, res) => {
     const {

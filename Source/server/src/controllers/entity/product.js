@@ -1,13 +1,8 @@
-import queryDatabase from "../../utils/queryDatabase.js";
+import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    const { id } = req.params;
-    const sql = id
-      ? "SELECT * FROM product WHERE id = ?"
-      : "SELECT * FROM product";
-    const params = id ? [id] : [];
-    return await queryDatabase(sql, params);
+    return await getBasedOnQueryParams("product", req.params);
   },
   post: async (req, res) => {
     const {
@@ -20,7 +15,7 @@ export default {
       length,
       height,
       weight,
-      image
+      image,
     } = req.body;
     return await queryDatabase(
       `INSERT INTO product(
@@ -35,20 +30,8 @@ export default {
         weight,
         image,
         deleted
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, false);
-      `,
-      [
-        sku,
-        upc,
-        price,
-        name,
-        description,
-        width,
-        length,
-        height,
-        weight,
-        image
-      ]
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, false);`,
+      [sku, upc, price, name, description, width, length, height, weight, image]
     );
   },
   put: async (req, res) => {
@@ -62,11 +45,10 @@ export default {
       length,
       height,
       weight,
-      image
+      image,
     } = req.body;
     return await queryDatabase(
-      `
-      UPDATE product
+      `UPDATE product
       SET
         product.sku = ?,
         product.upc = ?,
@@ -77,20 +59,8 @@ export default {
         product.height = ?,
         product.weight = ?,
         product.image = ?
-      WHERE product.id = ?;
-      `,
-      [
-        sku,
-        upc,
-        price,
-        description,
-        width,
-        length,
-        height,
-        weight,
-        image,
-        id
-      ]
+      WHERE product.id = ?;`,
+      [sku, upc, price, description, width, length, height, weight, image, id]
     );
   },
   delete: async (req, res) => {
@@ -98,9 +68,8 @@ export default {
     return await queryDatabase(
       `UPDATE product
       SET product.deleted = 1
-      WHERE product.id = ?;
-      `,
+      WHERE product.id = ?;`,
       [id]
-    )
+    );
   },
 };

@@ -1,21 +1,16 @@
-import queryDatabase from "../../utils/queryDatabase.js";
+import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    const { id } = req.params;
-    const sql = id ? "SELECT * FROM route WHERE id = ?" : "SELECT * FROM route";
-    const params = id ? [id] : [];
-    return await queryDatabase(sql, params);
+    return await getBasedOnQueryParams("route", req.params);
   },
   post: async (req, res) => {
-    const { start_address_id, distance, packages } = req.body;
+    const { source_branch_id, packages } = req.body;
     const route = await queryDatabase(
       `INSERT INTO route(
-        start_address_id,
-        distance
-      ) VALUES (?, ?);
-      `,
-      [start_address_id, distance]
+        source_branch_id
+      ) VALUES (?);`,
+      [source_branch_id]
     );
     const responses = await Promise.all(
       packages?.map((packageId) => {
@@ -36,37 +31,32 @@ export default {
   put: async (req, res) => {
     const {
       id,
-      start_address_id,
-      end_address_id,
+      source_branch_id,
+      destination_branch_id,
       driver_employee_id,
       start_timestamp,
       end_timestamp,
-      distance,
     } = req.body;
     return await queryDatabase(
-      `
-      UPDATE route
+      `UPDATE route
       SET
-        route.start_address_id = ?,
-        route.end_address_id = ?,
-        route.driver_employee_id = ?,
-        route.start_timestamp = ?,
-        route.end_timestamp = ?,
-        route.distance = ?
-      WHERE route.id = ?;
-      `,
+      source_branch_id = ?,
+        destination_branch_id = ?,
+        driver_employee_id = ?,
+        start_timestamp = ?,
+        end_timestamp = ?,
+      WHERE id = ?;`,
       [
-        start_address_id,
-        end_address_id,
+        source_branch_id,
+        destination_branch_id,
         driver_employee_id,
         start_timestamp,
         end_timestamp,
-        distance,
         id,
       ]
     );
   },
-  delete: async (req, res) => {
-    return;
-  },
+  // delete: async (req, res) => {
+  //   return;
+  // },
 };

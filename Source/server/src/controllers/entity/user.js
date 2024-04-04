@@ -1,4 +1,4 @@
-import queryDatabase from "../../utils/queryDatabase.js";
+// This file hasn't been updated to use the new database.js file
 
 export default {
   // No need to directly interact with the user table

@@ -1,11 +1,13 @@
 import url from "url";
-import router from "./router.js";
+import { router } from "./router.js";
 
-export default async (req, res) => {
+const handleRequest = async (req, res) => {
   logRequest(req);
   await parseRequest(req);
   await routeRequest(req, res);
 };
+
+export { handleRequest };
 
 const logRequest = (req) => {
   console.log(req.method, req.url);
@@ -43,7 +45,7 @@ const routeRequest = async (req, res) => {
 
   // Handle preflight OPTIONS request
   if (req.method === "OPTIONS") {
-    res.writeHead(200);
+    res.writeHead(204);
     res.end();
     return;
   }
@@ -59,7 +61,7 @@ const routeRequest = async (req, res) => {
       res.end(JSON.stringify(result, null, 2));
     } catch (error) {
       res.writeHead(500, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ Error: error.message }));
+      res.end(JSON.stringify(error, null, 2));
       console.error(error);
     }
   } else {

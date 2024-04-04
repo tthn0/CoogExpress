@@ -1,13 +1,8 @@
-import queryDatabase from "../../utils/queryDatabase.js";
+import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    const { id } = req.params;
-    const sql = id
-      ? "SELECT * FROM billing WHERE id = ?"
-      : "SELECT * FROM billing";
-    const params = id ? [id] : [];
-    return await queryDatabase(sql, params);
+    return await getBasedOnQueryParams("billing", req.params);
   },
   post: async (req, res) => {
     const {
@@ -17,7 +12,7 @@ export default {
       cvc,
       expiration_month,
       expiration_year,
-      cardholder_name
+      cardholder_name,
     } = req.body;
     return await queryDatabase(
       `INSERT INTO billing(
@@ -28,8 +23,7 @@ export default {
         expiration_month,
         expiration_year,
         cardholder_name
-      ) VALUES (?, ?, ?, ?, ?, ?, ?);
-      `,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?);`,
       [
         customer_id,
         address_id,
@@ -37,7 +31,7 @@ export default {
         cvc,
         expiration_month,
         expiration_year,
-        cardholder_name
+        cardholder_name,
       ]
     );
   },
@@ -50,11 +44,10 @@ export default {
       cvc,
       expiration_month,
       expiration_year,
-      cardholder_name
+      cardholder_name,
     } = req.body;
     return await queryDatabase(
-      `
-      UPDATE billing
+      `UPDATE billing
       SET
         billing.customer_id = ?,
         billing.address_id = ?,
@@ -63,8 +56,7 @@ export default {
         billing.expiration_month = ?,
         billing.expiration_year = ?,
         billing.cardholder_name = ?
-      WHERE billing.id = ?;
-      `,
+      WHERE billing.id = ?;`,
       [
         customer_id,
         address_id,
@@ -73,11 +65,12 @@ export default {
         expiration_month,
         expiration_year,
         cardholder_name,
-        id
+        id,
       ]
     );
   },
   delete: async (req, res) => {
-    return;
+    const { id } = req.body;
+    return await queryDatabase("DELETE FROM billing WHERE id = ?;", [id]);
   },
 };

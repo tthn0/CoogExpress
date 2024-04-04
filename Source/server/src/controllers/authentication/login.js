@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import queryDatabase from "../../utils/queryDatabase.js";
+import { queryDatabase } from "../../utils/database.js";
 
 // No bcrypt for simplicity
 const comparePassword = async (password1, password2) => {
@@ -31,7 +31,7 @@ export default {
 
     queryDatabase(`UPDATE user SET last_login = NOW() WHERE username = ?`, [
       username,
-    ]);
+    ]); // Not awaited because this can be done in the background to save the end user some time
     data.token = jwt.sign(user, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRY,
     });

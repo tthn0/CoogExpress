@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import http from "http";
-import handleRequest from "./utils/handleRequest.js";
+import { handleRequest } from "./utils/handleRequest.js";
 
 const __dirname = import.meta.dirname;
 dotenv.config({ path: __dirname + "/../.env" });

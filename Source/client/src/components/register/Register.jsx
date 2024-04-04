@@ -24,10 +24,6 @@ export default function Register() {
   const [formIndex, setFormIndex] = useState(0);
   const [customer, setCustomer] = useState({});
   useEffect(() => {
-    document.body.style.background = "black";
-    return () => (document.body.style.background = "");
-  }, []);
-  useEffect(() => {
     const hasNullValues = (obj) => Object.values(obj).every((v) => !v);
     if (formIndex !== 3) return;
     if (hasNullValues(customer)) {
