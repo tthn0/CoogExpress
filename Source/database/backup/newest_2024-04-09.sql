@@ -6,8 +6,8 @@
 # https://github.com/Sequel-Ace/Sequel-Ace
 #
 # Host: cosc3380.mysql.database.azure.com (MySQL 8.0.35)
-# Database: test
-# Generation Time: 2024-04-04 12:13:10 +0000
+# Database: newest
+# Generation Time: 2024-04-09 10:13:48 +0000
 # ************************************************************
 
 
@@ -28,13 +28,13 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `line1` varchar(63) NOT NULL,
-  `line2` varchar(63) DEFAULT NULL,
+  `line2` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `city` varchar(63) NOT NULL,
   `state` char(2) NOT NULL,
   `zip` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_address` (`line1`,`line2`,`city`,`state`,`zip`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=331 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
@@ -42,63 +42,32 @@ LOCK TABLES `address` WRITE;
 INSERT INTO `address` (`id`, `line1`, `line2`, `city`, `state`, `zip`)
 VALUES
 	(4,'10 Pine St','Suite 100','San Francisco','CA','94101'),
-	(15,'101 Apple St',NULL,'Detroit','MI','48201'),
-	(24,'1010 Coconut St',NULL,'Raleigh','NC','27601'),
-	(6,'111 Cedar St',NULL,'Seattle','WA','98101'),
-	(27,'123 Maain St',NULL,'City','ST','77084'),
-	(28,'123 Maain St',NULL,'City','ST','77084'),
-	(29,'123 Maain St',NULL,'City','ST','77084'),
-	(30,'123 Main St',NULL,'Houston','TX','77084'),
-	(31,'123 Main St',NULL,'Houston','TX','77084'),
-	(32,'123 Main St',NULL,'Houston','TX','77084'),
-	(35,'123 Main St',NULL,'Houston','TX','77084'),
-	(36,'123 Main St',NULL,'Houston','TX','77084'),
-	(37,'123 Main St',NULL,'Houston','TX','77084'),
-	(50,'123 Main St',NULL,'Houston','TX','77084'),
-	(51,'123 Main St',NULL,'Houston','TX','77084'),
-	(52,'123 Main St',NULL,'Houston','TX','77084'),
-	(57,'123 Main St',NULL,'Houston','TX','77084'),
-	(58,'123 Main St',NULL,'Houston','TX','77084'),
-	(59,'123 Main St',NULL,'Houston','TX','77084'),
-	(60,'123 Main St',NULL,'Houston','TX','77084'),
-	(61,'123 Main St',NULL,'Houston','TX','77084'),
-	(62,'123 Main St',NULL,'Houston','TX','77084'),
-	(63,'123 Main St',NULL,'Houston','TX','77084'),
-	(64,'123 Main St',NULL,'Houston','TX','77084'),
-	(65,'123 Main St',NULL,'Houston','TX','77084'),
-	(38,'123 Main St',NULL,'New York','NY','10001'),
-	(26,'123 Main St','','Houston','TX','77084'),
-	(25,'123 Main St','','New York','NY','10001'),
+	(15,'101 Apple St','','Detroit','MI','48201'),
+	(24,'1010 Coconut St','','Raleigh','NC','27601'),
+	(6,'111 Cedar St','','Seattle','WA','98101'),
 	(1,'123 Main St','Apt 1','New York','NY','10001'),
-	(49,'123 Real Street ','','Houston','TX','77012'),
-	(56,'12312','123','houston','tx','77057'),
-	(55,'1234 Houston St','','Houston','TX','77777'),
+	(25,'123 Real St','','Houston','TX','77084'),
 	(16,'202 Banana St','Apt 3C','Phoenix','AZ','85001'),
-	(7,'222 Birch St',NULL,'Boston','MA','02101'),
-	(48,'29384','92938','98239','TX','29384'),
-	(17,'303 Pear St',NULL,'Dallas','TX','75201'),
-	(8,'333 Walnut St',NULL,'Philadelphia','PA','19101'),
-	(18,'404 Watermelon St',NULL,'Charlotte','NC','28201'),
+	(7,'222 Birch St','','Boston','MA','02101'),
+	(17,'303 Pear St','','Dallas','TX','75201'),
+	(8,'333 Walnut St','','Philadelphia','PA','19101'),
+	(18,'404 Watermelon St','','Charlotte','NC','28201'),
 	(9,'444 Cherry St','Unit B','Austin','TX','78701'),
-	(2,'456 Elm St',NULL,'Los Angeles','CA','90001'),
-	(39,'456 Elm St',NULL,'Los Angeles','CA','90001'),
-	(40,'456 Elm St',NULL,'Los Angeles','CA','90001'),
+	(2,'456 Elm St','','Los Angeles','CA','90001'),
+	(26,'456 Jump St','','Albany','NY','12345'),
 	(19,'505 Kiwi St','Unit D','Minneapolis','MN','55401'),
-	(5,'555 Maple Ave',NULL,'Miami','FL','33101'),
-	(10,'555 Orange St',NULL,'Atlanta','GA','30301'),
-	(20,'606 Avocado St',NULL,'Las Vegas','NV','89101'),
+	(5,'555 Maple Ave','','Miami','FL','33101'),
+	(10,'555 Orange St','','Atlanta','GA','30301'),
+	(20,'606 Avocado St','','Las Vegas','NV','89101'),
 	(11,'666 Lemon St','Apt 2B','Denver','CO','80201'),
-	(21,'707 Mango St',NULL,'Orlando','FL','32801'),
-	(12,'777 Peach St',NULL,'Houston','TX','77001'),
-	(3,'789 Oak St',NULL,'Chicago','IL','60601'),
-	(33,'789 Oak St',NULL,'Chicago','IL','60601'),
-	(34,'789 Oak St',NULL,'Chicago','IL','60601'),
+	(21,'707 Mango St','','Orlando','FL','32801'),
+	(12,'777 Peach St','','Houston','TX','77001'),
+	(3,'789 Oak St','','Chicago','IL','60601'),
+	(27,'789 Sesame St','','Denver','CO','54321'),
 	(22,'808 Papaya St','Suite 200','San Antonio','TX','78201'),
 	(13,'888 Grape St','Suite 300','Portland','OR','97201'),
-	(23,'909 Fig St',NULL,'Nashville','TN','37201'),
-	(14,'999 Pineapple St',NULL,'San Diego','CA','92101'),
-	(46,'ddddddd','ddddddd','Sugarland','TX','56478'),
-	(44,'meow','meow','meow','me','12345');
+	(23,'909 Fig St','','Nashville','TN','37201'),
+	(14,'999 Pineapple St','','San Diego','CA','92101');
 
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -123,17 +92,8 @@ CREATE TABLE `billing` (
   KEY `address_id` (`address_id`),
   CONSTRAINT `fk_billing_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_billing_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `billing` WRITE;
-/*!40000 ALTER TABLE `billing` DISABLE KEYS */;
-
-INSERT INTO `billing` (`id`, `customer_id`, `address_id`, `card_number`, `cvc`, `expiration_month`, `expiration_year`, `cardholder_name`)
-VALUES
-	(5,7,1,'1234123412341234','234','12','2004','Bitch Boy');
-
-/*!40000 ALTER TABLE `billing` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table branch
@@ -155,7 +115,7 @@ CREATE TABLE `branch` (
   KEY `manager_id` (`manager_employee_id`),
   CONSTRAINT `fk_branch_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_branch_manager_employee_id` FOREIGN KEY (`manager_employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
@@ -194,21 +154,19 @@ CREATE TABLE `customer` (
   KEY `preferred_branch_id` (`preferred_branch_id`),
   CONSTRAINT `fk_customer_preferred_branch_id` FOREIGN KEY (`preferred_branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_customer_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
 
 INSERT INTO `customer` (`id`, `user_id`, `preferred_branch_id`, `preferred_communication_method`)
 VALUES
-	(7,69,NULL,NULL),
-	(8,70,NULL,NULL),
-	(9,71,NULL,NULL),
-	(11,74,NULL,NULL),
-	(13,76,NULL,NULL),
-	(14,77,NULL,NULL),
-	(15,78,NULL,NULL),
-	(16,79,NULL,NULL);
+	(1,20,NULL,NULL),
+	(2,21,NULL,NULL),
+	(3,22,NULL,NULL),
+	(4,23,NULL,NULL),
+	(5,24,NULL,NULL),
+	(6,25,NULL,NULL);
 
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -259,7 +217,7 @@ CREATE TABLE `email_queue` (
   `email_body` varchar(1000) DEFAULT NULL,
   `processed` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `email_queue` WRITE;
 /*!40000 ALTER TABLE `email_queue` DISABLE KEYS */;
@@ -301,7 +259,173 @@ VALUES
 	(36,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 62',0),
 	(37,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 63',0),
 	(38,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 64',0),
-	(39,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 65',0);
+	(39,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 65',0),
+	(40,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 66',0),
+	(41,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 67',0),
+	(42,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 68',0),
+	(43,'ben','b@b.com','CoogExpress: New tracking history!','Hello, ben!\n\n A new tracking history has been created for you.\n Tracking history ID: 69',0),
+	(44,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 70',0),
+	(45,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 71',0),
+	(46,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 72',0),
+	(47,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 73',0),
+	(48,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 74',0),
+	(49,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 75',0),
+	(50,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 76',0),
+	(51,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 77',0),
+	(52,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 78',0),
+	(53,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 79',0),
+	(54,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 80',0),
+	(55,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 81',0),
+	(56,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 82',0),
+	(57,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 83',0),
+	(58,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 84',0),
+	(59,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 85',0),
+	(60,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 86',0),
+	(61,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 87',0),
+	(62,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 88',0),
+	(63,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 89',0),
+	(64,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 90',0),
+	(65,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 91',0),
+	(66,'meow','meow@gmail.com','CoogExpress: New tracking history!','Hello, meow!\n\n A new tracking history has been created for you.\n Tracking history ID: 92',0),
+	(67,'Diana','dianasaur@school.com','CoogExpress: New tracking history!','Hello, Diana!\n\n A new tracking history has been created for you.\n Tracking history ID: 93',0),
+	(68,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 94',0),
+	(69,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 95',0),
+	(70,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 96',0),
+	(71,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 97',0),
+	(72,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 1',0),
+	(73,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 2',0),
+	(74,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 3',0),
+	(75,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 4',0),
+	(76,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 5',0),
+	(77,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 6',0),
+	(78,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 7',0),
+	(79,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 8',0),
+	(80,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 9',0),
+	(81,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 10',0),
+	(82,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 11',0),
+	(83,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 12',0),
+	(84,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 13',0),
+	(85,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 14',0),
+	(86,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 15',0),
+	(87,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 16',0),
+	(88,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 17',0),
+	(89,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 18',0),
+	(90,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 19',0),
+	(91,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 20',0),
+	(92,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 21',0),
+	(93,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 22',0),
+	(94,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 23',0),
+	(95,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 24',0),
+	(96,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 25',0),
+	(97,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 26',0),
+	(98,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 27',0),
+	(99,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 28',0),
+	(100,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 29',0),
+	(101,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 30',0),
+	(102,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 31',0),
+	(103,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 32',0),
+	(104,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 33',0),
+	(105,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 34',0),
+	(106,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 35',0),
+	(107,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 36',0),
+	(108,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 37',0),
+	(109,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 38',0),
+	(110,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 39',0),
+	(111,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 40',0),
+	(112,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 41',0),
+	(113,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 42',0),
+	(114,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 43',0),
+	(115,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 44',0),
+	(116,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 45',0),
+	(117,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 46',0),
+	(118,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 47',0),
+	(119,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 48',0),
+	(120,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 50',0),
+	(121,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 49',0),
+	(122,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 51',0),
+	(123,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 52',0),
+	(124,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 53',0),
+	(125,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 54',0),
+	(126,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 55',0),
+	(127,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 56',0),
+	(128,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 57',0),
+	(129,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 58',0),
+	(130,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 59',0),
+	(131,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 60',0),
+	(132,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 61',0),
+	(133,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 62',0),
+	(134,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 63',0),
+	(135,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 64',0),
+	(136,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 66',0),
+	(137,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 65',0),
+	(138,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 67',0),
+	(139,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 68',0),
+	(140,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 69',0),
+	(141,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 70',0),
+	(142,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 71',0),
+	(143,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 72',0),
+	(144,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 73',0),
+	(145,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 74',0),
+	(146,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 75',0),
+	(147,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 76',0),
+	(148,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 77',0),
+	(149,'Alan','alan@turing.com','CoogExpress: New tracking history!','Hello, Alan!\n\n A new tracking history has been created for you.\n Tracking history ID: 78',0),
+	(150,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 79',0),
+	(151,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 80',0),
+	(152,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 81',0),
+	(153,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 82',0),
+	(154,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 83',0),
+	(155,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 84',0),
+	(156,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 85',0),
+	(157,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 86',0),
+	(158,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 87',0),
+	(159,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 88',0),
+	(160,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 89',0),
+	(161,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 90',0),
+	(162,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 91',0),
+	(163,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 92',0),
+	(164,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 93',0),
+	(165,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 94',0),
+	(166,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 95',0),
+	(167,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 96',0),
+	(168,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 97',0),
+	(169,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 98',0),
+	(170,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 99',0),
+	(171,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 100',0),
+	(172,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 101',0),
+	(173,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 102',0),
+	(174,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 103',0),
+	(175,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 104',0),
+	(176,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 105',0),
+	(177,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 106',0),
+	(178,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 107',0),
+	(179,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 108',0),
+	(180,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 109',0),
+	(181,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 110',0),
+	(182,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 111',0),
+	(183,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 112',0),
+	(184,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 113',0),
+	(185,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 114',0),
+	(186,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 115',0),
+	(187,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 116',0),
+	(188,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 117',0),
+	(189,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 118',0),
+	(190,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 119',0),
+	(191,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 120',0),
+	(192,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 121',0),
+	(193,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 122',0),
+	(194,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 123',0),
+	(195,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 124',0),
+	(196,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 125',0),
+	(197,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 126',0),
+	(198,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 127',0),
+	(199,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 128',0),
+	(200,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 129',0),
+	(201,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 130',0),
+	(202,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 131',0),
+	(203,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 132',0),
+	(204,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 133',0),
+	(205,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 134',0);
 
 /*!40000 ALTER TABLE `email_queue` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -330,17 +454,21 @@ CREATE TABLE `employee` (
   CONSTRAINT `fk_employee_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_employee_supervisor_employee_id` FOREIGN KEY (`supervisor_employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_employee_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
 
 INSERT INTO `employee` (`id`, `user_id`, `branch_id`, `supervisor_employee_id`, `date_of_birth`, `gender`, `driver_license_number`, `role`, `shirt_size`)
 VALUES
-	(1,1,1,1,'2024-03-17','Male','1234567890123','Manager','M'),
-	(4,2,1,1,'2024-03-17','Male','1748937484391','Associate','M'),
-	(5,3,1,1,'2024-03-17','Male','3875758838383','Associate','S'),
-	(6,4,1,1,'2024-03-17','Male','494947483938','Driver','S');
+	(1,1,1,1,'2000-01-01','Male','1234567890123','Manager','M'),
+	(2,2,1,1,'2001-02-02','Male','2345678901234','Associate','M'),
+	(3,3,1,1,'2002-03-03','Male','3456789012345','Driver','M'),
+	(4,4,1,1,'2004-04-04','Male','4567890123456','Driver','S'),
+	(5,5,1,1,'2005-05-05','Male','5678901234567','Driver','S'),
+	(10,10,2,10,'2006-06-06','Male','0001234567890','Manager','XL'),
+	(11,11,2,10,'2007-07-07','Male','0002345678901','Driver','M'),
+	(12,12,2,10,'2008-08-08','Female','0004567890123','Associate','XS');
 
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -413,7 +541,7 @@ CREATE TABLE `inventory` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `fk_inventory_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_inventory_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
@@ -507,29 +635,6 @@ CREATE TABLE `package` (
   CONSTRAINT `fk_package_source_branch_id` FOREIGN KEY (`source_branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `package` WRITE;
-/*!40000 ALTER TABLE `package` DISABLE KEYS */;
-
-INSERT INTO `package` (`id`, `sender_customer_id`, `receiver_customer_id`, `source_branch_id`, `destination_address_id`, `type`, `width`, `length`, `height`, `weight`, `special_handling_instructions`, `delivery_instructions`, `base_shipping_cost`, `additional_fees`, `speed`)
-VALUES
-	(24,8,7,1,1,'Parcel',1.00,1.00,1.00,1.00,NULL,'Knock on door',8.99,3.50,'Standard'),
-	(25,7,8,1,2,'Mail',1.00,1.00,1.00,1.00,'Fragile','Ring doorbell',4.99,2.50,'Express'),
-	(26,7,9,1,3,'Mail',1.00,1.00,1.00,1.00,NULL,NULL,19.99,3.49,'Overnight'),
-	(39,7,9,1,35,'Mail',1.00,2.00,3.00,4.00,'Nope','Hi',13.18,4.72,'Standard'),
-	(40,7,9,1,36,'Parcel',1.00,2.00,3.00,4.00,'Hello','World',14.03,3.82,'Express'),
-	(41,9,8,1,38,'Mail',2.00,3.00,4.00,5.00,'Nothing','Nada',10.05,2.27,'Express'),
-	(45,13,7,1,26,'Parcel',1.00,1.00,1.00,1.00,'Bro',NULL,11.95,4.10,'Standard'),
-	(46,14,7,1,51,'Mail',1.00,1.00,1.00,1.00,'Bro','Hello',5.29,2.48,'Express'),
-	(47,14,8,1,52,'Mail',1.00,1.00,1.00,1.00,'Bro','Hello',5.29,2.48,'Express'),
-	(48,15,11,1,57,'Parcel',1.00,1.00,1.00,1.00,'Hello World','Hi',0.00,0.00,'Express'),
-	(49,11,15,1,58,'Parcel',11.00,1.00,1.00,1.00,'Hello','World',0.00,0.00,'Express'),
-	(50,7,11,1,60,'Parcel',1.00,3.00,4.00,5.00,'Hello','World',0.00,0.00,'Express'),
-	(51,11,14,1,61,'Mail',1.00,2.00,3.00,4.00,'Nothing','Special',0.00,0.00,'Standard'),
-	(52,14,11,1,62,'Mail',1.00,2.00,3.00,4.00,'Hello','World',0.00,0.00,'Standard'),
-	(53,14,11,1,65,'Mail',1.00,2.00,3.00,4.00,'Hello','World',0.00,0.00,'Standard');
-
-/*!40000 ALTER TABLE `package` ENABLE KEYS */;
-UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
@@ -568,7 +673,7 @@ CREATE TABLE `product` (
   `image` longblob,
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
@@ -632,7 +737,7 @@ DROP TABLE IF EXISTS `route`;
 CREATE TABLE `route` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `source_branch_id` int unsigned NOT NULL,
-  `destination_branch_id` int unsigned DEFAULT NULL,
+  `destination_branch_id` int unsigned NOT NULL,
   `driver_employee_id` int unsigned DEFAULT NULL,
   `start_timestamp` timestamp NULL DEFAULT NULL,
   `end_timestamp` timestamp NULL DEFAULT NULL,
@@ -645,17 +750,8 @@ CREATE TABLE `route` (
   CONSTRAINT `fk_route_start_address_id` FOREIGN KEY (`source_branch_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `route` WRITE;
-/*!40000 ALTER TABLE `route` DISABLE KEYS */;
 
-INSERT INTO `route` (`id`, `source_branch_id`, `destination_branch_id`, `driver_employee_id`, `start_timestamp`, `end_timestamp`)
-VALUES
-	(1,1,NULL,NULL,NULL,NULL),
-	(2,1,NULL,NULL,NULL,NULL),
-	(3,1,NULL,NULL,NULL,NULL);
 
-/*!40000 ALTER TABLE `route` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table shipment
@@ -673,21 +769,8 @@ CREATE TABLE `shipment` (
   KEY `route_id` (`route_id`),
   CONSTRAINT `fk_shipment_package_id` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_shipment_route_id` FOREIGN KEY (`route_id`) REFERENCES `route` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `shipment` WRITE;
-/*!40000 ALTER TABLE `shipment` DISABLE KEYS */;
-
-INSERT INTO `shipment` (`id`, `package_id`, `route_id`)
-VALUES
-	(27,48,3),
-	(25,50,2),
-	(24,51,1),
-	(26,52,2),
-	(23,53,1);
-
-/*!40000 ALTER TABLE `shipment` ENABLE KEYS */;
-UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
@@ -724,43 +807,8 @@ CREATE TABLE `tracking_history` (
   KEY `address_id` (`address_id`),
   CONSTRAINT `fk_tracking_history_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tracking_history_package_id` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `tracking_history` WRITE;
-/*!40000 ALTER TABLE `tracking_history` DISABLE KEYS */;
-
-INSERT INTO `tracking_history` (`id`, `package_id`, `address_id`, `timestamp`, `status`)
-VALUES
-	(7,24,1,'2024-03-23 10:44:17','Pending'),
-	(8,24,1,'2024-03-24 11:19:17','Shipping'),
-	(9,25,2,'2024-03-23 10:44:17','Pending'),
-	(10,25,1,'2024-03-24 13:12:17','Delivered'),
-	(11,26,1,'2024-03-23 10:54:34','Pending'),
-	(31,24,2,'2024-03-23 23:21:19','Pending'),
-	(32,24,2,'2024-03-23 23:22:58','Delivered'),
-	(34,24,2,'2024-03-23 23:26:45','Delivered'),
-	(35,39,1,'2024-03-24 01:38:03','Pending'),
-	(36,40,1,'2024-03-24 02:00:44','Pending'),
-	(37,40,2,'2024-03-24 02:46:10','Shipping'),
-	(38,40,2,'2024-03-24 02:51:16','Shipping'),
-	(39,41,1,'2024-03-24 03:09:11','Pending'),
-	(52,45,1,'2024-03-26 21:01:07','Pending'),
-	(53,46,1,'2024-03-26 21:42:09','Pending'),
-	(54,47,1,'2024-03-26 21:42:41','Pending'),
-	(55,48,1,'2024-04-04 09:49:03','Pending'),
-	(56,49,1,'2024-04-04 09:54:07','Pending'),
-	(57,50,1,'2024-04-04 09:59:37','Pending'),
-	(58,51,1,'2024-04-04 10:00:08','Pending'),
-	(59,52,1,'2024-04-04 10:00:55','Pending'),
-	(60,53,1,'2024-04-04 10:02:07','Pending'),
-	(61,53,1,'2024-04-04 10:10:22','Standby'),
-	(62,51,1,'2024-04-04 10:10:22','Standby'),
-	(63,50,1,'2024-04-04 10:30:44','Standby'),
-	(64,52,1,'2024-04-04 10:30:44','Standby'),
-	(65,48,1,'2024-04-04 11:24:32','Standby');
-
-/*!40000 ALTER TABLE `tracking_history` ENABLE KEYS */;
-UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
@@ -820,30 +868,63 @@ CREATE TABLE `user` (
   UNIQUE KEY `unique_username` (`username`),
   KEY `address_id` (`address_id`),
   CONSTRAINT `fk_user_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `email`, `password_hash`, `phone_number`, `phone_country_code`, `address_id`, `profile_picture`, `created_at`, `last_login`, `deleted`)
 VALUES
-	(1,'Thomas','Nguyen','tthn','thomas@tthn.us','password','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-03-31 01:54:42',0),
-	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-04-01 13:11:41',0),
-	(3,'Sam','Li','sam','sam@li.com','li','2222222222','1',34,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:44:00','2024-04-04 09:24:48',0),
-	(4,'Salim','Sanogho','salim','salim@sanogho.com','sanogho','3333333333','1',5,'https://cdn.discordapp.com/avatars/1013124526768406658/ece88637647dbdf3cc441279bc9355be.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
-	(5,'Nikolas','velazquez','nikolas','nikolas@velazquez.com','velazquez','4444444444','1',6,'https://cdn.discordapp.com/avatars/234144333161299978/c0411ce9c43f2397d4626b650159fdce.png?size=128','2024-03-23 13:45:09','2024-03-23 13:45:09',0),
-	(69,'Alan','Turing','alan','alan@turing.com','turing','7438927348','1',40,'https://i.pravatar.cc/400?img=11','2024-03-23 10:31:51','2024-04-02 10:15:54',0),
-	(70,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','9287482974','1',3,'https://i.pravatar.cc/400?img=49','2024-03-23 10:33:11','2024-03-24 05:18:11',0),
-	(71,'Grace','Hopper','grace','grace@hopper.com','hopper','9823427342','1',4,'https://i.pravatar.cc/400?img=38','2024-03-23 10:54:05','2024-03-24 05:18:17',0),
-	(74,'meow','meow','meow','meow@gmail.com','meowmeow','1234567899','1',44,NULL,'2024-03-24 05:09:53','2024-03-24 05:09:53',0),
-	(76,'Sterling','Gore','SterlingGore','gorest02@gmail.com','Stg2002~1','8327038992','1',46,'https://i.imgur.com/Ld72LRD.png','2024-03-26 20:45:54','2024-03-26 21:01:39',0),
-	(77,'Diana','Nguyen','dianasaur','dianasaur@school.com','password','8327746889','1',49,'https://i.imgur.com/AA4iET3.png','2024-03-26 21:40:19','2024-03-26 21:48:05',0),
-	(78,'ben','tuason','ben','b@b.com','26dosis123','1234567890','1',55,NULL,'2024-03-27 13:45:27','2024-03-27 13:45:27',0),
-	(79,'Nikolas','Velazquez','niko','nevelaz2@cougarnet.uh.edu','helloworld','1234569291','1',56,NULL,'2024-03-28 21:00:31','2024-03-28 21:00:31',0);
+	(1,'Thomas','Nguyen','thomas','thomas@tthn.us','nguyen','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-04-08 09:37:51',0),
+	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-04-08 09:38:06',0),
+	(3,'Salim','Sanogho','salim','salim@sanogho.com','sanogho','2222222222','1',3,'https://cdn.discordapp.com/avatars/1013124526768406658/ece88637647dbdf3cc441279bc9355be.png?size=128','2024-03-23 13:45:09','2024-04-08 09:38:21',0),
+	(4,'Nikolas','Velazquez','nikolas','nikolas@velazquez.com','velazquez','3333333333','1',4,'https://cdn.discordapp.com/avatars/234144333161299978/c0411ce9c43f2397d4626b650159fdce.png?size=128','2024-03-23 13:45:09','2024-04-08 09:38:36',0),
+	(5,'Sam','Li','sam','sam@li.com','lilili','4444444444','1',5,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:45:09','2024-04-09 09:28:26',0),
+	(10,'Manager','Employee','manager','manager@branch2.com','manager','1111100000','1',1,'https://i.pravatar.cc/400?img=11','2024-03-23 13:45:09','2024-04-08 09:50:14',0),
+	(11,'Driver','Employee','driver','driver@branch2.com','driver','2222200000','1',2,'https://i.pravatar.cc/400?img=13','2024-03-23 13:45:09','2024-04-08 09:50:25',0),
+	(12,'Associate','Employee','associate','associate@branch2.com','associate','3333300000','1',3,'https://i.pravatar.cc/400?img=38','2024-03-23 13:45:09','2024-04-09 09:43:11',0),
+	(20,'Alan','Turing','alan','alan@turing.com','turing','0000011111','1',1,'https://xsgames.co/randomusers/assets/avatars/male/1.jpg','2024-04-08 09:23:16','2024-04-09 03:40:07',0),
+	(21,'Grace','Hopper','grace','grace@hopper.com','hopper','0000022222','1',2,'https://xsgames.co/randomusers/assets/avatars/female/2.jpg','2024-04-08 09:24:56','2024-04-08 09:37:19',0),
+	(22,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','0000033333','1',3,'https://xsgames.co/randomusers/assets/avatars/female/3.jpg','2024-04-08 09:26:06','2024-04-08 09:37:13',0),
+	(23,'Dennis','Ritchie','dennis','dennis@ritchie.com','ritchie','0000044444','1',4,'https://xsgames.co/randomusers/assets/avatars/male/4.jpg','2024-04-08 09:27:28','2024-04-08 09:37:26',0),
+	(24,'Linus','Torvalds','linus','linus@torvalds.com','torvalds','0000055555','1',5,'https://xsgames.co/randomusers/assets/avatars/male/5.jpg','2024-04-08 09:28:18','2024-04-08 09:37:33',0),
+	(25,'John','Conway','john','john@conway.com','conway','0000066666','1',6,'https://xsgames.co/randomusers/assets/avatars/male/6.jpg','2024-04-08 09:28:53','2024-04-08 09:53:16',0);
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+# Dump of view route_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `route_view`; DROP VIEW IF EXISTS `route_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `route_view`
+AS SELECT
+   `r`.`id` AS `route_id`,
+   `r`.`start_timestamp` AS `start_timestamp`,
+   `r`.`end_timestamp` AS `end_timestamp`,
+   `b1`.`branch_id` AS `source_branch_id`,
+   `b1`.`name` AS `source_branch_name`,
+   `b1`.`address_id` AS `source_branch_address_id`,
+   `b1`.`line1` AS `source_branch_line1`,
+   `b1`.`line2` AS `source_branch_line2`,
+   `b1`.`city` AS `source_branch_city`,
+   `b1`.`state` AS `source_branch_state`,
+   `b1`.`zip` AS `source_branch_zip`,
+   `b2`.`branch_id` AS `destination_branch_id`,
+   `b2`.`name` AS `destination_branch_name`,
+   `b2`.`address_id` AS `destination_branch_address_id`,
+   `b2`.`line1` AS `destination_branch_line1`,
+   `b2`.`line2` AS `destination_branch_line2`,
+   `b2`.`city` AS `destination_branch_city`,
+   `b2`.`state` AS `destination_branch_state`,
+   `b2`.`zip` AS `destination_branch_zip`,
+   `driver`.`employee_id` AS `driver_employee_id`,
+   `driver`.`first_name` AS `driver_first_name`,
+   `driver`.`last_name` AS `driver_last_name`,
+   `driver`.`profile_picture` AS `driver_profile_picture`,(select count(0)
+FROM `shipment` `s` where (`s`.`route_id` = `r`.`id`)) AS `package_count` from (((`route` `r` left join `branch_view` `b1` on((`r`.`source_branch_id` = `b1`.`branch_id`))) left join `branch_view` `b2` on((`r`.`destination_branch_id` = `b2`.`branch_id`))) left join `employee_view` `driver` on((`r`.`driver_employee_id` = `driver`.`employee_id`)));
 
 # Dump of view package_view
 # ------------------------------------------------------------
@@ -882,12 +963,18 @@ AS SELECT
    `receiver`.`phone_country_code` AS `receiver_phone_country_code`,
    `receiver`.`profile_picture` AS `receiver_profile_picture`,
    `b`.`name` AS `source_branch_name`,
-   `a`.`line1` AS `destination_address_line1`,
-   `a`.`line2` AS `destination_address_line2`,
-   `a`.`city` AS `destination_address_city`,
-   `a`.`state` AS `destination_address_state`,
-   `a`.`zip` AS `destination_address_zip`,(select `th`.`status`
-FROM `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` desc limit 1) AS `status`,(select `th`.`timestamp` from `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` limit 1) AS `initiated_at`,(select `th`.`timestamp` from `tracking_history` `th` where ((`th`.`package_id` = `p`.`id`) and (`th`.`status` = 'Delivered')) order by `th`.`timestamp` desc limit 1) AS `delivered_at` from ((((`package` `p` join `customer_view` `sender`) join `customer_view` `receiver`) join `branch` `b`) join `address` `a`) where ((`p`.`sender_customer_id` = `sender`.`customer_id`) and (`p`.`receiver_customer_id` = `receiver`.`customer_id`) and (`p`.`source_branch_id` = `b`.`id`) and (`p`.`destination_address_id` = `a`.`id`)) order by `p`.`id`;
+   `destination_address`.`line1` AS `destination_address_line1`,
+   `destination_address`.`line2` AS `destination_address_line2`,
+   `destination_address`.`city` AS `destination_address_city`,
+   `destination_address`.`state` AS `destination_address_state`,
+   `destination_address`.`zip` AS `destination_address_zip`,
+   `current_address`.`id` AS `current_address_id`,
+   `current_address`.`line1` AS `current_address_line1`,
+   `current_address`.`line2` AS `current_address_line2`,
+   `current_address`.`city` AS `current_address_city`,
+   `current_address`.`state` AS `current_address_state`,
+   `current_address`.`zip` AS `current_address_zip`,(select `th`.`status`
+FROM `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` desc limit 1) AS `status`,(select `th`.`timestamp` from `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` limit 1) AS `initiated_at`,(select `th`.`timestamp` from `tracking_history` `th` where ((`th`.`package_id` = `p`.`id`) and (`th`.`status` = 'Delivered')) order by `th`.`timestamp` desc limit 1) AS `delivered_at` from ((((((`package` `p` join `customer_view` `sender`) join `customer_view` `receiver`) join `branch` `b`) join `address` `destination_address`) join `address` `current_address`) join `tracking_history` `th`) where ((`p`.`sender_customer_id` = `sender`.`customer_id`) and (`p`.`receiver_customer_id` = `receiver`.`customer_id`) and (`p`.`source_branch_id` = `b`.`id`) and (`p`.`destination_address_id` = `destination_address`.`id`) and (`th`.`package_id` = `p`.`id`) and (`th`.`timestamp` = (select max(`tracking_history`.`timestamp`) from `tracking_history` where (`tracking_history`.`package_id` = `p`.`id`))) and (`th`.`address_id` = `current_address`.`id`)) order by `p`.`id`;
 
 # Dump of view employee_view
 # ------------------------------------------------------------

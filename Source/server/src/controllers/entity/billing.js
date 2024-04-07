@@ -49,13 +49,13 @@ export default {
     return await queryDatabase(
       `UPDATE billing
       SET
-        billing.customer_id = ?,
-        billing.address_id = ?,
-        billing.card_number = ?,
-        billing.cvc = ?,
-        billing.expiration_month = ?,
-        billing.expiration_year = ?,
-        billing.cardholder_name = ?
+        customer_id = ?,
+        address_id = ?,
+        card_number = ?,
+        cvc = ?,
+        expiration_month = ?,
+        expiration_year = ?,
+        cardholder_name = ?
       WHERE billing.id = ?;`,
       [
         customer_id,

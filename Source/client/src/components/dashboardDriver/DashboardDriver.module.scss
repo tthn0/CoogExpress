@@ -20,7 +20,7 @@
   font-weight: 550;
 }
 
-#paragraph {
+.paragraph {
   margin-top: 0.25em;
   color: grey;
 }
@@ -46,23 +46,24 @@
   color: black !important;
 }
 
-.tableContainer {
-  overflow-x: scroll;
-}
-
 .button {
   margin-top: 1em;
 }
 
 #form {
-  margin-top: 2em;
+  margin-top: 1em;
+}
+
+#tableContainer {
+  overflow-x: auto;
+  margin-top: 1em;
+  padding-bottom: 1px; // (Bug workaround) show bottom border
 }
 
 #table {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid black;
-  margin-top: 1em;
 
   tr:nth-child(even) {
     background-color: #f2f2f2;
@@ -78,5 +79,22 @@
   td {
     padding: 0.75em;
     border: 1px solid black;
+  }
+}
+
+#dropOff {
+  width: 100%;
+  height: 100%;
+}
+
+.routeContainer {
+  background: rgb(255, 255, 255);
+  box-shadow: 0 0.25em 0.75em 0.75em rgba(0, 0, 0, 0.025);
+  padding: 2em;
+  border-radius: 1em;
+  margin-top: 2em;
+
+  .subHeading {
+    margin-top: 0; // Reset margin-top
   }
 }

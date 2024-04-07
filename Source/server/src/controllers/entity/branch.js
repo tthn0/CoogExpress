@@ -49,13 +49,13 @@ export default {
     return await queryDatabase(
       `UPDATE branch
       SET
-        branch.address_id = ?,
-        branch.manager_employee_id = ?,
-        branch.name = ?,
-        branch.phone_number = ?,
-        branch.email = ?,
-        branch.opening_time = ?,
-        branch.closing_time = ?
+        address_id = ?,
+        manager_employee_id = ?,
+        name = ?,
+        phone_number = ?,
+        email = ?,
+        opening_time = ?,
+        closing_time = ?
       WHERE branch.id = ?;`,
       [
         address_id,

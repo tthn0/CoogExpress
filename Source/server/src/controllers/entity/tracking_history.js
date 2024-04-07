@@ -5,30 +5,38 @@ export default {
     return await getBasedOnQueryParams("tracking_history", req.params);
   },
   post: async (req, res) => {
-    const { package_id, address_id, timestamp, status } = req.body;
+    const { package_id, line1, line2, city, state, zip, status } = req.body;
     return await queryDatabase(
-      `INSERT INTO tracking_history(
-        package_id,
-        address_id,
-        timestamp,
-        status
-      ) VALUES (?, ?, ?, ?);`,
-      [package_id, address_id, timestamp, status]
+      `START TRANSACTION;
+
+        INSERT INTO address (line1, line2, city, state, zip)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
+
+        INSERT INTO tracking_history(
+          package_id,
+          address_id,
+          timestamp,
+          status
+        ) VALUES (?, LAST_INSERT_ID(), NOW(), ?);
+
+      COMMIT;`,
+      [line1, line2, city, state, zip, package_id, status]
     );
   },
-  put: async (req, res) => {
-    const { id, package_id, address_id, timestamp, status } = req.body;
-    return await queryDatabase(
-      `UPDATE tracking_history
-      SET
-        tracking_history.package_id = ?,
-        tracking_history.address_id = ?,
-        tracking_history.timestamp = ?,
-        tracking_history.status = ?
-      WHERE tracking_history.id = ?;`,
-      [package_id, address_id, timestamp, status, id]
-    );
-  },
+  // put: async (req, res) => {
+  //   const { id, package_id, address_id, timestamp, status } = req.body;
+  //   return await queryDatabase(
+  //     `UPDATE tracking_history
+  //     SET
+  //       package_id = ?,
+  //       address_id = ?,
+  //       timestamp = ?,
+  //       status = ?
+  //     WHERE id = ?;`,
+  //     [package_id, address_id, timestamp, status, id]
+  //   );
+  // },
   // delete: async (req, res) => {
   //   return;
   // },

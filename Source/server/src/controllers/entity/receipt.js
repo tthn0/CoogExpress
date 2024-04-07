@@ -57,16 +57,16 @@ export default {
     return await queryDatabase(
       `UPDATE receipt
       SET
-        receipt.customer_id = ?,
-        receipt.package_id = ?,
-        receipt.branch_id = ?,
-        receipt.billing_id = ?,
-        receipt.subtotal = ?,
-        receipt.tax = ?,
-        receipt.total = ?,
-        receipt.timestamp = ?,
-        receipt.notes = ?
-      WHERE receipt.id = ?;`,
+        customer_id = ?,
+        package_id = ?,
+        branch_id = ?,
+        billing_id = ?,
+        subtotal = ?,
+        tax = ?,
+        total = ?,
+        timestamp = ?,
+        notes = ?
+      WHERE id = ?;`,
       [
         customer_id,
         package_id,
