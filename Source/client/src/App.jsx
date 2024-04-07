@@ -34,6 +34,10 @@ const router = createHashRouter([
     path: "/dashboard/driver",
     element: <ProtectedRoute children={<DashboardDriver />} />,
   },
+  {
+    path: "/dashboard/driver/route/:routeId",
+    element: <ProtectedRoute children={<DashboardDriver />} />,
+  },
   // {
   //   path: "/dashboard/manager",
   //   element: <ProtectedRoute children={<DashboardManager />} />,

@@ -67,6 +67,11 @@ export default function RouteForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (selectedPackagesById.length === 0) {
+      alert("Please select at least one package.");
+      return;
+    }
+
     setIsLoading(true);
 
     fetch(`${SERVER_BASE_URL}/route`, {
@@ -105,78 +110,77 @@ export default function RouteForm() {
         <h2 className={styles.subHeading}>Select Packages</h2>
         <div id={styles.tableContainer}>
           <table id={styles.table}>
-            <tr>
-              <th>{/* Empty space for checkbox */}</th>
-              <th>Package ID</th>
-              <th>Sender Username</th>
-              <th>Receiver Username</th>
-              <th>Length</th>
-              <th>Width</th>
-              <th>Height</th>
-              <th>Weight</th>
-              <th>Speed</th>
-              <th>Destination</th>
-            </tr>
-            {allPackages.map((p, i) => (
-              <tr key={p.package_id}>
-                <td>
-                  <input
-                    type="checkbox"
-                    name={p.package_id}
-                    value={p.package_id}
-                  />
-                </td>
-                <td>
-                  <pre>{p.package_id}</pre>
-                </td>
-                <td>
-                  <pre>{p.sender_username}</pre>
-                </td>
-                <td>
-                  <pre>{p.receiver_username}</pre>
-                </td>
-                <td>
-                  <pre>{p.length}</pre>
-                </td>
-                <td>
-                  <pre>{p.width}</pre>
-                </td>
-                <td>
-                  <pre>{p.height}</pre>
-                </td>
-                <td>
-                  <pre>{p.weight}</pre>
-                </td>
-                <td>
-                  <pre>{p.speed}</pre>
-                </td>
-                <td>
-                  {p.destination_address_line1}
-                  <br />
-                  {p.destination_address_line2
-                    ? p.destination_address_line2 + <br />
-                    : null}
-                  {p.destination_address_city}, {p.destination_address_state}{" "}
-                  {p.destination_address_zip}
-                </td>
+            <thead>
+              <tr>
+                <th>{/* Empty space for checkbox */}</th>
+                <th>Package ID</th>
+                <th>Sender Username</th>
+                <th>Receiver Username</th>
+                <th>Length</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Speed</th>
+                <th>Destination</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {allPackages.map((p, i) => (
+                <tr key={p.package_id}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name={p.package_id}
+                      value={p.package_id}
+                    />
+                  </td>
+                  <td>
+                    <pre>{p.package_id}</pre>
+                  </td>
+                  <td>
+                    <pre>{p.sender_username}</pre>
+                  </td>
+                  <td>
+                    <pre>{p.receiver_username}</pre>
+                  </td>
+                  <td>
+                    <pre>{p.length}</pre>
+                  </td>
+                  <td>
+                    <pre>{p.width}</pre>
+                  </td>
+                  <td>
+                    <pre>{p.height}</pre>
+                  </td>
+                  <td>
+                    <pre>{p.weight}</pre>
+                  </td>
+                  <td>
+                    <pre>{p.speed}</pre>
+                  </td>
+                  <td>
+                    {p.destination_address_line1}
+                    <br />
+                    {p.destination_address_line2
+                      ? p.destination_address_line2 + <br />
+                      : null}
+                    {p.destination_address_city}, {p.destination_address_state}{" "}
+                    {p.destination_address_zip}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
 
         <h2 className={styles.subHeading}>Select Destination Branch</h2>
 
-        {/* 
-        UPDATE SCHEMA
-        Source branch id
-        Destination branch id
-        */}
-
         <select id={styles.select} name="destination_branch_id">
+          <option value="" selected disabled hidden>
+            Choose a branch
+          </option>
           {branches.map((branch) => (
-            <option value={branch.id} selected={user.branch_id === branch.id}>
-              {branch.name}
-            </option>
+            <option value={branch.branch_id}>{branch.name}</option>
           ))}
         </select>
         <p className={styles.paragraph}>

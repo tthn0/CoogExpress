@@ -54,7 +54,7 @@ export default {
 
     let address_id;
 
-    if (address.length) {
+    if (address.length > 0) {
       address_id = address[0].id;
     } else {
       const address = await queryDatabase(

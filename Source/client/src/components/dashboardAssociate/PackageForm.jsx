@@ -122,7 +122,9 @@ export default function PackageForm() {
   return (
     <div id={styles.formContainer}>
       <h1 id={styles.heading}>Create New Package</h1>
-      <p id={styles.paragraph}>Please enter in the package details below.</p>
+      <p className={styles.paragraph}>
+        Please enter in the package details below.
+      </p>
       <form ref={formRef} onSubmit={handleSubmit} onChange={handleChange}>
         <h2 className={styles.subHeading}>Customer Details</h2>
         <Input
