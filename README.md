@@ -30,6 +30,9 @@
     - Whenever a route is accepted by a driver, mark all packages in the route as `Shipping`.
   - Add Nikolas's triggers to GitHub.
   - Finish tracking history.
+  - Reports:
+    - https://jsreport.net.
+    - Chart.js.
   - Finish manager dashboard.
   - Change customer dashboard UI to light mode.
   - Update README:
@@ -51,9 +54,15 @@ Subject: **Update on Your Package Delivery Status**
 
 # About
 
-**Short miniworld description**: CoogExpress is a delivery company that delivers packages to all locations in the continental United States. The company has multiple branches, each with its own set of employees. The company also has customers who can place orders to send packages between branches. The website is where customers can track their packages or purchase items, retail associates can place orders, drivers can accept shipment routes, and managers can track the activity at their respective branches.
+[Todo].
+
+**Short miniworld description**: CoogExpress is a delivery company that delivers packages to all locations in the continental United States. The company has multiple branches, each with its own set of employees. Customers can place orders to send packages between branches. The website is where customers can track their packages or purchase items, retail associates can place orders, drivers can accept shipment routes, and managers can track the activity at their respective branches.
 
 # Screenshots
+
+[Todo].
+
+# Project Requirements
 
 [Todo].
 

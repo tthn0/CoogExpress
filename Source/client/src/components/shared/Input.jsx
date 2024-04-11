@@ -116,7 +116,7 @@ const VALIDATORS = Object.freeze({
   },
   POSITIVE_INT: {
     min: 0,
-    max: 1000,
+    max: 999,
     pattern: null,
     // title: "Must be a positive number.", // Title doesn't show up for type="number"
   },

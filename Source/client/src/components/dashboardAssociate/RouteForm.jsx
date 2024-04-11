@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import Button from "../shared/Button";
 import styles from "./DashboardAssociate.module.scss";
+import mailImage from "./images/Mail.svg";
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
 
 const formatHoursAndMinutes = (minutes) => {
@@ -33,14 +34,10 @@ export default function RouteForm() {
   const [branches, setBranches] = useState([]);
 
   useEffect(() => {
-    fetch(`${SERVER_BASE_URL}/package`)
+    fetch(
+      `${SERVER_BASE_URL}/package?current_address_id=${user.branch_id}&status=Pending`
+    )
       .then((response) => response.json())
-      .then((data) =>
-        data.filter(
-          (p) =>
-            p.current_address_id === user.branch_id && p.status === "Pending"
-        )
-      )
       .then((data) => setAllPackages(data))
       .catch((error) => console.error("Error fetching packages:", error));
 
@@ -100,112 +97,122 @@ export default function RouteForm() {
 
   const estimates = estimateRouteSummary(selectedPackagesById.length);
 
+  const formHtml = (
+    <form onSubmit={handleSubmit} onChange={handleChange}>
+      <h2 className={styles.subHeading}>Select Packages</h2>
+      <div id={styles.tableContainer}>
+        <table id={styles.table}>
+          <thead>
+            <tr>
+              <th>{/* Empty space for checkbox */}</th>
+              <th>Package ID</th>
+              <th>Sender Username</th>
+              <th>Receiver Username</th>
+              <th>Length</th>
+              <th>Width</th>
+              <th>Height</th>
+              <th>Weight</th>
+              <th>Speed</th>
+              <th>Destination</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allPackages.map((p, i) => (
+              <tr key={p.package_id}>
+                <td>
+                  <input
+                    type="checkbox"
+                    name={p.package_id}
+                    value={p.package_id}
+                  />
+                </td>
+                <td>
+                  <pre>{p.package_id}</pre>
+                </td>
+                <td>
+                  <pre>{p.sender_username}</pre>
+                </td>
+                <td>
+                  <pre>{p.receiver_username}</pre>
+                </td>
+                <td>
+                  <pre>{p.length}</pre>
+                </td>
+                <td>
+                  <pre>{p.width}</pre>
+                </td>
+                <td>
+                  <pre>{p.height}</pre>
+                </td>
+                <td>
+                  <pre>{p.weight}</pre>
+                </td>
+                <td>
+                  <pre>{p.speed}</pre>
+                </td>
+                <td>
+                  <div>{p.destination_address_line1}</div>
+                  <div>{p.destination_address_line2}</div>
+                  <div>
+                    {p.destination_address_city}
+                    {", "}
+                    {p.destination_address_state} {p.destination_address_zip}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 className={styles.subHeading}>Select Destination Branch</h2>
+
+      <select id={styles.select} name="destination_branch_id">
+        <option value="" selected disabled hidden>
+          Choose a branch
+        </option>
+        {branches.map((branch) => (
+          <option value={branch.branch_id}>{branch.name}</option>
+        ))}
+      </select>
+      <p className={styles.paragraph}>
+        <strong>Important</strong>: if the destination branch isn't the same as
+        the current branch, the packages will be transferred to the selected
+        branch. The packages should not be delivered to their final destination.
+        The destination branch will be responsible for delivering the packages.
+      </p>
+
+      <h2 className={styles.subHeading}>Summary</h2>
+      <h3 className={styles.h3}>Estimated Time</h3>
+      <pre>{estimates.time}</pre>
+      <h3 className={styles.h3}>Estimated Fuel</h3>
+      <pre>{estimates.fuel} gal</pre>
+      <h3 className={styles.h3}>Estimated Distance</h3>
+      <pre>{estimates.distance} mi</pre>
+
+      <Button
+        className={styles.submit}
+        text="Create Route"
+        isLoading={isLoading}
+      />
+    </form>
+  );
+
   return (
     <div id={styles.formContainer}>
       <h1 id={styles.heading}>Create New Route</h1>
       <p className={styles.paragraph}>
-        Please select the packages that you would like to be included on this
-        route.
+        {/* Please select the packages that you would like to be included on this
+        route. */}
+        {allPackages.length === 0
+          ? "Routes cannot be created at this time. There are no pending packages."
+          : "Please select the packages that you would like to be included on this route."}
       </p>
-      <form onSubmit={handleSubmit} onChange={handleChange}>
-        <h2 className={styles.subHeading}>Select Packages</h2>
-        <div id={styles.tableContainer}>
-          <table id={styles.table}>
-            <thead>
-              <tr>
-                <th>{/* Empty space for checkbox */}</th>
-                <th>Package ID</th>
-                <th>Sender Username</th>
-                <th>Receiver Username</th>
-                <th>Length</th>
-                <th>Width</th>
-                <th>Height</th>
-                <th>Weight</th>
-                <th>Speed</th>
-                <th>Destination</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allPackages.map((p, i) => (
-                <tr key={p.package_id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name={p.package_id}
-                      value={p.package_id}
-                    />
-                  </td>
-                  <td>
-                    <pre>{p.package_id}</pre>
-                  </td>
-                  <td>
-                    <pre>{p.sender_username}</pre>
-                  </td>
-                  <td>
-                    <pre>{p.receiver_username}</pre>
-                  </td>
-                  <td>
-                    <pre>{p.length}</pre>
-                  </td>
-                  <td>
-                    <pre>{p.width}</pre>
-                  </td>
-                  <td>
-                    <pre>{p.height}</pre>
-                  </td>
-                  <td>
-                    <pre>{p.weight}</pre>
-                  </td>
-                  <td>
-                    <pre>{p.speed}</pre>
-                  </td>
-                  <td>
-                    <div>{p.destination_address_line1}</div>
-                    <div>{p.destination_address_line2}</div>
-                    <div>
-                      {p.destination_address_city}
-                      {", "}
-                      {p.destination_address_state} {p.destination_address_zip}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <h2 className={styles.subHeading}>Select Destination Branch</h2>
-
-        <select id={styles.select} name="destination_branch_id">
-          <option value="" selected disabled hidden>
-            Choose a branch
-          </option>
-          {branches.map((branch) => (
-            <option value={branch.branch_id}>{branch.name}</option>
-          ))}
-        </select>
-        <p className={styles.paragraph}>
-          <strong>Important</strong>: if the destination branch isn't the same
-          as the current branch, the packages will be transferred to the
-          selected branch. The packages should not be delivered to their final
-          destination. The destination branch will be responsible for delivering
-          the packages.
-        </p>
-
-        <h2 className={styles.subHeading}>Summary</h2>
-        <h3 className={styles.h3}>Estimated Time</h3>
-        <pre>{estimates.time}</pre>
-        <h3 className={styles.h3}>Estimated Fuel</h3>
-        <pre>{estimates.fuel} gal</pre>
-        <h3 className={styles.h3}>Estimated Distance</h3>
-        <pre>{estimates.distance} mi</pre>
-
-        <Button
-          className={styles.submit}
-          text="Create Route"
-          isLoading={isLoading}
-        />
-      </form>
+      {allPackages.length === 0 ? (
+        <img id={styles.mailImage} src={mailImage} alt="No pending packages" />
+      ) : (
+        formHtml
+      )}
     </div>
   );
 }

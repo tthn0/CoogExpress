@@ -1,0 +1,129 @@
+@use "./colors" as colors;
+@use "./fonts" as fonts;
+
+#container {
+  font-family: fonts.$poppins;
+  font-size: fonts.$fluidFontSize-0;
+  width: min(90%, 90em);
+  margin-inline: auto;
+  padding: 4em 0;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.box {
+  background: white;
+  border-radius: 1.5em;
+  padding: 2.5em;
+}
+
+#top {
+  width: 100%;
+  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+.card {
+  background: white;
+  border-radius: 1.5em;
+}
+
+.userInfo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5em;
+  padding: 2.5em;
+}
+
+.picture {
+  border-radius: 50%;
+  width: 10em;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.name {
+  font-size: 1.1em;
+}
+
+.username {
+  color: grey;
+}
+
+#buttonContainer {
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+%button {
+  border-radius: 0.75em;
+  height: 2.5em;
+  width: 100%;
+  transition: 0.3s ease;
+  &:hover {
+    filter: hue-rotate(-10deg);
+  }
+}
+
+#primaryButton {
+  @extend %button;
+  background: #5c9dff;
+  color: white;
+}
+
+#secondaryButton {
+  @extend %button;
+  background: white;
+  border: 3px solid #5c9dff;
+  color: #5c9dff;
+}
+
+.userType {
+  background: #5c9dff;
+  padding: 0.75em 0;
+  color: white;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+#summary {
+  font-size: 2.25em;
+  font-weight: 500;
+}
+
+#hash {
+  color: grey;
+}
+
+#divider {
+  width: 100%;
+  height: 0.4em;
+  border-radius: 100em;
+  background: black;
+  margin: 1em 0;
+}
+
+#packageInfo h2 {
+  font-size: 1.1em;
+  font-weight: 450;
+}
+
+#packageInfo p {
+  color: grey;
+}

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import deliveredImage from "./images/Delivered.svg";
 import styles from "./DashboardDriver.module.scss";
 import Button from "../shared/Button";
 import AuthContext from "../../contexts/AuthContext";
@@ -99,8 +100,17 @@ export default function SelectRoute({ routes }) {
         <main id={styles.innerContainer}>
           <h1 id={styles.heading}>Driver Dashboard</h1>
           <p className={styles.paragraph}>
-            Please select a route to begin your delivery.
+            {routes.length === 0
+              ? "No routes available. All pending routes have been completed."
+              : "Please select a route to begin your delivery."}
           </p>
+          {routes.length === 0 && (
+            <img
+              id={styles.deliveredImage}
+              src={deliveredImage}
+              alt="No pending routes"
+            />
+          )}
           {routes.map((route) => (
             <RouteCard key={route.route_id} route={route} />
           ))}
