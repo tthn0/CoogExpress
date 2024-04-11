@@ -1,18 +1,20 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
   faChevronDown,
   faCaretDown,
-  faCircleInfo,
+  faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
+import EmptyImage from "./images/Empty.svg";
 import styles from "./DashboardCustomer.module.scss";
 import AuthContext from "../../contexts/AuthContext";
 import NavBar from "../shared/NavBar";
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
 
 const SORT_COLUMNS = Object.freeze({
-  RECIPIENT: "recipient",
+  PERSON: "person",
   STATUS: "status",
   COST: "cost",
   TYPE: "type",
@@ -29,6 +31,7 @@ const SORT_ORDER = Object.freeze({
 const SEARCHABLE_CLASS_NAME = "searchable";
 
 function Row({
+  packageId,
   first,
   last,
   picture,
@@ -45,17 +48,27 @@ function Row({
   dateDelivered,
   timeDelivered,
 }) {
+  const navigate = useNavigate();
+
   const DEFAULT_PROFILE_PICTURE =
     "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
+
+  const handleClick = (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      const isHashRouter = window.location.hash;
+
+      if (isHashRouter) {
+        window.open(`/#/package/${packageId}`, "_blank");
+      } else {
+        window.open(`/package/${packageId}`, "_blank");
+      }
+    } else {
+      navigate(`/package/${packageId}`);
+    }
+  };
+
   return (
-    <tr>
-      <td>
-        <FontAwesomeIcon
-          icon={faCircleInfo}
-          className={styles.infoIcon}
-          onClick={() => alert("This feature is not yet implemented.")}
-        />
-      </td>
+    <tr className={styles.row} onClick={handleClick}>
       <td>
         <div className={styles.userContainer}>
           <div className={styles.imageContainer}>
@@ -131,6 +144,7 @@ export default function DashboardCustomer() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortColumn, setSortColumn] = useState(SORT_COLUMNS.INITIATED);
   const [sortOrder, setSortOrder] = useState(SORT_ORDER.DESCENDING);
+  const [isIncoming, setIsIncoming] = useState(false);
 
   useEffect(() => {
     document.body.style.backgroundColor = "#08141a";
@@ -138,18 +152,16 @@ export default function DashboardCustomer() {
   }, []);
 
   useEffect(() => {
-    fetch(`${SERVER_BASE_URL}/package`)
+    let query;
+    if (user.role) query = `source_branch_id=${user.branch_id}`;
+    else if (isIncoming) query = `receiver_customer_id=${user.customer_id}`;
+    else query = `sender_customer_id=${user.customer_id}`;
+
+    fetch(`${SERVER_BASE_URL}/package?${query}`)
       .then((response) => response.json())
-      .then((data) => {
-        if (user.role) {
-          return data.filter((p) => p.source_branch_id === user.branch_id);
-        } else {
-          return data.filter((p) => p.sender_customer_id === user.customer_id);
-        }
-      })
       .then((data) => setPackages(data))
       .catch((error) => console.error("Error fetching packages:", error));
-  }, []);
+  }, [isIncoming]);
 
   useEffect(() => {
     const searchables = Array.from(
@@ -168,14 +180,6 @@ export default function DashboardCustomer() {
       );
     });
   }, [searchQuery]);
-
-  // const sqlDatetimeToDate = (sqlDatetime) => {
-  //   // Regex split that creates [year, month, day, hour, minutes, seconds] array
-  //   let dateTimeParts = sqlDatetime.split(/[- :]/);
-  //   // Month index begins with 0 for January and ends with 11 for December, so decrement by one
-  //   dateTimeParts[1]--;
-  //   return new Date(...dateTimeParts);
-  // };
 
   const formatDateAndTime = (date) => {
     const formattedDate = date.toLocaleDateString("en-US", {
@@ -211,9 +215,12 @@ export default function DashboardCustomer() {
         : "-";
 
       return {
-        first: p.receiver_first_name,
-        last: p.receiver_last_name,
-        picture: p.receiver_profile_picture,
+        packageId: p.package_id,
+        first: isIncoming ? p.sender_first_name : p.receiver_first_name,
+        last: isIncoming ? p.sender_last_name : p.receiver_last_name,
+        picture: isIncoming
+          ? p.sender_profile_picture
+          : p.receiver_profile_picture,
         status: p.status,
         costFloat,
         costString,
@@ -247,7 +254,7 @@ export default function DashboardCustomer() {
   const sortPackages = (packages, column, order) => {
     const ascending = order === SORT_ORDER.ASCENDING;
     return [...packages].sort((a, b) => {
-      if (column === SORT_COLUMNS.RECIPIENT) {
+      if (column === SORT_COLUMNS.PERSON) {
         // If first names are the same, compare last names
         const firstNameComparison = a.first.localeCompare(b.first);
         const lastNameComparison = a.last.localeCompare(b.last);
@@ -277,7 +284,8 @@ export default function DashboardCustomer() {
           : b.costFloat - a.costFloat;
       }
       // For other columns, use the default comparison
-      return ascending ? a[column] > b[column] : a[column] < b[column];
+      const sort = ascending ? a[column] > b[column] : a[column] < b[column]; // Returns a boolean
+      return sort ? 1 : -1; // Sort needs a signed integer to determine order
     });
   };
 
@@ -308,7 +316,18 @@ export default function DashboardCustomer() {
     <>
       <NavBar />
       <main id={styles.container}>
-        <h1 id={styles.heading}>Welcome back, {user.first_name}</h1>
+        <div id={styles.top}>
+          <h1 id={styles.heading}>Welcome back, {user.first_name}</h1>
+          {!user.role && (
+            <button
+              id={styles.switch}
+              onClick={() => setIsIncoming(!isIncoming)}
+            >
+              <FontAwesomeIcon icon={faRepeat} />
+              {isIncoming ? "Incoming" : "Outgoing"}
+            </button>
+          )}
+        </div>
         <section id={styles.controls} className={styles.section}>
           <p id={styles.searchText} className={styles.label}>
             What are you searching for?
@@ -343,7 +362,9 @@ export default function DashboardCustomer() {
               defaultValue={sortColumn}
               onChange={(e) => setSortColumn(e.target.value)}
             >
-              <option value={SORT_COLUMNS.RECIPIENT}>Recipient</option>
+              <option value={SORT_COLUMNS.PERSON}>
+                {isIncoming ? "Sender" : "Recipient"}
+              </option>
               <option value={SORT_COLUMNS.STATUS}>Status</option>
               <option value={SORT_COLUMNS.COST}>Total Cost</option>
               <option value={SORT_COLUMNS.TYPE}>Type</option>
@@ -373,27 +394,33 @@ export default function DashboardCustomer() {
           </button>
         </section>
         <section id={styles.outerTableContainer} className={styles.section}>
-          <div id={styles.innerTableContainer}>
-            <table id={styles.table}>
-              <thead>
-                <tr>
-                  <th>{/* Empty to account for info icon */}</th>
-                  <th>Recipient</th>
-                  <th>Status</th>
-                  <th>Total Cost</th>
-                  <th>Type</th>
-                  <th>Destination</th>
-                  <th>Initiated</th>
-                  <th>Delivered</th>
-                </tr>
-              </thead>
-              <tbody>
-                {parsedFilteredSortedPackages.map((props, i) => (
-                  <Row key={i} {...props} />
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {parsedFilteredSortedPackages.length === 0 ? (
+            <div id={styles.noResults}>
+              <img id={styles.empty} src={EmptyImage} alt="Clipboard" />
+              <p>No results found</p>
+            </div>
+          ) : (
+            <div id={styles.innerTableContainer}>
+              <table id={styles.table}>
+                <thead>
+                  <tr>
+                    <th> {isIncoming ? "Sender" : "Recipient"}</th>
+                    <th>Status</th>
+                    <th>Total Cost</th>
+                    <th>Type</th>
+                    <th>Destination</th>
+                    <th>Initiated</th>
+                    <th>Delivered</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {parsedFilteredSortedPackages.map((props, i) => (
+                    <Row key={i} {...props} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
         <section id={styles.pagination} className={styles.section}>
           <p id={styles.records}>

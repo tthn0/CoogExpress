@@ -8,6 +8,7 @@ import DashboardDriver from "./components/dashboardDriver";
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
+import Package from "./components/package";
 import Profile from "./components/profile";
 import AuthProvider from "./contexts/AuthProvider";
 import ProtectedRoute from "./contexts/ProtectedRoute";
@@ -42,6 +43,10 @@ const router = createHashRouter([
   //   path: "/dashboard/manager",
   //   element: <ProtectedRoute children={<DashboardManager />} />,
   // },
+  {
+    path: "/package/:packageId",
+    element: <ProtectedRoute children={<Package />} />,
+  },
   {
     path: "/profile",
     element: <ProtectedRoute children={<Profile />} />,

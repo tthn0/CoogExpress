@@ -38,6 +38,7 @@ export default function PackageForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [validUsernames, setValidUsernames] = useState([]);
+  const [validAddresses, setValidAddresses] = useState([]);
   const packageTypeRef = useRef(null);
   const packageSpeedRef = useRef(null);
   const formRef = useRef(null);
@@ -53,6 +54,20 @@ export default function PackageForm() {
         }
         const validUsernames = data.map((customer) => customer.username);
         setValidUsernames(validUsernames);
+      })
+      .catch((error) => {
+        alert(`An error occurred: ${error.message}. Check the console.`);
+        console.log(error);
+      });
+    fetch(`${SERVER_BASE_URL}/address`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.errno) {
+          alert(`An error occurred: ${data.message}. Check the console.`);
+          console.log(data);
+          return;
+        }
+        setValidAddresses(data);
       })
       .catch((error) => {
         alert(`An error occurred: ${error.message}. Check the console.`);
@@ -156,6 +171,15 @@ export default function PackageForm() {
       ))}
     </datalist>
   );
+
+  const addressDatalistFields = ["line1", "line2", "city", "state", "zip"];
+  const addressDatalists = addressDatalistFields.map((field) => (
+    <datalist key={field} id={field}>
+      {validAddresses.map((address, i) => (
+        <option key={i} value={address[field]} />
+      ))}
+    </datalist>
+  ));
 
   return (
     <div id={styles.formContainer}>
@@ -265,10 +289,12 @@ export default function PackageForm() {
         />
 
         <h2 className={styles.subHeading}>Address Details</h2>
+        {addressDatalists.map((datalist) => datalist)}
         <Input
           containerClassName={styles.inputContainer}
           className={styles.input}
           type="text"
+          list="line1"
           name="destination_address_line1"
           label="Address Line 1"
           icon={faHome}
@@ -278,6 +304,7 @@ export default function PackageForm() {
           containerClassName={styles.inputContainer}
           className={styles.input}
           type="text"
+          list="line2"
           name="destination_address_line2"
           label="Address Line 2"
           icon={faBuilding}
@@ -288,6 +315,7 @@ export default function PackageForm() {
           containerClassName={styles.inputContainer}
           className={styles.input}
           type="text"
+          list="city"
           name="destination_address_city"
           label="City"
           icon={faLocationDot}
@@ -297,6 +325,7 @@ export default function PackageForm() {
           containerClassName={styles.inputContainer}
           className={styles.input}
           type="text"
+          list="state"
           name="destination_address_state"
           label="State"
           icon={faMapPin}
@@ -306,6 +335,7 @@ export default function PackageForm() {
           containerClassName={styles.inputContainer}
           className={styles.input}
           type="text"
+          list="zip"
           name="destination_address_zip"
           label="Zip"
           icon={faLocationArrow}

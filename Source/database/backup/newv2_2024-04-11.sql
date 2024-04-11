@@ -6,8 +6,8 @@
 # https://github.com/Sequel-Ace/Sequel-Ace
 #
 # Host: cosc3380.mysql.database.azure.com (MySQL 8.0.35)
-# Database: newest
-# Generation Time: 2024-04-09 10:13:48 +0000
+# Database: newv2
+# Generation Time: 2024-04-11 14:40:48 +0000
 # ************************************************************
 
 
@@ -34,7 +34,7 @@ CREATE TABLE `address` (
   `zip` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_address` (`line1`,`line2`,`city`,`state`,`zip`)
-) ENGINE=InnoDB AUTO_INCREMENT=331 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=376 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
@@ -52,6 +52,7 @@ VALUES
 	(17,'303 Pear St','','Dallas','TX','75201'),
 	(8,'333 Walnut St','','Philadelphia','PA','19101'),
 	(18,'404 Watermelon St','','Charlotte','NC','28201'),
+	(375,'404 Watermelon St','','Orlando','OR','80201'),
 	(9,'444 Cherry St','Unit B','Austin','TX','78701'),
 	(2,'456 Elm St','','Los Angeles','CA','90001'),
 	(26,'456 Jump St','','Albany','NY','12345'),
@@ -92,8 +93,35 @@ CREATE TABLE `billing` (
   KEY `address_id` (`address_id`),
   CONSTRAINT `fk_billing_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_billing_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `billing` WRITE;
+/*!40000 ALTER TABLE `billing` DISABLE KEYS */;
+
+INSERT INTO `billing` (`id`, `customer_id`, `address_id`, `card_number`, `cvc`, `expiration_month`, `expiration_year`, `cardholder_name`)
+VALUES
+	(1,1,1,'4242424242424242','342','12','2023','third time'),
+	(2,1,1,'4242424242424242','342','12','2023','third time'),
+	(3,1,1,'4242424242424242','342','12','2023','third time'),
+	(4,1,1,'4242424242424242','342','12','2023','third time'),
+	(5,1,1,'4242424242424242','342','12','2023','third time'),
+	(6,1,1,'4242424242424242','342','12','2023','third time'),
+	(7,1,1,'4242424242424242','342','12','2023','third time'),
+	(8,1,1,'4242424242424242','342','12','2023','third time'),
+	(9,1,1,'4242424242424242','342','12','2023','third time'),
+	(10,1,1,'4242424242424242','342','12','2023','third time'),
+	(11,1,1,'4242424242424242','342','12','2023','third time'),
+	(12,1,1,'4242424242424242','342','12','2023','third time'),
+	(13,1,1,'4242424242424242','342','12','2023','third time'),
+	(14,1,1,'4242424242424242','342','12','2023','third time'),
+	(15,1,1,'4242424242424242','342','12','2023','third time'),
+	(16,1,1,'4242424242424242','342','12','2023','third time'),
+	(17,1,1,'4242424242424242','342','12','2023','third time'),
+	(18,1,1,'4242424242424242','342','12','2023','third time'),
+	(19,1,1,'4242424242424242','342','12','2023','third time');
+
+/*!40000 ALTER TABLE `billing` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table branch
@@ -217,7 +245,7 @@ CREATE TABLE `email_queue` (
   `email_body` varchar(1000) DEFAULT NULL,
   `processed` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `email_queue` WRITE;
 /*!40000 ALTER TABLE `email_queue` DISABLE KEYS */;
@@ -425,7 +453,40 @@ VALUES
 	(202,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 131',0),
 	(203,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 132',0),
 	(204,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 133',0),
-	(205,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 134',0);
+	(205,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 134',0),
+	(206,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 135',0),
+	(207,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 136',0),
+	(208,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 137',0),
+	(209,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 138',0),
+	(210,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 139',0),
+	(211,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 140',0),
+	(212,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 141',0),
+	(213,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 142',0),
+	(214,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 143',0),
+	(215,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 144',0),
+	(216,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 145',0),
+	(217,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 146',0),
+	(218,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 147',0),
+	(219,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 148',0),
+	(220,'John','john@conway.com','CoogExpress: New tracking history!','Hello, John!\n\n A new tracking history has been created for you.\n Tracking history ID: 149',0),
+	(221,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 150',0),
+	(222,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 151',0),
+	(223,'Alan','alan@turing.com','CoogExpress: New tracking history!','Hello, Alan!\n\n A new tracking history has been created for you.\n Tracking history ID: 152',0),
+	(224,'Ada','ada@lovelace.com','CoogExpress: New tracking history!','Hello, Ada!\n\n A new tracking history has been created for you.\n Tracking history ID: 153',0),
+	(225,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 154',0),
+	(226,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 155',0),
+	(227,'Dennis','dennis@ritchie.com','CoogExpress: New tracking history!','Hello, Dennis!\n\n A new tracking history has been created for you.\n Tracking history ID: 156',0),
+	(228,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 157',0),
+	(229,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 158',0),
+	(230,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 159',0),
+	(231,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 160',0),
+	(232,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 161',0),
+	(233,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 162',0),
+	(234,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 163',0),
+	(235,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 164',0),
+	(236,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 165',0),
+	(237,'Grace','grace@hopper.com','CoogExpress: New tracking history!','Hello, Grace!\n\n A new tracking history has been created for you.\n Tracking history ID: 166',0),
+	(238,'Linus','linus@torvalds.com','CoogExpress: New tracking history!','Hello, Linus!\n\n A new tracking history has been created for you.\n Tracking history ID: 167',0);
 
 /*!40000 ALTER TABLE `email_queue` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -454,7 +515,7 @@ CREATE TABLE `employee` (
   CONSTRAINT `fk_employee_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_employee_supervisor_employee_id` FOREIGN KEY (`supervisor_employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_employee_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
@@ -541,14 +602,15 @@ CREATE TABLE `inventory` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `fk_inventory_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_inventory_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
 
 INSERT INTO `inventory` (`id`, `branch_id`, `product_id`, `quantity_in_stock`, `stock_alert_threshold`, `last_stock_update`, `been_notified`)
 VALUES
-	(1,4,4,201,200,'2016-08-10 06:15:00',0);
+	(1,4,4,201,200,'2016-08-10 01:15:00',0),
+	(2,4,5,100,200,'2016-08-10 01:15:00',0);
 
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -603,6 +665,8 @@ DELIMITER ;
 /*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
 
+
+
 # Dump of table package
 # ------------------------------------------------------------
 
@@ -633,8 +697,17 @@ CREATE TABLE `package` (
   CONSTRAINT `fk_package_receiver_customer_id` FOREIGN KEY (`receiver_customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_package_sender_customer_id` FOREIGN KEY (`sender_customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_package_source_branch_id` FOREIGN KEY (`source_branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `package` WRITE;
+/*!40000 ALTER TABLE `package` DISABLE KEYS */;
+
+INSERT INTO `package` (`id`, `sender_customer_id`, `receiver_customer_id`, `source_branch_id`, `destination_address_id`, `type`, `width`, `length`, `height`, `weight`, `special_handling_instructions`, `delivery_instructions`, `base_shipping_cost`, `additional_fees`, `speed`)
+VALUES
+	(8,3,5,1,375,'Parcel',1.00,2.00,3.00,4.00,NULL,NULL,4.99,1.99,'Express');
+
+/*!40000 ALTER TABLE `package` ENABLE KEYS */;
+UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
@@ -748,8 +821,20 @@ CREATE TABLE `route` (
   CONSTRAINT `fk_route_driver_employee_id` FOREIGN KEY (`driver_employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_route_end_address_id` FOREIGN KEY (`destination_branch_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_route_start_address_id` FOREIGN KEY (`source_branch_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `route` WRITE;
+/*!40000 ALTER TABLE `route` DISABLE KEYS */;
+
+INSERT INTO `route` (`id`, `source_branch_id`, `destination_branch_id`, `driver_employee_id`, `start_timestamp`, `end_timestamp`)
+VALUES
+	(1,1,1,5,'2024-04-09 10:25:54','2024-04-09 05:28:46'),
+	(2,1,1,5,'2024-04-09 10:33:08','2024-04-09 05:33:26'),
+	(3,1,1,5,'2024-04-09 22:18:54','2024-04-09 17:19:55'),
+	(4,1,1,2,'2024-04-11 12:42:35','2024-04-11 07:54:14');
+
+/*!40000 ALTER TABLE `route` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
@@ -769,7 +854,7 @@ CREATE TABLE `shipment` (
   KEY `route_id` (`route_id`),
   CONSTRAINT `fk_shipment_package_id` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_shipment_route_id` FOREIGN KEY (`route_id`) REFERENCES `route` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 DELIMITER ;;
@@ -801,14 +886,23 @@ CREATE TABLE `tracking_history` (
   `package_id` int unsigned NOT NULL,
   `address_id` int unsigned NOT NULL,
   `timestamp` timestamp NOT NULL,
-  `status` enum('Pending','Standby','Shipping','Delivered') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `status` enum('Pending','Standby','Shipping','Delivered','Lost') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `package_id` (`package_id`),
   KEY `address_id` (`address_id`),
   CONSTRAINT `fk_tracking_history_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tracking_history_package_id` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `tracking_history` WRITE;
+/*!40000 ALTER TABLE `tracking_history` DISABLE KEYS */;
+
+INSERT INTO `tracking_history` (`id`, `package_id`, `address_id`, `timestamp`, `status`)
+VALUES
+	(167,8,1,'2024-04-11 08:36:59','Pending');
+
+/*!40000 ALTER TABLE `tracking_history` ENABLE KEYS */;
+UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
@@ -868,23 +962,23 @@ CREATE TABLE `user` (
   UNIQUE KEY `unique_username` (`username`),
   KEY `address_id` (`address_id`),
   CONSTRAINT `fk_user_address_id` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `email`, `password_hash`, `phone_number`, `phone_country_code`, `address_id`, `profile_picture`, `created_at`, `last_login`, `deleted`)
 VALUES
-	(1,'Thomas','Nguyen','thomas','thomas@tthn.us','nguyen','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-04-08 09:37:51',0),
-	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-04-08 09:38:06',0),
+	(1,'Thomas','Nguyen','thomas','thomas@tthn.us','nguyen','0000000000','1',1,'https://cdn.discordapp.com/avatars/354864663579590656/63557e1ac09d078162e402b7ccb4f8d5.png?size=128','2024-03-17 12:30:45','2024-04-10 00:49:21',0),
+	(2,'Brandon','Miramontes','brandon','brandon@miramontes.com','miramontes','1111111111','1',2,'https://cdn.discordapp.com/avatars/1074077467796582401/59b4e2334926f1a3ec85261648464c6d.png?size=128','2024-03-23 13:42:02','2024-04-11 12:36:51',0),
 	(3,'Salim','Sanogho','salim','salim@sanogho.com','sanogho','2222222222','1',3,'https://cdn.discordapp.com/avatars/1013124526768406658/ece88637647dbdf3cc441279bc9355be.png?size=128','2024-03-23 13:45:09','2024-04-08 09:38:21',0),
 	(4,'Nikolas','Velazquez','nikolas','nikolas@velazquez.com','velazquez','3333333333','1',4,'https://cdn.discordapp.com/avatars/234144333161299978/c0411ce9c43f2397d4626b650159fdce.png?size=128','2024-03-23 13:45:09','2024-04-08 09:38:36',0),
-	(5,'Sam','Li','sam','sam@li.com','lilili','4444444444','1',5,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:45:09','2024-04-09 09:28:26',0),
+	(5,'Sam','Li','sam','sam@li.com','lilili','4444444444','1',5,'https://cdn.discordapp.com/avatars/550888319182176287/6023d54c18e7853518137efee812d10f.png?size=128','2024-03-23 13:45:09','2024-04-11 08:49:47',0),
 	(10,'Manager','Employee','manager','manager@branch2.com','manager','1111100000','1',1,'https://i.pravatar.cc/400?img=11','2024-03-23 13:45:09','2024-04-08 09:50:14',0),
 	(11,'Driver','Employee','driver','driver@branch2.com','driver','2222200000','1',2,'https://i.pravatar.cc/400?img=13','2024-03-23 13:45:09','2024-04-08 09:50:25',0),
 	(12,'Associate','Employee','associate','associate@branch2.com','associate','3333300000','1',3,'https://i.pravatar.cc/400?img=38','2024-03-23 13:45:09','2024-04-09 09:43:11',0),
-	(20,'Alan','Turing','alan','alan@turing.com','turing','0000011111','1',1,'https://xsgames.co/randomusers/assets/avatars/male/1.jpg','2024-04-08 09:23:16','2024-04-09 03:40:07',0),
-	(21,'Grace','Hopper','grace','grace@hopper.com','hopper','0000022222','1',2,'https://xsgames.co/randomusers/assets/avatars/female/2.jpg','2024-04-08 09:24:56','2024-04-08 09:37:19',0),
+	(20,'Alan','Turing','alan','alan@turing.com','turing','0000011111','1',1,'https://xsgames.co/randomusers/assets/avatars/male/1.jpg','2024-04-08 09:23:16','2024-04-11 06:35:40',0),
+	(21,'Grace','Hopper','grace','grace@hopper.com','hopper','0000022222','1',2,'https://xsgames.co/randomusers/assets/avatars/female/2.jpg','2024-04-08 09:24:56','2024-04-10 01:45:49',0),
 	(22,'Ada','Lovelace','ada','ada@lovelace.com','lovelace','0000033333','1',3,'https://xsgames.co/randomusers/assets/avatars/female/3.jpg','2024-04-08 09:26:06','2024-04-08 09:37:13',0),
 	(23,'Dennis','Ritchie','dennis','dennis@ritchie.com','ritchie','0000044444','1',4,'https://xsgames.co/randomusers/assets/avatars/male/4.jpg','2024-04-08 09:27:28','2024-04-08 09:37:26',0),
 	(24,'Linus','Torvalds','linus','linus@torvalds.com','torvalds','0000055555','1',5,'https://xsgames.co/randomusers/assets/avatars/male/5.jpg','2024-04-08 09:28:18','2024-04-08 09:37:33',0),
@@ -894,37 +988,22 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of view route_view
+# Dump of view inventory_view
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `route_view`; DROP VIEW IF EXISTS `route_view`;
+DROP TABLE IF EXISTS `inventory_view`; DROP VIEW IF EXISTS `inventory_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `route_view`
+CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `inventory_view`
 AS SELECT
-   `r`.`id` AS `route_id`,
-   `r`.`start_timestamp` AS `start_timestamp`,
-   `r`.`end_timestamp` AS `end_timestamp`,
-   `b1`.`branch_id` AS `source_branch_id`,
-   `b1`.`name` AS `source_branch_name`,
-   `b1`.`address_id` AS `source_branch_address_id`,
-   `b1`.`line1` AS `source_branch_line1`,
-   `b1`.`line2` AS `source_branch_line2`,
-   `b1`.`city` AS `source_branch_city`,
-   `b1`.`state` AS `source_branch_state`,
-   `b1`.`zip` AS `source_branch_zip`,
-   `b2`.`branch_id` AS `destination_branch_id`,
-   `b2`.`name` AS `destination_branch_name`,
-   `b2`.`address_id` AS `destination_branch_address_id`,
-   `b2`.`line1` AS `destination_branch_line1`,
-   `b2`.`line2` AS `destination_branch_line2`,
-   `b2`.`city` AS `destination_branch_city`,
-   `b2`.`state` AS `destination_branch_state`,
-   `b2`.`zip` AS `destination_branch_zip`,
-   `driver`.`employee_id` AS `driver_employee_id`,
-   `driver`.`first_name` AS `driver_first_name`,
-   `driver`.`last_name` AS `driver_last_name`,
-   `driver`.`profile_picture` AS `driver_profile_picture`,(select count(0)
-FROM `shipment` `s` where (`s`.`route_id` = `r`.`id`)) AS `package_count` from (((`route` `r` left join `branch_view` `b1` on((`r`.`source_branch_id` = `b1`.`branch_id`))) left join `branch_view` `b2` on((`r`.`destination_branch_id` = `b2`.`branch_id`))) left join `employee_view` `driver` on((`r`.`driver_employee_id` = `driver`.`employee_id`)));
+   `b`.`id` AS `branch_id`,
+   `b`.`name` AS `branch_name`,
+   `p`.`name` AS `product_name`,
+   `i`.`product_id` AS `product_id`,
+   `i`.`quantity_in_stock` AS `quantity_in_stock`,
+   `i`.`stock_alert_threshold` AS `stock_alert_threshold`,
+   `i`.`last_stock_update` AS `last_stock_update`,
+   `p`.`deleted` AS `product_deleted`
+FROM ((`inventory` `i` join `branch` `b` on((`b`.`id` = `i`.`branch_id`))) join `product` `p` on((`p`.`id` = `i`.`product_id`)));
 
 # Dump of view package_view
 # ------------------------------------------------------------
@@ -1015,6 +1094,38 @@ AS SELECT
    `b`.`name` AS `branch_name`,
    `b`.`address_id` AS `branch_address_id`
 FROM (((((`user` `u` join `address` `a`) join `employee` `e`) join `employee` `s`) join `user` `su`) join `branch` `b`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`) and (`e`.`supervisor_employee_id` = `s`.`id`) and (`s`.`user_id` = `su`.`id`) and (`e`.`branch_id` = `b`.`id`));
+
+# Dump of view route_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `route_view`; DROP VIEW IF EXISTS `route_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `route_view`
+AS SELECT
+   `r`.`id` AS `route_id`,
+   `r`.`start_timestamp` AS `start_timestamp`,
+   `r`.`end_timestamp` AS `end_timestamp`,
+   `b1`.`branch_id` AS `source_branch_id`,
+   `b1`.`name` AS `source_branch_name`,
+   `b1`.`address_id` AS `source_branch_address_id`,
+   `b1`.`line1` AS `source_branch_line1`,
+   `b1`.`line2` AS `source_branch_line2`,
+   `b1`.`city` AS `source_branch_city`,
+   `b1`.`state` AS `source_branch_state`,
+   `b1`.`zip` AS `source_branch_zip`,
+   `b2`.`branch_id` AS `destination_branch_id`,
+   `b2`.`name` AS `destination_branch_name`,
+   `b2`.`address_id` AS `destination_branch_address_id`,
+   `b2`.`line1` AS `destination_branch_line1`,
+   `b2`.`line2` AS `destination_branch_line2`,
+   `b2`.`city` AS `destination_branch_city`,
+   `b2`.`state` AS `destination_branch_state`,
+   `b2`.`zip` AS `destination_branch_zip`,
+   `driver`.`employee_id` AS `driver_employee_id`,
+   `driver`.`first_name` AS `driver_first_name`,
+   `driver`.`last_name` AS `driver_last_name`,
+   `driver`.`profile_picture` AS `driver_profile_picture`,(select count(0)
+FROM `shipment` `s` where (`s`.`route_id` = `r`.`id`)) AS `package_count` from (((`route` `r` left join `branch_view` `b1` on((`r`.`source_branch_id` = `b1`.`branch_id`))) left join `branch_view` `b2` on((`r`.`destination_branch_id` = `b2`.`branch_id`))) left join `employee_view` `driver` on((`r`.`driver_employee_id` = `driver`.`employee_id`)));
 
 # Dump of view branch_view
 # ------------------------------------------------------------

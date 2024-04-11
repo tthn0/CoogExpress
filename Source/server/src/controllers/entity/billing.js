@@ -56,7 +56,7 @@ export default {
         expiration_month = ?,
         expiration_year = ?,
         cardholder_name = ?
-      WHERE billing.id = ?;`,
+      WHERE id = ?;`,
       [
         customer_id,
         address_id,
