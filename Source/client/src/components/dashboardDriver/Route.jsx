@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faBuilding,
+  faExclamationTriangle,
   faLocationDot,
   faMapPin,
   faLocationArrow,
@@ -50,7 +51,7 @@ const fetchPackages = async (routeId, setPackages) => {
   if (route.source_branch_id === route.destination_branch_id) {
     // If going back to home branch
     const undeliveredPackages = packages.filter(
-      (pkg) => pkg.status !== "Delivered"
+      (pkg) => pkg.status !== "Delivered" && pkg.status !== "Lost"
     );
     setPackages(undeliveredPackages);
   } else {
@@ -124,7 +125,7 @@ export default function Route() {
     setLoading(false);
   };
 
-  const handleDropOff = (pkg) => {
+  const updateStatus = (pkg, status) => {
     return (e) => {
       e.preventDefault();
 
@@ -138,7 +139,7 @@ export default function Route() {
           city: pkg.destination_address_city,
           state: pkg.destination_address_state,
           zip: pkg.destination_address_zip,
-          status: "Delivered",
+          status,
         }),
       })
         .then((response) => {
@@ -148,10 +149,13 @@ export default function Route() {
             return;
           }
 
-          // remove packge from state
           setPackages(packages.filter((p) => p.package_id !== pkg.package_id));
 
-          alert("Package dropped off successfully.");
+          alert(
+            status === "Delivered"
+              ? "Package updated off successfully."
+              : "Package marked as lost."
+          );
         })
         .catch((error) => {
           alert("Error updating location. Check console.");
@@ -364,8 +368,11 @@ export default function Route() {
                     <th>Special Handling Instructions</th>
                     <th>Delivery Instructions</th>
                     {user.branch_id === destinationBranch.branch_id && (
-                      <th>Drop Off</th>
+                      <>
+                        <th>Drop Off</th>
+                      </>
                     )}
+                    <th>Mark Lost</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -394,12 +401,20 @@ export default function Route() {
                         <td>
                           <button
                             id={styles.dropOff}
-                            onClick={handleDropOff(pkg)}
+                            onClick={updateStatus(pkg, "Delivered")}
                           >
                             <FontAwesomeIcon icon={faSquareCheck} />
                           </button>
                         </td>
                       )}
+                      <td>
+                        <button
+                          id={styles.dropOff}
+                          onClick={updateStatus(pkg, "Lost")}
+                        >
+                          <FontAwesomeIcon icon={faExclamationTriangle} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

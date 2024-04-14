@@ -1,0 +1,353 @@
+@use "./colors" as colors;
+@use "./fonts" as fonts;
+
+#container {
+  font-family: fonts.$poppins;
+  font-size: fonts.$fluidFontSize-0;
+  width: min(90%, 90em);
+  margin-inline: auto;
+  padding: 4em 0;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.box {
+  background: white;
+  border-radius: 1.5em;
+  padding: 2.5em;
+}
+
+#top {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+.card {
+  background: white;
+  border-radius: 1.5em;
+}
+
+.userInfo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5em;
+  padding: 2.5em;
+}
+
+.picture {
+  border-radius: 50%;
+  width: 10em;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.name {
+  font-size: 1.1em;
+}
+
+.username {
+  color: grey;
+}
+
+#buttonContainer {
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+%button {
+  border-radius: 0.75em;
+  height: 2.5em;
+  width: 100%;
+  transition: 0.3s ease;
+  &:hover {
+    filter: hue-rotate(-10deg);
+  }
+}
+
+#primaryButton {
+  @extend %button;
+  background: #5c9dff;
+  color: white;
+}
+
+#secondaryButton {
+  @extend %button;
+  background: white;
+  border: 3px solid #5c9dff;
+  color: #5c9dff;
+}
+
+.userType {
+  background: #5c9dff;
+  padding: 0.75em 0;
+  color: white;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+#summary {
+  font-size: 2.25em;
+  font-weight: 500;
+}
+
+#hash {
+  color: grey;
+}
+
+#divider {
+  width: 100%;
+  height: 0.4em;
+  border-radius: 100em;
+  background: black;
+  margin: 1.5em 0 2em 0;
+}
+
+#underDivider {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+#packageInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#qrCode {
+  width: 100%;
+}
+
+.cell {
+  margin-top: 1em;
+}
+
+#packageInfo h2 {
+  font-size: 1.1em;
+  font-weight: 450;
+}
+
+#packageInfo p {
+  color: grey;
+}
+
+#outerTableContainer {
+  padding: 0.5em;
+  overflow: auto;
+  max-height: 60vh;
+  background: colors.$darkI;
+}
+
+#innerTableContainer {
+  border-radius: 0.75em;
+  overflow: auto;
+}
+
+#table {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+  font-weight: 300;
+}
+
+#noResults {
+  margin: 3em auto;
+}
+
+#empty {
+  width: 30%;
+  margin: 0 auto;
+}
+
+#noResults p {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 450;
+}
+
+#table th,
+td {
+  padding: 0.75em 1em;
+}
+
+#table th:first-of-type,
+#table td:first-of-type {
+  border-top-left-radius: 0.75em;
+  border-bottom-left-radius: 0.75em;
+}
+
+#table th:last-of-type,
+#table td:last-of-type {
+  border-top-right-radius: 0.75em;
+  border-bottom-right-radius: 0.75em;
+}
+
+#table thead tr {
+  background: colors.$darkIV;
+}
+
+#table thead th {
+  font-weight: 500;
+}
+
+#table tbody tr:nth-child(odd) {
+  background: colors.$darkI;
+}
+
+#table tbody tr:nth-child(even) {
+  background: colors.$darkII;
+}
+
+.userContainer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.imageContainer {
+  width: 3rem;
+  height: 3rem;
+}
+
+.profilePicture {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.first {
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.last {
+  color: colors.$grey;
+  font-size: 0.9em;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.status {
+  border-radius: 100em;
+  padding: 0.45em 1.35em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pending {
+  background: colors.$orangeBg;
+  color: colors.$orangeFg;
+}
+
+.standby {
+  background: colors.$purpleBg;
+  color: colors.$purpleFg;
+}
+
+.shipping {
+  background: colors.$blueBg;
+  color: colors.$blueFg;
+}
+
+.delivered {
+  background: colors.$greenBg;
+  color: colors.$greenFg;
+}
+
+.lost {
+  background: colors.$redBg;
+  color: colors.$redFg;
+}
+
+.pre {
+  text-align: center;
+  display: inline-block;
+  background: colors.$darkIII;
+  padding: 0.35em 1.5em;
+  border-radius: 0.5em;
+  font-size: 0.9em;
+  margin: 0;
+}
+
+@media screen and (max-width: 1200px) {
+  #container {
+    font-size: fonts.$fluidFontSize--1;
+    width: 92.5%;
+    padding: 3em 0;
+  }
+  #buttonContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  #container {
+    font-size: fonts.$fluidFontSize--2;
+  }
+  #underDivider {
+    grid-template-columns: 5fr 2fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #container {
+    font-size: fonts.$fluidFontSize--3;
+    width: 95%;
+    padding: 2em 0;
+  }
+  #top {
+    grid-template-columns: 1fr;
+  }
+  #underDivider {
+    grid-template-columns: 2fr 1fr;
+  }
+  #buttonContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #underDivider {
+    grid-template-columns: 5fr 4fr;
+  }
+  #packageInfo {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #container {
+    font-size: fonts.$fluidFontSize--4;
+    padding: 1em 0;
+  }
+  #underDivider {
+    grid-template-columns: 1fr;
+  }
+  #qrCode {
+    margin-top: 1em;
+  }
+  #buttonContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  #container {
+    font-size: fonts.$fluidFontSize--5;
+  }
+}
