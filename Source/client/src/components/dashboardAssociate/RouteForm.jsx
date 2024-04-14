@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../../contexts/AuthContext";
 import Button from "../shared/Button";
 import styles from "./DashboardAssociate.module.scss";
@@ -95,6 +97,47 @@ export default function RouteForm() {
       });
   };
 
+  const updateStatus = (pkg, status) => {
+    return (e) => {
+      e.preventDefault();
+
+      fetch(`${SERVER_BASE_URL}/tracking_history`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          package_id: pkg.package_id,
+          line1: pkg.destination_address_line1,
+          line2: pkg.destination_address_line2,
+          city: pkg.destination_address_city,
+          state: pkg.destination_address_state,
+          zip: pkg.destination_address_zip,
+          status,
+        }),
+      })
+        .then((response) => {
+          if (response.errno) {
+            alert("Error updating location. Check console.");
+            console.error("Error updating location:", response);
+            return;
+          }
+
+          setAllPackages(
+            allPackages.filter((p) => p.package_id !== pkg.package_id)
+          );
+
+          alert(
+            status === "Delivered"
+              ? "Package updated off successfully."
+              : "Package marked as lost."
+          );
+        })
+        .catch((error) => {
+          alert("Error updating location. Check console.");
+          console.error("Error updating location:", error);
+        });
+    };
+  };
+
   const estimates = estimateRouteSummary(selectedPackagesById.length);
 
   const formHtml = (
@@ -108,12 +151,12 @@ export default function RouteForm() {
               <th>Package ID</th>
               <th>Sender Username</th>
               <th>Receiver Username</th>
-              <th>Length</th>
-              <th>Width</th>
-              <th>Height</th>
-              <th>Weight</th>
+              <th>Dimensions (cm)</th>
+              <th>Weight (g)</th>
+              <th>Type</th>
               <th>Speed</th>
               <th>Destination</th>
+              <th>Mark Lost</th>
             </tr>
           </thead>
           <tbody>
@@ -136,16 +179,15 @@ export default function RouteForm() {
                   <pre>{p.receiver_username}</pre>
                 </td>
                 <td>
-                  <pre>{p.length}</pre>
-                </td>
-                <td>
-                  <pre>{p.width}</pre>
-                </td>
-                <td>
-                  <pre>{p.height}</pre>
+                  <pre>
+                    {p.length}×{p.width}×{p.height}
+                  </pre>
                 </td>
                 <td>
                   <pre>{p.weight}</pre>
+                </td>
+                <td>
+                  <pre>{p.type}</pre>
                 </td>
                 <td>
                   <pre>{p.speed}</pre>
@@ -158,6 +200,11 @@ export default function RouteForm() {
                     {", "}
                     {p.destination_address_state} {p.destination_address_zip}
                   </div>
+                </td>
+                <td>
+                  <button id={styles.dropOff} onClick={updateStatus(p, "Lost")}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </button>
                 </td>
               </tr>
             ))}

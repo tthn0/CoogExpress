@@ -4,7 +4,6 @@
 #container {
   font-family: fonts.$poppins;
   font-size: fonts.$fluidFontSize-0;
-  color: colors.$light;
   width: min(90%, 90em);
   margin-inline: auto;
   padding: 4em 0;
@@ -42,10 +41,10 @@
 .section {
   background: colors.$darkI;
   border-radius: 1.5em;
-}
 
-.section:first-of-type {
-  margin-top: 1em;
+  &:first-of-type {
+    margin-top: 1em;
+  }
 }
 
 .section:not(:first-of-type) {
@@ -87,7 +86,7 @@
 
 #searchContainer:hover,
 #searchContainer:focus-within {
-  filter: brightness(1.25);
+  filter: brightness(0.95);
   transition: 0.1s ease;
 }
 
@@ -123,7 +122,7 @@
 
 .dropdownContainer:hover,
 .dropdownContainer:focus-within {
-  filter: brightness(1.25);
+  filter: brightness(0.95);
   transition: 0.1s ease;
 }
 
@@ -131,11 +130,10 @@
   width: 100%;
   font-size: 0.95em;
   border-radius: 0.5em;
-  background: colors.$darkI;
+  background: colors.$darkIV;
   cursor: pointer;
   padding: 0.55em 0.75em;
   color: colors.$grey;
-  border: 3px solid colors.$darkIV;
   appearance: none; /* Removes default browser styles */
 }
 
@@ -214,12 +212,12 @@ td {
 }
 
 #table tbody tr:hover {
-  filter: brightness(1.25);
+  filter: brightness(0.95);
   transition: 0.1s ease;
 }
 
 #table tbody tr:hover img {
-  filter: brightness(0.8);
+  filter: brightness(1.11);
   transition: 0.1s ease;
 }
 
@@ -350,7 +348,7 @@ td {
 
 #recordsDropdownContainer:hover,
 #recordsDropdownContainer:focus-within {
-  filter: brightness(1.25);
+  filter: brightness(0.95);
   transition: 0.1s ease;
 }
 
@@ -366,14 +364,14 @@ td {
   user-select: none;
 }
 
-#recordSize select {
+#logsLimit {
   font-size: 0.85em;
   border-radius: 0.5em;
-  background: colors.$darkI;
+  background: colors.$darkIV;
   cursor: pointer;
   padding: 0.25em 1.5em 0.25em 0.75em;
   color: colors.$grey;
-  border: 3px solid colors.$darkIV;
+  border: 1.5px solid colors.$grey;
   appearance: none; /* emoves default browser styles */
 }
 
@@ -394,8 +392,6 @@ td {
 @media screen and (max-width: 1200px) {
   #container {
     font-size: fonts.$fluidFontSize--1;
-  }
-  #container {
     width: 92.5%;
     padding: 3em 0;
   }

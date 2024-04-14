@@ -149,10 +149,13 @@ export default function Route() {
             return;
           }
 
-          // remove packge from state
           setPackages(packages.filter((p) => p.package_id !== pkg.package_id));
 
-          alert("Package updated off successfully.");
+          alert(
+            status === "Delivered"
+              ? "Package updated off successfully."
+              : "Package marked as lost."
+          );
         })
         .catch((error) => {
           alert("Error updating location. Check console.");
@@ -367,9 +370,9 @@ export default function Route() {
                     {user.branch_id === destinationBranch.branch_id && (
                       <>
                         <th>Drop Off</th>
-                        <th>Mark Lost</th>
                       </>
                     )}
+                    <th>Mark Lost</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -395,25 +398,23 @@ export default function Route() {
                       <td>{pkg.special_handling_instructions}</td>
                       <td>{pkg.delivery_instructions}</td>
                       {user.branch_id === destinationBranch.branch_id && (
-                        <>
-                          <td>
-                            <button
-                              id={styles.dropOff}
-                              onClick={updateStatus(pkg, "Delivered")}
-                            >
-                              <FontAwesomeIcon icon={faSquareCheck} />
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              id={styles.dropOff}
-                              onClick={updateStatus(pkg, "Lost")}
-                            >
-                              <FontAwesomeIcon icon={faExclamationTriangle} />
-                            </button>
-                          </td>
-                        </>
+                        <td>
+                          <button
+                            id={styles.dropOff}
+                            onClick={updateStatus(pkg, "Delivered")}
+                          >
+                            <FontAwesomeIcon icon={faSquareCheck} />
+                          </button>
+                        </td>
                       )}
+                      <td>
+                        <button
+                          id={styles.dropOff}
+                          onClick={updateStatus(pkg, "Lost")}
+                        >
+                          <FontAwesomeIcon icon={faExclamationTriangle} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

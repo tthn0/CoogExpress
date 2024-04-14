@@ -38,6 +38,7 @@ function Row({
   status,
   costString,
   type,
+  speed,
   line1,
   line2,
   city,
@@ -108,6 +109,15 @@ function Row({
         </pre>
       </td>
       <td>
+        <pre className={`${SEARCHABLE_CLASS_NAME} ${styles.pre}`}>
+          {speed === "Standard"
+            ? "🐌 Standard"
+            : speed === "Express"
+            ? "🐢 Express"
+            : "🐇 Overnight"}
+        </pre>
+      </td>
+      <td>
         <div className={`${SEARCHABLE_CLASS_NAME} ${styles.first}`}>
           {line1}
         </div>
@@ -147,8 +157,8 @@ export default function DashboardCustomer() {
   const [isIncoming, setIsIncoming] = useState(false);
 
   useEffect(() => {
-    document.body.style.backgroundColor = "#08141a";
-    return () => (document.body.style.backgroundColor = "");
+    document.body.style.background = "#EBEBEB";
+    return () => (document.body.style.background = "");
   }, []);
 
   useEffect(() => {
@@ -209,7 +219,7 @@ export default function DashboardCustomer() {
 
       const dateDelivered = delivered
         ? formatDateAndTime(delivered).formattedDate
-        : "-";
+        : "";
       const timeDelivered = delivered
         ? formatDateAndTime(delivered).formattedTime
         : "-";
@@ -225,6 +235,7 @@ export default function DashboardCustomer() {
         costFloat,
         costString,
         type: p.type,
+        speed: p.speed,
         line1: p.destination_address_line1,
         line2: p.destination_address_line2,
         city: p.destination_address_city,
@@ -408,6 +419,7 @@ export default function DashboardCustomer() {
                     <th>Status</th>
                     <th>Total Cost</th>
                     <th>Type</th>
+                    <th>Speed</th>
                     <th>Destination</th>
                     <th>Initiated</th>
                     <th>Delivered</th>
