@@ -13,6 +13,10 @@ import AuthProvider from "./contexts/AuthProvider";
 import ProtectedRoute from "./contexts/ProtectedRoute";
 import RedirectIfLoggedIn from "./contexts/RedirectIfLoggedIn";
 
+import Products from "./components/products/products";
+import Branches from "./components/branches/branches";
+import Inventory from "./components/inventory/inventory";
+
 const router = createHashRouter([
   {
     path: "/",
@@ -53,6 +57,19 @@ const router = createHashRouter([
   {
     path: "/register",
     element: <RedirectIfLoggedIn children={<Register />} />,
+  },
+
+  {
+    path: "/products",
+    element: <Products />,
+  },
+  {
+    path: "/branches",
+    element: <Branches />,
+  },
+  {
+    path: "/inventory/:branchId",
+    element: <Inventory />,
   },
 ]);
 

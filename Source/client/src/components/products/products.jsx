@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
+import NavBar from "../shared/NavBar";
+import styles from "./Products.module.css";
 
 const Products = () => {
   const [products, setProducts] = useState({});
@@ -37,21 +39,23 @@ const Products = () => {
   
   return (
     <>
-      <h2>List of Products</h2>
-      <div>
-        <ul>
-          {products.map((prod) => (
-            <li key={prod.id}>
-              <h3>{prod.name}</h3>
-              <p><strong>Description: </strong> { prod.description }</p>
-              <p><strong>Price: </strong>{ prod.price }</p>
-              <br/>
-            </li>
-          ))}
-        </ul>
+      <NavBar />
+      <div className={styles.productsContainer}>
+        <h2>List of Products</h2>
+        <div>
+          <ul>
+            {products.map((prod) => (
+              <li key={prod.id} className={styles.productItem}>
+                <h3>{prod.name}</h3>
+                <p><strong>Description: </strong>{prod.description}</p>
+                <p><strong>Price: </strong>${prod.price}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
-  );
+  );  
 };
 
 export default Products;

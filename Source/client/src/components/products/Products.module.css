@@ -1,0 +1,35 @@
+.productsContainer {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.productsContainer h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.productItem {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.productItem h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.productItem p {
+  font-size: 16px;
+}
+
+.productItem strong {
+  font-weight: bold;
+  color: #333;
+}

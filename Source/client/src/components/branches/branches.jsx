@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
+import NavBar from "../shared/NavBar";
+import styles from "./Branches.module.css";
+
+const convertPhoneNumber = (pNum) => {
+  try{
+    const cleaned = pNum.replace(/\D/g, "")
+    return `(${cleaned.substring(0, 3)}) ${cleaned.substring(3, 6)}-${cleaned.substring(6, 10)}`;
+  }catch{
+    return pNum;
+  }
+} 
 
 const Branches = () => {
   const [branches, setBranches] = useState({});
@@ -37,22 +48,24 @@ const Branches = () => {
 
   return (
     <>
-    <h2>List of Post Office Branches</h2>
-      <div>
-        <ul>
-          {branches.map((branch) => (
-            <li key={branch.id}>
-              <h3>{branch.name}</h3>
-              <p><strong>Address: </strong>{ branch.line1.concat("\n", branch.city, "\n", branch.state, "\n", branch.zip) }</p>
-              <p><strong>Manager: </strong>{ branch.manager_first_name.concat(" ", branch.manager_last_name) }</p>
-              <p><strong>Phone Number: </strong>{ branch.phone_number }</p>
-              <p><strong>Email: </strong>{ branch.email }</p>
-              <p><strong>Opening Time: </strong>{ branch.opening_time }</p>
-              <p><strong>Closing Time: </strong>{ branch.closing_time }</p>
-              <br/>
-            </li>
-          ))}
-        </ul>
+      <NavBar />
+      <div className={styles.branchesContainer}>
+        <h2>List of Post Office Branches</h2>
+        <div>
+          <ul>
+            {branches.map((branch) => (
+              <li key={branch.id} className={styles.branchItem}>
+                <h3>{branch.name}</h3>
+                <p><strong>Address: </strong>{ branch.line1.concat("\n", branch.city, "\n", branch.state, "\n", branch.zip) }</p>
+                <p><strong>Manager: </strong>{ branch.manager_first_name.concat(" ", branch.manager_last_name) }</p>
+                <p><strong>Phone Number: </strong>{ convertPhoneNumber(branch.phone_number) }</p>
+                <p><strong>Email: </strong>{ branch.email }</p>
+                <p><strong>Opening Time: </strong>{ branch.opening_time }</p>
+                <p><strong>Closing Time: </strong>{ branch.closing_time }</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   );

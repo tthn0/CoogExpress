@@ -2,7 +2,7 @@ import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    return await getBasedOnQueryParams("inventory", req.params);
+    return await getBasedOnQueryParams("inventory_view", req.params);
   },
   post: async (req, res) => {
     const {
