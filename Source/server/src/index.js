@@ -38,7 +38,6 @@ const processEmailQueue = async () => {
        `,
         [email_msg.id]
       );
-      console.log(result);
     }
   }
   // console.log("queue refreshed")
