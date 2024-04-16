@@ -1,11 +1,26 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import NavBar from "../shared/NavBar";
 import styles from "./Profile.module.scss";
 
+import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
+
 export default function Profile() {
   const { user, updateUser, deleteUser, logout } = useContext(AuthContext);
   const [customer, setCustomer] = useState({ ...user });
+  const [billingInfo, setBillingInfo] = useState([]);
+
+  useEffect(() => {
+    getBillingInfo();
+  }, []);
+
+  const getBillingInfo = async () => {
+    const response = await fetch(
+      `${SERVER_BASE_URL}/billing?customer_id=${user.customer_id}`
+    );
+    const data = await response.json();
+    setBillingInfo(data);
+  };
 
   const DEFAULT_PROFILE_PICTURE =
     "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
@@ -64,6 +79,113 @@ export default function Profile() {
   ];
 
   const employeeColumns = [...customerColumns, "shirt_size", "gender"];
+
+  const addCreditCard = async (e) => {
+    e.preventDefault();
+
+    console.log(e.target.card_number.value);
+    console.log(e.target.cvc.value);
+    console.log(e.target.expiration_month.value);
+    console.log(e.target.expiration_year.value);
+    console.log(e.target.cardholder_name.value);
+    console.log(e.target.line1.value);
+    console.log(e.target.line2.value);
+    console.log(e.target.city.value);
+    console.log(e.target.state.value);
+    console.log(e.target.zip.value);
+
+    const {
+      card_number,
+      cvc,
+      expiration_month,
+      expiration_year,
+      cardholder_name,
+      line1,
+      line2,
+      city,
+      state,
+      zip,
+    } = e.target;
+
+    fetch(`${SERVER_BASE_URL}/billing`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        line1: line1.value,
+        line2: line2.value,
+        city: city.value,
+        state: state.value,
+        zip: zip.value,
+        customer_id: user.customer_id,
+        card_number: card_number.value,
+        cvc: cvc.value,
+        expiration_month: expiration_month.value,
+        expiration_year: expiration_year.value,
+        cardholder_name: cardholder_name.value,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.errno) {
+          alert(`Error: ${data.message}. Check the console for more details.`);
+          console.error(data);
+        } else {
+          getBillingInfo();
+          alert("Credit card added successfully!");
+        }
+      });
+  };
+
+  const deleteCreditCard = (id) => async () => {
+    fetch(`${SERVER_BASE_URL}/billing`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.errno) {
+          alert(`Error: ${data.message}. Check the console for more details.`);
+          console.error(data);
+        } else {
+          getBillingInfo();
+          alert("Credit card deleted successfully!");
+        }
+      });
+  };
+
+  const setPreferredCard = (billing) => {
+    return () => {
+      console.log(
+        JSON.stringify({
+          ...billing,
+          preferred: true,
+        })
+      );
+      fetch(`${SERVER_BASE_URL}/billing`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...billing,
+          preferred: true,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.errno) {
+            alert(
+              `Error: ${data.message}. Check the console for more details.`
+            );
+            console.error(data);
+          } else {
+            getBillingInfo();
+            alert("Preferred card set successfully!");
+          }
+        });
+    };
+  };
 
   return (
     <>
@@ -156,58 +278,102 @@ export default function Profile() {
           <button className={styles.formButton} onClick={logout}>
             Logout
           </button>
-
-          {/* Only if the user is a customer: */}
-
-          {/* <h2>Card Information</h2>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.flexRow}>
-            <div className={`${styles.formGroup} ${styles.flexCol}`}>
-              <label className={styles.formLabel}>CARD NUMBER</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                name="cardNumber"
-                value={cardInfo.cardNumber}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={`${styles.formGroup} ${styles.flexCol}`}>
-              <label className={styles.formLabel}>EXPIRATION DATE</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                name="expirationDate"
-                value={cardInfo.expirationDate}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={`${styles.formGroup} ${styles.flexCol}`}>
-              <label className={styles.formLabel}>CVV</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                name="cvv"
-                value={cardInfo.cvv}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={`${styles.formGroup} ${styles.flexCol}`}>
-              <label className={styles.formLabel}>NAME ON CARD</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                name="nameOnCard"
-                value={cardInfo.nameOnCard}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <button type="submit" className={styles.formButton}>
-            Update Card Info
-          </button>
-        </form> */}
         </div>
+
+        {!user.role && (
+          <div className={styles.innerContainer}>
+            <h1 className={styles.h1}>Credit Card Management</h1>
+            {billingInfo.map((billing, i) => {
+              console.log(billing.cardholder_name, billing.preferred);
+              return (
+                <div key={i}>
+                  <h3 className={styles.h3}>Credit Card</h3>
+                  <pre>**** **** **** {billing.card_number.slice(12, 16)}</pre>
+                  <pre>
+                    Expires: {billing.expiration_month}/
+                    {billing.expiration_year}
+                  </pre>
+                  {billing.preferred && <pre>Preferred Card</pre>}
+                  {!billing.preferred && (
+                    <button
+                      className={styles.formButton}
+                      onClick={setPreferredCard(billing)}
+                    >
+                      Set Preferred
+                    </button>
+                  )}
+                  <button
+                    className={styles.formButton}
+                    onClick={deleteCreditCard(billing.id)}
+                  >
+                    Delete Credit Card
+                  </button>
+                </div>
+              );
+            })}
+            <form onSubmit={addCreditCard}>
+              <input
+                className={styles.formInput}
+                placeholder="Card Number"
+                name="card_number"
+                minLength={16}
+                maxLength={16}
+              />
+              <input
+                className={styles.formInput}
+                placeholder="CVC"
+                name="cvc"
+                minLength={3}
+                maxLength={4}
+              />
+              <input
+                className={styles.formInput}
+                placeholder="Expiration Month"
+                name="expiration_month"
+                minLength={1}
+                maxLength={2}
+              />
+              <input
+                className={styles.formInput}
+                placeholder="Expiration Year"
+                name="expiration_year"
+                minLength={4}
+                maxLength={4}
+              />
+              <input
+                className={styles.formInput}
+                placeholder="Cardholder Name"
+                name="cardholder_name"
+              />
+              <input
+                className={styles.formInput}
+                name="line1"
+                placeholder="Address Line 1"
+              />
+              <input
+                className={styles.formInput}
+                name="line2"
+                placeholder="Address Line 2"
+              />
+              <input
+                className={styles.formInput}
+                name="city"
+                placeholder="City"
+              />
+              <input
+                className={styles.formInput}
+                name="state"
+                placeholder="State"
+              />
+              <input
+                className={styles.formInput}
+                name="zip"
+                placeholder="Zip Code"
+              />
+              <button className={styles.formButton}>Add Credit Card</button>
+            </form>
+          </div>
+        )}
       </div>
     </>
   );

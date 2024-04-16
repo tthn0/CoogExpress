@@ -1,5 +1,5 @@
 import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
-
+ 
 export default {
   get: async (req, res) => {
     return await getBasedOnQueryParams("billing", req.params);
@@ -7,7 +7,11 @@ export default {
   post: async (req, res) => {
     const {
       customer_id,
-      address_id,
+      line1,
+      line2,
+      city,
+      state,
+      zip,
       card_number,
       cvc,
       expiration_month,
@@ -15,18 +19,31 @@ export default {
       cardholder_name,
     } = req.body;
     return await queryDatabase(
-      `INSERT INTO billing(
-        customer_id,
-        address_id,
-        card_number,
-        cvc,
-        expiration_month,
-        expiration_year,
-        cardholder_name
-      ) VALUES (?, ?, ?, ?, ?, ?, ?);`,
+      `START TRANSACTION;
+ 
+        INSERT INTO address (line1, line2, city, state, zip)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
+ 
+        INSERT INTO billing(
+          customer_id,
+          address_id,
+          card_number,
+          cvc,
+          expiration_month,
+          expiration_year,
+          cardholder_name,
+          preferred
+        ) VALUES (?, LAST_INSERT_ID(), ?, ?, ?, ?, ?, FALSE);
+ 
+      COMMIT;`,
       [
+        line1,
+        line2,
+        city,
+        state,
+        zip,
         customer_id,
-        address_id,
         card_number,
         cvc,
         expiration_month,
@@ -45,19 +62,30 @@ export default {
       expiration_month,
       expiration_year,
       cardholder_name,
+      preferred,
     } = req.body;
     return await queryDatabase(
-      `UPDATE billing
-      SET
-        customer_id = ?,
-        address_id = ?,
-        card_number = ?,
-        cvc = ?,
-        expiration_month = ?,
-        expiration_year = ?,
-        cardholder_name = ?
-      WHERE billing.id = ?;`,
+      `START TRANSACTION;
+ 
+        UPDATE billing
+        SET preferred = FALSE
+        WHERE customer_id = ?;
+ 
+        UPDATE billing
+        SET
+          customer_id = ?,
+          address_id = ?,
+          card_number = ?,
+          cvc = ?,
+          expiration_month = ?,
+          expiration_year = ?,
+          cardholder_name = ?,
+          preferred = ?
+        WHERE id = ?;
+ 
+      COMMIT;`,
       [
+        customer_id,
         customer_id,
         address_id,
         card_number,
@@ -65,6 +93,7 @@ export default {
         expiration_month,
         expiration_year,
         cardholder_name,
+        preferred,
         id,
       ]
     );
