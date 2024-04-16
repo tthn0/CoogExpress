@@ -24,8 +24,8 @@
 
 - **Thomas**:
   - **GIT COMMIT AMEND AND FORCE PUSH**.
-    - Finished tracking history, updated UI to light mode.
   - **Backup database on every commit**.
+    - Move `package_view`, `branch_view`, `route_view` down.
   - Trying to sign in while on `0.0.0.0` doesn't work in Chrome. Remediate this.
   - Add Nikolas's triggers to GitHub.
   - Reports:
@@ -67,12 +67,12 @@ Subject: **Update on Your Package Delivery Status**
 
 - **Frontend**: `React`, `SCSS`.
 - **Backend**: `Node.js`.
-- **Testing**: `Postman`.
-- **Authentication**: `JWT`.
-- **Database**: `Azure MySQL`.
+- **Database**: `Azure Database for MySQL - Flexible Server`.
 - **Deployment**: `Oracle Cloud Compute`.
-- **Operating System**: `Linux`.
-- **APIs**: `Imgur`.
+- **Operating System**: `Ubuntu Linux`.
+- **Authentication**: `JWT`, `JavaScript Cookie`.
+- **Testing**: `Postman`.
+- **Third-Party APIs**: `Imgur`.
 
 # Features
 
@@ -118,8 +118,10 @@ npm start        # Start the server.
 
 # Notes
 
+- Whenever a manager deletes an employee, the employee isn't automatically signed out.
+  - The employee's session still remains active until either their JWT expires or they log out.
 - Package status can be one of the following:
-  - `Standby`: The order has been placed but not yet loaded onto a truck.
+  - `Standby`: The order has been placed, and a shipping label has been created, but it hasn't been loaded onto a truck yet.
     - A package may be in this state multiple times.
     - For example, if a package is transferred between branches, it would be marked as `Standby` again upon arriving at each branch.
   - `Pending`: The package has been loaded onto a truck but has not been accepted by a driver.

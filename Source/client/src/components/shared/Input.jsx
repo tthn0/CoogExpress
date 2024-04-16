@@ -120,6 +120,12 @@ const VALIDATORS = Object.freeze({
     pattern: null,
     // title: "Must be a positive number.", // Title doesn't show up for type="number"
   },
+  DRIVERS_LICENSE: {
+    minLength: 13,
+    maxLength: 13,
+    pattern: /^[0-9]{13}$/.source,
+    title: "Must be numeric and exactly 13 characters.",
+  },
 });
 
 export { VALIDATORS };

@@ -62,17 +62,16 @@ function UserCard({ picture, first, last, username, email, phone, type }) {
   );
 }
 
-function Row({
-  date,
-  time,
-  status,
-  line1,
-  line2,
-  city,
-  state,
-  zip,
-  remainingDistance,
-}) {
+function Row({ date, time, status, line1, line2, city, state, zip, index }) {
+  const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+  const calculateRemainingDistance = () => {
+    if (status === "Delivered") return 0;
+    return 15 * (index + 1) + getRandomInt(-5, 5);
+  };
   return (
     <tr className={styles.row}>
       <td>
@@ -92,7 +91,7 @@ function Row({
         </div>
       </td>
       <td>
-        <pre className={styles.pre}>{remainingDistance} miles</pre>
+        <pre className={styles.pre}>{calculateRemainingDistance()} miles</pre>
       </td>
     </tr>
   );
@@ -241,7 +240,7 @@ export default function Package() {
               <thead>
                 <tr>
                   <th>Timestamp</th>
-                  <th>Address</th>
+                  <th>Status</th>
                   <th>Location</th>
                   <th>Remaining Distance</th>
                 </tr>
@@ -256,7 +255,7 @@ export default function Package() {
                       time={
                         formatDateAndTime(new Date(th.timestamp)).formattedTime
                       }
-                      remainingDistance={i + 1}
+                      index={i}
                       {...th}
                     />
                   );

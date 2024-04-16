@@ -1,10 +1,11 @@
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import "./components/shared/_reset.scss";
 import Dashboard from "./components/dashboard";
 import DashboardAssociate from "./components/dashboardAssociate";
 import DashboardCustomer from "./components/dashboardCustomer";
 import DashboardDriver from "./components/dashboardDriver";
-// import DashboardManager from "./components/dashboardManager";
+import DashboardManager from "./components/dashboardManager";
+import Employees from "./components/dashboardManager/Employees";
+import Reports from "./components/reports";
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
@@ -13,6 +14,7 @@ import Profile from "./components/profile";
 import AuthProvider from "./contexts/AuthProvider";
 import ProtectedRoute from "./contexts/ProtectedRoute";
 import RedirectIfLoggedIn from "./contexts/RedirectIfLoggedIn";
+import "./components/shared/_reset.scss";
 
 const router = createHashRouter([
   {
@@ -39,10 +41,18 @@ const router = createHashRouter([
     path: "/dashboard/driver/route/:routeId",
     element: <ProtectedRoute children={<DashboardDriver />} />,
   },
-  // {
-  //   path: "/dashboard/manager",
-  //   element: <ProtectedRoute children={<DashboardManager />} />,
-  // },
+  {
+    path: "/dashboard/manager",
+    element: <ProtectedRoute children={<DashboardManager />} />,
+  },
+  {
+    path: "/dashboard/manager/employees",
+    element: <ProtectedRoute children={<Employees />} />,
+  },
+  {
+    path: "/dashboard/manager/reports",
+    element: <ProtectedRoute children={<Reports />} />,
+  },
   {
     path: "/package/:packageId",
     element: <ProtectedRoute children={<Package />} />,
@@ -61,8 +71,7 @@ const router = createHashRouter([
   },
 ]);
 
-// TODO
-// Improve authentication router:
+// Authentication router potential improvement:
 // https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c
 
 export default function App() {
