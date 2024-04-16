@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -211,17 +212,16 @@ export default function Route() {
 
     setLoading(true);
 
-    const dateToSqlDatetime = (date) =>
-      date.toISOString().slice(0, 19).replace("T", " ");
-
     fetch(`${SERVER_BASE_URL}/route`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...route,
         id: route.route_id,
-        start_timestamp: dateToSqlDatetime(new Date(route.start_timestamp)),
-        end_timestamp: dateToSqlDatetime(new Date()),
+        start_timestamp: moment(route.start_timestamp).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        end_timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
       }),
     })
       .then((response) => response.json())

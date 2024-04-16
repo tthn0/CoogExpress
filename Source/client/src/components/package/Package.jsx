@@ -26,10 +26,16 @@ const formatDateAndTime = (date) => {
 };
 
 function UserCard({ picture, first, last, username, email, phone, type }) {
+  const DEFAULT_PROFILE_PICTURE =
+    "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
   return (
     <div className={styles.card}>
       <div className={styles.userInfo}>
-        <img className={styles.picture} src={picture} alt="Profile" />
+        <img
+          className={styles.picture}
+          src={picture || DEFAULT_PROFILE_PICTURE}
+          alt="Profile"
+        />
         <div className={styles.contactInfo}>
           <h1 className={styles.name}>
             {first} {last}

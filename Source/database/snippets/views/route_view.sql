@@ -1,3 +1,6 @@
+-- RAND(N) seems to be almost periodic.
+-- Use RAND(N) * POW(10, 12) - FLOOR(RAND(N) * POW(10, 12)) to get a more random looking number.
+
 CREATE VIEW route_view
 AS SELECT
     r.id AS route_id,
@@ -26,10 +29,32 @@ AS SELECT
     driver.first_name AS driver_first_name,
     driver.last_name AS driver_last_name,
     driver.profile_picture AS driver_profile_picture,
+    driver.branch_id AS driver_branch_id,
 
     (SELECT COUNT(*)
     FROM shipment AS s
-    WHERE s.route_id = r.id) AS package_count
+    WHERE s.route_id = r.id) AS package_count,
+    
+    (SELECT ROUND(
+        COUNT(*) * 1 +
+        RAND(r.id) * POW(10, 12) - FLOOR(RAND(r.id) * POW(10, 12))
+        - 0.5
+    , 2)
+    FROM shipment AS s
+    WHERE s.route_id = r.id) AS estimated_fuel,
+
+    (SELECT COUNT(*) * 20 + FLOOR(
+        (
+            RAND(r.id) * POW(10, 12) - FLOOR(RAND(r.id) * POW(10, 12))
+        ) * (10 + 1) - 5
+    ) 
+    FROM shipment AS s
+    WHERE s.route_id = r.id) AS estimated_distance,
+    
+    (SELECT COUNT(*)
+    FROM tracking_history AS t
+    JOIN shipment AS s ON t.package_id = s.package_id
+    WHERE t.status = 'Lost' AND s.route_id = r.id) AS lost_count
 FROM 
     route AS r
     LEFT JOIN branch_view AS b1 ON r.source_branch_id = b1.branch_id

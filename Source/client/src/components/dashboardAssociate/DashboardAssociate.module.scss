@@ -17,6 +17,7 @@
   padding: 0.75em 1.5em;
   border-radius: 0.75em;
   transition: 0.3s ease;
+  font-weight: 450;
 
   &:first-of-type {
     margin-right: 1em;
@@ -28,7 +29,7 @@
   }
 
   &:hover {
-    filter: hue-rotate(-10deg);
+    filter: hue-rotate(-20deg);
   }
 }
 

@@ -2,7 +2,7 @@ import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    return await getBasedOnQueryParams("receipt", req.params);
+    return await getBasedOnQueryParams("receipt_view", req.params);
   },
   post: async (req, res) => {
     const {

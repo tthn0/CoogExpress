@@ -7,7 +7,7 @@ import {
   faCaretDown,
   faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
-import EmptyImage from "./images/Empty.svg";
+import emptyImage from "./images/Empty.svg";
 import styles from "./DashboardCustomer.module.scss";
 import AuthContext from "../../contexts/AuthContext";
 import NavBar from "../shared/NavBar";
@@ -407,7 +407,7 @@ export default function DashboardCustomer() {
         <section id={styles.outerTableContainer} className={styles.section}>
           {parsedFilteredSortedPackages.length === 0 ? (
             <div id={styles.noResults}>
-              <img id={styles.empty} src={EmptyImage} alt="Clipboard" />
+              <img id={styles.empty} src={emptyImage} alt="Clipboard" />
               <p>No results found</p>
             </div>
           ) : (

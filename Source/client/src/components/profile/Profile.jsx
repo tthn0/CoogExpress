@@ -1,9 +1,94 @@
 import { useContext, useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCreditCard, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../../contexts/AuthContext";
 import NavBar from "../shared/NavBar";
+import { VALIDATORS } from "../shared/Input";
 import styles from "./Profile.module.scss";
 
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
+
+function CreditCard({ billingInfo, getBillingInfo }) {
+  const deleteCreditCard = (id) => {
+    return () => {
+      fetch(`${SERVER_BASE_URL}/billing`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.errno) {
+            alert(
+              `Error: ${data.message}. Check the console for more details.`
+            );
+            console.error(data);
+          } else {
+            getBillingInfo();
+            alert("Credit card deleted successfully!");
+          }
+        });
+    };
+  };
+
+  const setPreferredCard = (billingInfo) => {
+    return () => {
+      fetch(`${SERVER_BASE_URL}/billing`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...billingInfo,
+          preferred: true,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.errno) {
+            alert(
+              `Error: ${data.message}. Check the console for more details.`
+            );
+            console.error(data);
+          } else {
+            getBillingInfo();
+            alert("Preferred card set successfully!");
+          }
+        });
+    };
+  };
+
+  return (
+    <div className={styles.creditCard}>
+      <div>
+        <FontAwesomeIcon icon={faCreditCard} />
+      </div>
+      <div>
+        <pre>**** **** **** {billingInfo.card_number.slice(12, 16)}</pre>
+        <div className={styles.expiry}>
+          {billingInfo.expiration_month} /{" "}
+          {billingInfo.expiration_year.toString().slice(2)}
+        </div>
+      </div>
+      {billingInfo.preferred ? (
+        <div className={styles.preferred}>Preferred</div>
+      ) : (
+        <div
+          className={styles.setPreferred}
+          onClick={setPreferredCard(billingInfo)}
+        >
+          Set Preferred
+        </div>
+      )}
+      <div
+        className={styles.deleteCard}
+        onClick={deleteCreditCard(billingInfo.id)}
+      >
+        <FontAwesomeIcon className={styles.trashIcon} icon={faTrash} />
+      </div>
+    </div>
+  );
+}
 
 export default function Profile() {
   const { user, updateUser, deleteUser, logout } = useContext(AuthContext);
@@ -83,17 +168,6 @@ export default function Profile() {
   const addCreditCard = async (e) => {
     e.preventDefault();
 
-    console.log(e.target.card_number.value);
-    console.log(e.target.cvc.value);
-    console.log(e.target.expiration_month.value);
-    console.log(e.target.expiration_year.value);
-    console.log(e.target.cardholder_name.value);
-    console.log(e.target.line1.value);
-    console.log(e.target.line2.value);
-    console.log(e.target.city.value);
-    console.log(e.target.state.value);
-    console.log(e.target.zip.value);
-
     const {
       card_number,
       cvc,
@@ -136,57 +210,6 @@ export default function Profile() {
       });
   };
 
-  const deleteCreditCard = (id) => async () => {
-    fetch(`${SERVER_BASE_URL}/billing`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.errno) {
-          alert(`Error: ${data.message}. Check the console for more details.`);
-          console.error(data);
-        } else {
-          getBillingInfo();
-          alert("Credit card deleted successfully!");
-        }
-      });
-  };
-
-  const setPreferredCard = (billing) => {
-    return () => {
-      console.log(
-        JSON.stringify({
-          ...billing,
-          preferred: true,
-        })
-      );
-      fetch(`${SERVER_BASE_URL}/billing`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...billing,
-          preferred: true,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.errno) {
-            alert(
-              `Error: ${data.message}. Check the console for more details.`
-            );
-            console.error(data);
-          } else {
-            getBillingInfo();
-            alert("Preferred card set successfully!");
-          }
-        });
-    };
-  };
-
   return (
     <>
       <NavBar />
@@ -194,13 +217,12 @@ export default function Profile() {
         {user.role && (
           <div className={styles.innerContainer}>
             <h1 className={styles.h1}>Employee Information</h1>
-            <br />
+            <h3 className={styles.h3}>Branch</h3>
+            <pre>{user.branch_name}</pre>
             <h3 className={styles.h3}>Employee ID</h3>
             <pre>{user.employee_id}</pre>
-            <br />
             <h3 className={styles.h3}>Role</h3>
             <pre>{user.role}</pre>
-            <br />
             <h3 className={styles.h3}>Supervisor</h3>
             <pre>
               {user.supervisor_first_name} {user.supervisor_last_name}
@@ -283,35 +305,20 @@ export default function Profile() {
         {!user.role && (
           <div className={styles.innerContainer}>
             <h1 className={styles.h1}>Credit Card Management</h1>
-            {billingInfo.map((billing, i) => {
-              console.log(billing.cardholder_name, billing.preferred);
-              return (
-                <div key={i}>
-                  <h3 className={styles.h3}>Credit Card</h3>
-                  <pre>**** **** **** {billing.card_number.slice(12, 16)}</pre>
-                  <pre>
-                    Expires: {billing.expiration_month}/
-                    {billing.expiration_year}
-                  </pre>
-                  {billing.preferred && <pre>Preferred Card</pre>}
-                  {!billing.preferred && (
-                    <button
-                      className={styles.formButton}
-                      onClick={setPreferredCard(billing)}
-                    >
-                      Set Preferred
-                    </button>
-                  )}
-                  <button
-                    className={styles.formButton}
-                    onClick={deleteCreditCard(billing.id)}
-                  >
-                    Delete Credit Card
-                  </button>
-                </div>
-              );
-            })}
-            <form onSubmit={addCreditCard}>
+
+            <styles className={styles.creditCardContainer}>
+              {billingInfo.map((billing, i) => {
+                return (
+                  <CreditCard
+                    key={i}
+                    billingInfo={billing}
+                    getBillingInfo={getBillingInfo}
+                  />
+                );
+              })}
+            </styles>
+
+            <form id={styles.cardForm} onSubmit={addCreditCard}>
               <input
                 className={styles.formInput}
                 placeholder="Card Number"
@@ -359,16 +366,19 @@ export default function Profile() {
                 className={styles.formInput}
                 name="city"
                 placeholder="City"
+                {...VALIDATORS.CITY}
               />
               <input
                 className={styles.formInput}
                 name="state"
                 placeholder="State"
+                {...VALIDATORS.STATE}
               />
               <input
                 className={styles.formInput}
                 name="zip"
                 placeholder="Zip Code"
+                {...VALIDATORS.ZIP}
               />
               <button className={styles.formButton}>Add Credit Card</button>
             </form>

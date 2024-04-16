@@ -1,9 +1,8 @@
 @use "./fonts" as fonts;
 
 .container {
-  min-height: 100dvh;
   color: white;
-  padding: 50px 0;
+  padding: 4em 0;
   background: #f0f0f0;
   font-size: fonts.$fluidFontSize;
   font-family: fonts.$inter;
@@ -77,7 +76,7 @@
     255,
     0.95
   ); /* Lighter, almost white background with slight transparency */
-  padding: 20px;
+  padding: 2em;
   border-radius: 20px;
   color: #333; /* Darker text color for readability */
   margin: 20px auto;
@@ -115,4 +114,61 @@
 
 .formButton:hover {
   background-color: #4a90e2; /* Lighter blue on hover */
+}
+
+.creditCardContainer {
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.creditCard {
+  display: grid;
+  grid-template-columns: auto 4fr 2fr auto auto;
+  gap: 1.5em;
+  padding: 1.25em 1.5em;
+  border: 1px solid lighten(grey, 40%);
+  border-radius: 0.5em;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.expiry {
+  color: lighten(grey, 20%);
+}
+
+.preferred {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.setPreferred {
+  color: #33b7e4;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.deleteCard {
+  cursor: pointer;
+}
+
+.trashIcon {
+  color: red;
+}
+
+#cardForm {
+  margin-top: 2em;
+
+  input:not(:first-of-type) {
+    margin-top: 1em;
+  }
 }

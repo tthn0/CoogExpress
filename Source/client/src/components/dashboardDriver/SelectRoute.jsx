@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import deliveredImage from "./images/Delivered.svg";
 import styles from "./DashboardDriver.module.scss";
@@ -35,9 +36,6 @@ function RouteCard({ route }) {
 
       setLoading(true);
 
-      const dateToSqlDatetime = (date) =>
-        date.toISOString().slice(0, 19).replace("T", " ");
-
       fetch(`${SERVER_BASE_URL}/route`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -45,7 +43,7 @@ function RouteCard({ route }) {
           ...route,
           id: route.route_id,
           driver_employee_id: user.employee_id,
-          start_timestamp: dateToSqlDatetime(new Date()),
+          start_timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
           end_timestamp: null,
         }),
       })

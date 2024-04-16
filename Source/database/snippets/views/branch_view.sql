@@ -1,6 +1,6 @@
 CREATE VIEW branch_view
 AS SELECT
-    b.id AS branch_id, b.name, b.phone_number, b.email, b.opening_time, b.closing_time,
+    b.id AS branch_id, b.name, b.phone_number, b.email, b.opening_time, b.closing_time, b.image,
     a.id AS address_id, a.line1, a.line2, a.city, a.state, a.zip,
         e.employee_id AS manager_employee_id,
         e.first_name AS manager_first_name,

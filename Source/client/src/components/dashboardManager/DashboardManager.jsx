@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import NavBar from "../shared/NavBar";
 import styles from "./DashboardManager.module.scss";
-import peopleImage from "./images/People.svg";
 import analyticsImage from "./images/Analytics.svg";
+import factoryImage from "./images/Factory.svg";
+import peopleImage from "./images/People.svg";
 
 export default function DashboardManager() {
   useEffect(() => {
@@ -16,8 +17,17 @@ export default function DashboardManager() {
     <>
       <NavBar />
       <div id={styles.container}>
-        <h1 id={styles.heading}>Select Option</h1>
+        <h1 id={styles.heading}>Manager Dashboard</h1>
         <div id={styles.options}>
+          <div
+            className={styles.option}
+            onClick={() => navigate("/dashboard/manager/inventory")}
+          >
+            <div className={styles.imageContainer}>
+              <img src={factoryImage} alt="Graphic" />
+            </div>
+            <h2 className={styles.subHeading}>Restock Inventory</h2>
+          </div>
           <div
             className={styles.option}
             onClick={() => navigate("/dashboard/manager/employees")}
@@ -27,11 +37,11 @@ export default function DashboardManager() {
             </div>
             <h2 className={styles.subHeading}>Manage Employees</h2>
           </div>
-          <div className={styles.option}>
-            <div
-              className={styles.imageContainer}
-              onClick={() => navigate("/dashboard/manager/reports")}
-            >
+          <div
+            className={styles.option}
+            onClick={() => navigate("/dashboard/manager/reports")}
+          >
+            <div className={styles.imageContainer}>
               <img src={analyticsImage} alt="Graphic" />
             </div>
             <h2 className={styles.subHeading}>View Reports</h2>

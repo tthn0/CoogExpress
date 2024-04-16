@@ -22,20 +22,20 @@
 
 ### Temporary Todo List
 
-- **Thomas**:
-  - **GIT COMMIT AMEND AND FORCE PUSH**.
-  - **Backup database on every commit**.
-    - Move `package_view`, `branch_view`, `route_view` down.
-  - Trying to sign in while on `0.0.0.0` doesn't work in Chrome. Remediate this.
-  - Add Nikolas's triggers to GitHub.
-  - Reports:
-    - https://jsreport.net.
-    - Chart.js.
-  - Finish manager dashboard.
-  - Update README:
-    - Include deploy instructions.
-- **Others**:
-  - Find todos on Discord.
+- **GIT COMMIT AMEND AND FORCE PUSH**.
+- **Backup database on every commit**.
+  - Move `package_view`, `branch_view`, `route_view` down.
+- Trying to sign in while on `0.0.0.0` doesn't work in Chrome. Remediate this.
+- Before presentation:
+  - Merge `secondary` branch.
+  - Test everything works.
+  - Host on Oracle Cloud.
+  - Test everything works again.
+- Add Nikolas's triggers to GitHub.
+- Reports:
+  - https://jsreport.net.
+- Update README:
+  - Include deploy instructions.
 
 ### Email Template
 
@@ -118,6 +118,13 @@ npm start        # Start the server.
 
 # Notes
 
+- In the manager's dashboard, the date picker on the reports panel will make the `endDate`'s time exactly `00:00:00`. This may cause some confusion since it doesn't include the entire day (up to `23:59:59`).
+- Billing information doesn't have a uniqueness constraint.
+  - Multiple customers can have the same billing information.
+  - A side effect of this is that a customer can have multiple billing entries that are identical (except for the billing information's ID).
+  - To remediate this:
+    - A uniqueness constraint should be added to the billing information table.
+    - If a customer tries to add a billing information entry that already exists, the existing entry should be used instead.
 - Whenever a manager deletes an employee, the employee isn't automatically signed out.
   - The employee's session still remains active until either their JWT expires or they log out.
 - Package status can be one of the following:

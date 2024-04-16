@@ -37,6 +37,7 @@ export default function PackageForm() {
     speed: null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  // const allCustomers = useRef([]);
   const [validUsernames, setValidUsernames] = useState([]);
   const [validAddresses, setValidAddresses] = useState([]);
   const packageTypeRef = useRef(null);
@@ -44,7 +45,7 @@ export default function PackageForm() {
   const formRef = useRef(null);
 
   useEffect(() => {
-    fetch(`${SERVER_BASE_URL}/customer`)
+    fetch(`${SERVER_BASE_URL}/customer?deleted=0`)
       .then((res) => res.json())
       .then((data) => {
         if (data.errno) {
@@ -52,6 +53,7 @@ export default function PackageForm() {
           console.log(data);
           return;
         }
+        // allCustomers.current = data;
         const validUsernames = data.map((customer) => customer.username);
         setValidUsernames(validUsernames);
       })
@@ -114,25 +116,55 @@ export default function PackageForm() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validateUsername = (username) => {
       return validUsernames.includes(username);
     };
+    const validateUserHasBilling = async (username) => {
+      // return allCustomers.current.find(
+      //   (customer) => customer.username === username
+      // )?.billing_id;
 
-    if (!validateUsername(form.sender_username)) {
-      alert("Sender username is invalid.");
-      return;
-    } else if (!validateUsername(form.receiver_username)) {
-      alert("Receiver username is invalid.");
-      return;
-    } else if (form.sender_username === form.receiver_username) {
-      alert("Sender and receiver usernames cannot be the same.");
-      return;
-    }
+      try {
+        const response = await fetch(
+          `${SERVER_BASE_URL}/customer?username=${username}&deleted=0`
+        );
+        const data = await response.json();
+        if (data.errno) {
+          alert(`An error occurred: ${data.message}. Check the console.`);
+          console.log(data);
+          return false;
+        } else if (data.length === 0) {
+          return false;
+        } else {
+          return data[0].billing_id;
+        }
+      } catch (error) {
+        alert(`An error occurred: ${error.message}. Check the console.`);
+        console.log(error);
+        return false;
+      }
+    };
 
     setIsLoading(true);
+
+    let errorMessage;
+    if (!validateUsername(form.sender_username))
+      errorMessage = "Sender username is invalid.";
+    else if (!validateUsername(form.receiver_username))
+      errorMessage = "Receiver username is invalid.";
+    else if (form.sender_username === form.receiver_username)
+      errorMessage = "Sender and receiver usernames cannot be the same.";
+    else if (!(await validateUserHasBilling(form.sender_username)))
+      errorMessage = "Sender must have a preferred card on file.";
+
+    if (errorMessage) {
+      alert(errorMessage);
+      setIsLoading(false);
+      return;
+    }
 
     fetch(`${SERVER_BASE_URL}/package`, {
       method: "POST",

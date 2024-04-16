@@ -1,9 +1,9 @@
 import { useState } from "react";
-
-import styles from "./Report.module.scss";
-
+import styles from "./Reports.module.scss";
 import NavBar from "../shared/NavBar";
 import PackageReport from "./PackageReport";
+import RouteReport from "./RouteReport";
+import ProductReport from "./ProductReport";
 
 const REPORT_TYPES = Object.freeze({
   PACKAGE: "package",
@@ -26,32 +26,24 @@ export default function Reports() {
             >
               Package Report
             </button>
-
-            <hr />
-
             <button
               className={styles.option}
               onClick={() => setFormType(REPORT_TYPES.ROUTE)}
             >
               Route Report
             </button>
-
-            <hr />
-
             <button
               className={styles.option}
               onClick={() => setFormType(REPORT_TYPES.PRODUCT)}
             >
               Product Report
             </button>
-
-            <hr />
           </section>
           {
             {
               [REPORT_TYPES.PACKAGE]: <PackageReport />,
-              [REPORT_TYPES.ROUTE]: <></>,
-              [REPORT_TYPES.PRODUCT]: <></>,
+              [REPORT_TYPES.ROUTE]: <RouteReport />,
+              [REPORT_TYPES.PRODUCT]: <ProductReport />,
             }[formType]
           }
         </main>

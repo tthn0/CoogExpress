@@ -18,8 +18,8 @@ const roundToTwoDecimals = (num) => Math.round(num * 100) / 100;
 const estimateRouteSummary = (numberOfPackages) => {
   return {
     time: formatHoursAndMinutes(numberOfPackages * 15),
-    fuel: roundToTwoDecimals(numberOfPackages * 0.5),
-    distance: roundToTwoDecimals(numberOfPackages * 5),
+    fuel: roundToTwoDecimals(numberOfPackages * 1),
+    distance: roundToTwoDecimals(numberOfPackages * 20),
   };
 };
 
