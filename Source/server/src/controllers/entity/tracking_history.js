@@ -2,7 +2,7 @@ import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    return await getBasedOnQueryParams("tracking_history", req.params);
+    return await getBasedOnQueryParams("tracking_history_view", req.params);
   },
   post: async (req, res) => {
     const { package_id, line1, line2, city, state, zip, status } = req.body;

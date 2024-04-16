@@ -24,14 +24,14 @@
 
 - **Thomas**:
   - **GIT COMMIT AMEND AND FORCE PUSH**.
+    - Finished tracking history, updated UI to light mode.
   - **Backup database on every commit**.
   - Trying to sign in while on `0.0.0.0` doesn't work in Chrome. Remediate this.
-  - Driver dashboard enhancement:
-    - Whenever a route is accepted by a driver, mark all packages in the route as `Shipping`.
   - Add Nikolas's triggers to GitHub.
-  - Finish tracking history.
+  - Reports:
+    - https://jsreport.net.
+    - Chart.js.
   - Finish manager dashboard.
-  - Change customer dashboard UI to light mode.
   - Update README:
     - Include deploy instructions.
 - **Others**:
@@ -51,9 +51,15 @@ Subject: **Update on Your Package Delivery Status**
 
 # About
 
-**Short miniworld description**: CoogExpress is a delivery company that delivers packages to all locations in the continental United States. The company has multiple branches, each with its own set of employees. The company also has customers who can place orders to send packages between branches. The website is where customers can track their packages or purchase items, retail associates can place orders, drivers can accept shipment routes, and managers can track the activity at their respective branches.
+[Todo].
+
+**Short miniworld description**: CoogExpress is a delivery company that delivers packages to all locations in the continental United States. The company has multiple branches, each with its own set of employees. Customers can place orders to send packages between branches. The website is where customers can track their packages or purchase items, retail associates can place orders, drivers can accept shipment routes, and managers can track the activity at their respective branches.
 
 # Screenshots
+
+[Todo].
+
+# Project Requirements
 
 [Todo].
 
@@ -125,3 +131,6 @@ npm start        # Start the server.
   - `Delivered`: The package has been delivered to the final destination.
     - A package may be in this state exactly once.
     - After a package is marked as `Delivered`, it cannot obtain a new status.
+  - `Lost`: The package was lost during its transit.
+    - A package may be in this state exactly once.
+    - After a package is marked as `Lost`, it cannot obtain a new status.

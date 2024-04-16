@@ -194,13 +194,12 @@ export default function Profile() {
         {user.role && (
           <div className={styles.innerContainer}>
             <h1 className={styles.h1}>Employee Information</h1>
-            <br />
+            <h3 className={styles.h3}>Branch</h3>
+            <pre>{user.branch_name}</pre>
             <h3 className={styles.h3}>Employee ID</h3>
             <pre>{user.employee_id}</pre>
-            <br />
             <h3 className={styles.h3}>Role</h3>
             <pre>{user.role}</pre>
-            <br />
             <h3 className={styles.h3}>Supervisor</h3>
             <pre>
               {user.supervisor_first_name} {user.supervisor_last_name}
