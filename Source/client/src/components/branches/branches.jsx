@@ -55,6 +55,7 @@ const Branches = () => {
           <ul>
             {branches.map((branch) => (
               <li key={branch.id} className={styles.branchItem}>
+                <img src={branch.branch_image || "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg"} alt="branch image" />
                 <h3>{branch.name}</h3>
                 <p><strong>Address: </strong>{ branch.line1.concat("\n", branch.city, "\n", branch.state, "\n", branch.zip) }</p>
                 <p><strong>Manager: </strong>{ branch.manager_first_name.concat(" ", branch.manager_last_name) }</p>

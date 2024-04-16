@@ -46,9 +46,17 @@ const Products = () => {
           <ul>
             {products.map((prod) => (
               <li key={prod.id} className={styles.productItem}>
+                <img src={prod.image || "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg"} alt="branch image" />
                 <h3>{prod.name}</h3>
                 <p><strong>Description: </strong>{prod.description}</p>
                 <p><strong>Price: </strong>${prod.price}</p>
+                <button className={styles.button}>Add to cart</button>
+                <label htmlFor="Qty">Qty:</label>
+                <select name="Qty" id="Qty">
+                  {Array.from({ length: 20 }).map((_, index) => (
+                    <option key={index + 1} value={index + 1}>{index + 1}</option>
+                  ))}
+                </select>
               </li>
             ))}
           </ul>

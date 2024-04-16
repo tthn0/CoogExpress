@@ -55,11 +55,33 @@ const Inventory = () => {
           <ul>
             {inventory.map((inv) => (
               <li key={inv.id} className={styles.inventoryItem}>
+                <img 
+                  className={styles.inventoryItemimg}
+                  src={inv.product_image || "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg"} 
+                  alt="branch image" 
+                />
+                { inv.quantity_in_stock <= inv.stock_alert_threshold && (
+                  <>
+                    <div className={styles.alert} >
+                      <img 
+                        src="https://media.istockphoto.com/id/1152189152/vector/red-alert-icon.jpg?s=612x612&w=0&k=20&c=Kw_-i314F4cxgn2hmakp-88-O45FSx62c6r-OzKYMw4="
+                        alt="Alert"
+                      />
+                      <text>Low Stock Alert!!!</text>
+                    </div>
+                  </>
+                )}
                 <h3>{inv.product_name}</h3>
                 <p><strong>Product ID:</strong> {inv.product_id}</p>
                 <p><strong>Current Stock:</strong> {inv.quantity_in_stock}</p>
                 <p><strong>Stock Alert:</strong> {inv.stock_alert_threshold}</p>
                 <p><strong>Last Stock Update:</strong> {inv.last_stock_update}</p>
+                <input 
+                  value="0"
+                  type="number"
+                  maxLength="5"
+                />
+                <button>Add Stock</button>
               </li>
             ))}
           </ul>

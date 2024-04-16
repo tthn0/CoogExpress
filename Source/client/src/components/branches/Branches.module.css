@@ -23,6 +23,18 @@ body{
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.branchItem img {
+  border-width: 5px;
+  border-color: #1d11c9;
+  border-radius: 10px;
+  position: relative;
+  float: right;
+  width: 200px;
+  height: 150px;
+  right: 70px;
+  top: 10px;
+}
+
 .branchItem h3 {
   margin-bottom: 10px;
   font-size: 20px;
