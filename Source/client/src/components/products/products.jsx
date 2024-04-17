@@ -40,6 +40,30 @@ const Products = () => {
   return (
     <>
       <NavBar />
+      <div className={styles.checkout}>
+        <h2>Summary</h2>
+        <div>
+          <div className={styles.checkoutBlock}>
+           <text>Sub Total: </text>
+           <text className={styles.cost}>$0</text>
+          </div>
+          <div className={styles.checkoutBlock}> 
+            <text>Shipping and Handling: </text>
+            <text className={styles.cost}>$0</text>
+          </div>
+          <div className={styles.checkoutBlock}>
+            <text>Tax:  </text>
+            <text className={styles.cost}>$0</text>
+          </div>
+          <div className={styles.divider} />
+          <div className={styles.checkoutBlock}>
+            <h3>Total: </h3>
+            <text className={styles.cost}>$0</text>
+          </div>
+          <button>Checkout</button>
+        </div>
+      </div>
+
       <div className={styles.productsContainer}>
         <h2>List of Products</h2>
         <div>
