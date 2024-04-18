@@ -52,12 +52,22 @@ export default {
     );
   },
   delete: async (req, res) => {
-    const { id } = req.body;
+    const { branch_id, product_id } = req.body;
+
+    const cartId = await queryDatabase(
+      `
+        SELECT id
+        FROM shopping_cart
+        WHERE branch_id = ? AND product_id = ?
+      `, [
+        branch_id,
+        product_id
+      ])
 
     return await queryDatabase(`
         DELETE
         FROM shopping_cart
         WHERE id = ?
-    `, [id]);
+    `, [cartId[0].id]);
   },
 };

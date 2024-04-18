@@ -6,6 +6,16 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  .shoppingCart h2 {
+    font-weight: bold;
+    font-size: xx-large;
+  }
+
+  .shoppingCart h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
   
   .cartItems {
     margin-top: 20px;
@@ -38,7 +48,17 @@
   }
   
   .itemDetails p {
-    margin: 5px 0;
+    margin: 5px;
+  }
+
+  .itemDetails button {
+    color: white;
+    background-color: #ff0000;
+    border-color: black;
+    border-width: 2px;
+    padding: 0 7px 0 7px;
+    margin-left: 5px;
+    border-radius: 20px;
   }
   
   .totalPrice {
@@ -50,19 +70,18 @@
     display: block;
     width: 100%;
     max-width: 200px;
-    margin: 20px auto 0;
+    margin: 20px auto;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #ff9408;
     color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
   }
   
   .checkoutButton:hover {
-    background-color: #0056b3;
+    background-color: #e6810a;
   }
   
   .loading {

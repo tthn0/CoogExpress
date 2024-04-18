@@ -11,28 +11,18 @@ const Products = () => {
   const [products, setProducts] = useState({});
   const [inventory, setInventory] = useState({});
   const [isPending, setIsPending] = useState({
+    shoppingCart: true,
     products: true,
     branches: true,
     inventory: true
   });
   const [error, setError] = useState({
+    shoppingCart: null,
     products: null,
     branches: null,
     inventory: null
   });
   const [cart, setCart] = useState({});
-
-  const [form, setForm] = useState({
-    customer_id: 2,
-    branch_id: 1,
-    product_id: 1,
-    billing_id: 31,
-    amount_bought: 3,
-    subtotal: 29.99,
-    tax: 2.89,
-    total: 37.87,
-    notes: ""
-  })
   const [shoppingCartForm, setShoppingCartForm] = useState({
     user_id: 0,
     branch_id: 0,
@@ -47,6 +37,38 @@ const Products = () => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
+    // Fetch checkout
+    fetch(`${SERVER_BASE_URL}/shopping_cart?user_id=${user.user_id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      if (!res.ok) throw Error("Could not fetch the data for that resource");
+      return res.json();
+    })
+    .then((data) => {
+      convertDataToCart(data);
+      setIsPending((prevState) => ({
+        ...prevState,
+        shoppingCart: false
+      }));
+      setError((prevState) => ({
+        ...prevState,
+        shoppingCart: null
+      }));
+    })
+    .catch((err) => {
+      alert("Error occured while fetching shopping cart. Check the console.");
+      setIsPending((prevState) => ({
+        ...prevState,
+        shoppingCart: false
+      }));
+      setError((prevState) => ({
+        ...prevState,
+        shoppingCart: err.message
+      }));
+    });
+
     // Fetch products
     fetch(`${SERVER_BASE_URL}/product`, {
       method: "GET",
@@ -154,103 +176,90 @@ const Products = () => {
     });
   }, [currentBranch_id])
 
-  //cart[branchid][productid].quantity (OR .price)
-  const addToCart = (product_id, quantity, price) => {
-    setCart((prevCart) => {
-      const updatedCart = { ...prevCart};
-      if(!updatedCart[currentBranch_id]){
-        updatedCart[currentBranch_id] = {};
-        setShoppingCartForm((prevState) => ({
-          ...prevState,
-          user_id: user.user_id,
-          branch_id: currentBranch_id,
-          product_id: product_id,
-          quantity: 0,
-          isNew: true
-        }))
-      }
-      const branchCart = updatedCart[currentBranch_id]
-      if(branchCart[product_id]){
-        branchCart[product_id].quantity += quantity;
-      } else {
-        branchCart[product_id] = { quantity, price };
-      }
-      setShoppingCartForm((prevState) => ({
-        ...prevState,
-        quantity: quantity
-      }))
-      setShipping(4.99);
-      return updatedCart;
-    })
-  }
-
-  const handleCheckout = () => {
-    window.location.href = "/#/checkout"
-    // fetch(`${SERVER_BASE_URL}/receipt`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(form)
-    // })
-    // .then((res) => res.json())
-    // .then((data) => {
-    //   if (data.errno) {
-    //     alert(`An error occurred: ${data.message}. Check the console.`);
-    //     console.log(data);
-    //   } else {
-    //     console.log(data);
-    //     alert("Successfully purchased items!");
-    //   }
-    // })
-    // .catch((error) => {
-    //   alert(`An error occurred: ${error.message}. Check the consnole.`);
-    //   console.log(error);
-    // })
-  }
-
   // useEffects for checkout 
-  useEffect(() => {
-    let newTotal = 0
-    for (const branch_id in cart){
-      for(const product_id in cart[branch_id])
-        newTotal += cart[branch_id][product_id].price * cart[branch_id][product_id].quantity;
-    }
-    setSubTotal(parseFloat(newTotal.toFixed(2)));
-
-    console.log(Object.values(cart).length)
-    if(Object.values(cart).length === 0) return;
-
-    let METHOD_TYPE; 
-    if(shoppingCartForm.isNew){
-      METHOD_TYPE = "POST"
-    }else{
-      METHOD_TYPE = "PUT"
-    }
-    fetch(`${SERVER_BASE_URL}/shopping_cart`, {
-      method: METHOD_TYPE,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(shoppingCartForm)
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.errno) {
-        alert(`An error occurred: ${data.message}. Check the console.`);
-        console.log(data);
-      } else {
-        console.log(data);
-        alert("Shopping cart successfully updated!");
-      }
-    })
-    .catch((error) => {
-      alert(`An error occurred: ${error.message}. Check the consnole.`);
-      console.log(error);
-    })
-  },[cart])
+  useEffect(() => updateSubTotal,[cart])
 
   useEffect(() => {
     const newTax = parseFloat(((subTotal + shipping) * 0.0825).toFixed(2));
     setTax(newTax);
     setTotal(parseFloat((subTotal + shipping + newTax).toFixed(2)))
   }, [subTotal])
+
+  const convertDataToCart = (data) => {
+    data.map((item) => {
+      addToCart(item.product_id, item.product_quantity, item.price, false);
+    })
+  }
+
+  //cart[branchid][productid].quantity (OR .price)
+  const addToCart = (product_id, quantity, price, sendPOST) => {
+    let currentCart = cart;
+    let currentSCForm = shoppingCartForm;
+
+    if(!currentCart[currentBranch_id]){
+      currentCart[currentBranch_id] = {};
+      currentSCForm = {
+        ...currentSCForm,
+        user_id: user.user_id,
+        branch_id: currentBranch_id,
+        product_id: product_id,
+        quantity: 0,
+        isNew: true
+      }
+    }
+    const branchCart = currentCart[currentBranch_id]
+    if(branchCart[product_id]){
+      branchCart[product_id].quantity += quantity;
+    } else {
+      branchCart[product_id] = { quantity, price };
+    }
+    currentSCForm = {
+      ...currentSCForm,
+      quantity: quantity
+    }
+
+    setShipping(4.99);
+    console.log(currentCart);
+    setCart(currentCart);
+    setShoppingCartForm(currentSCForm);
+    updateSubTotal();
+
+    if(sendPOST){
+      fetch(`${SERVER_BASE_URL}/shopping_cart`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(currentSCForm)
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.errno) {
+          alert(`An error occurred: ${data.message}. Check the console.`);
+          console.log(data);
+        } else {
+          console.log(data);
+          alert("Shopping cart successfully updated!");
+        }
+      })
+      .catch((error) => {
+        alert(`An error occurred: ${error.message}. Check the consnole.`);
+        console.log(error);
+      })
+    }
+  }
+
+  const updateSubTotal = () => {
+    let newTotal = 0
+    for (const branch_id in cart){
+      for(const product_id in cart[branch_id])
+        newTotal += cart[branch_id][product_id].price * cart[branch_id][product_id].quantity;
+    }
+    console.log(newTotal)
+    setSubTotal(parseFloat(newTotal.toFixed(2)));
+  }
+
+  const handleCheckout = () => {
+    window.location.href = "/#/checkout"
+  }
 
   if (isPending.products || isPending.branches || isPending.inventory) {
     return <div>Loading...</div>;
@@ -268,7 +277,6 @@ const Products = () => {
           <div className={styles.productsContainer}>
             <h2>List of Products</h2>
 
-            {/* Select branches dropdown box */}
             <div className={styles.selectBranches}>
               <label htmlFor="branch_name">Select Branch:</label>
               <select 
@@ -276,7 +284,6 @@ const Products = () => {
                 id="branch_name"
                 onChange={(event) => {
                   setCurrentBranch_id(event.target.value);
-                  console.log(event.target.value);
                 }}
               >
                 {branches.map((branch) => (
@@ -309,7 +316,7 @@ const Products = () => {
                         <button 
                         className={styles.button}
                         onClick={() => {
-                          addToCart(prod.id, parseInt(document.getElementById(`Qty_${prod.id}`).value), prod.price)
+                          addToCart(prod.id, parseInt(document.getElementById(`Qty_${prod.id}`).value), prod.price, true)
                         }}
                         disabled={inventory[prod.id].stock === 0}
                       >Add to cart</button>
