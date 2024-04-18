@@ -55,20 +55,17 @@ export default {
     );
   },
   delete: async (req, res) => {
-    const { user_id, branch_id, product_id } = req.body;
+    const {branch_id, product_id } = req.body;
 
     const cartId = await queryDatabase(
       `
         SELECT id
         FROM shopping_cart
-        WHERE branch_id = ? AND product_id = ? AND user_id = ?
+        WHERE branch_id = ? AND product_id = ?
       `, [
         branch_id,
         product_id,
-        user_id
       ])
-
-    console.log(cartId);
 
     return await queryDatabase(`
         DELETE
