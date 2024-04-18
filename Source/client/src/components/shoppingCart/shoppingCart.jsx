@@ -18,7 +18,7 @@ const ShoppingCart = () => {
   });
 
   const [form, setForm] = useState({
-    customer_id: 4,
+    customer_id: user.customer_id,
     branch_id: 2,
     product_id: 4,
     billing_id: 46,
@@ -44,6 +44,7 @@ const ShoppingCart = () => {
       return res.json();
     })
     .then((data) => {
+      console.log(data);
       convertDataToCart(data);
       setIsPending((prevState) => ({
         ...prevState,
@@ -106,10 +107,8 @@ const ShoppingCart = () => {
   useEffect(() => updatePricing(userCart), [userCart])
 
   const updatePricing = (cart) => {
-    console.log(cart)
     if(cart === null)
       cart = userCart;
-    console.log(cart)
     let newSubTotal = 0;
     Object.values(cart).forEach(branch => {
         Object.values(branch).forEach(product => {
@@ -117,20 +116,29 @@ const ShoppingCart = () => {
         });
     });
     setSubTotal(newSubTotal);
-    setShipping(4.99);
-    const newTax = (newSubTotal + 4.99) * 0.0825;
+    let shippingCost = 0;
+    if(Object.keys(userCart).length !== 0){
+      shippingCost = 4.99
+    }
+    else{
+      shippingCost = 0
+    }
+    setShipping(shippingCost);
+    const newTax = (newSubTotal + shippingCost) * 0.0825;
     setTax(newTax);
-    setTotal(newSubTotal + 4.99 + newTax);
+    setTotal(newSubTotal + shippingCost + newTax);
   }
 
   const convertDataToCart = (data) => {
     let currentCart = userCart;
     data.map((item) => {
+      console.log(item)
       if(!currentCart[item.branch_id])
         currentCart[item.branch_id] = {};
 
       const branchItems = currentCart[item.branch_id];
       branchItems[item.product_id] = {
+        shopping_cart_id: item.shopping_cart_id,
         image: item.product_image,
         quantity: item.product_quantity, 
         price: item.price 
@@ -141,26 +149,85 @@ const ShoppingCart = () => {
   }
 
   const handleCheckout = () => {
-    fetch(`${SERVER_BASE_URL}/receipt`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.errno) {
-        alert(`An error occurred: ${data.message}. Check the console.`);
-        console.log(data);
-      } else {
-        console.log(data);
-        alert("Successfully purchased item(s)!");
-      }
-    })
-    .catch((error) => {
-      alert(`An error occurred: ${error.message}. Check the consnole.`);
-      console.log(error);
-    })
-    setUserCart({})
+
+    if (!user.billing_id) {
+      alert("You must have a card on file to buy stuff.")
+      return;
+    }
+
+    Object.keys(userCart).forEach((branchID) => {
+      const productId = Object.keys(userCart[branchID])[0];
+      const quantity = userCart[branchID][productId].quantity;
+
+      fetch(
+        `${SERVER_BASE_URL}/inventory?branch_id=${branchID}&product_id=${productId}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const inventory = data[0];
+
+          if (inventory.quantity_in_stock < quantity) {
+            alert("Not enough inventory");
+            return;
+          } else {
+            fetch(
+              `${SERVER_BASE_URL}/inventory?branch_id=${branchID}&product_id=${productId}`,
+              {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  ...inventory,
+                  id: inventory.inventory_id,
+                  quantity_in_stock: inventory.quantity_in_stock - quantity,
+                }),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+              });
+          }
+        });
+
+        fetch(`${SERVER_BASE_URL}/shopping_cart`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+              user_id: user.user_id,
+              branch_id: branchID,
+              product_id: productId
+             })
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+          }).catch((err) => {
+            alert("Error occured here. Check the console.");
+          })
+          
+    });
+
+    // fetch(`${SERVER_BASE_URL}/receipt`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify()
+    // })
+    // .then((res) => res.json())
+    // .then((data) => {
+    //   if (data.errno) {
+    //     alert(`An error occurred: ${data.message}. Check the console.`);
+    //     console.log(data);
+    //   } else {
+    //     console.log(data);
+    //     alert("Successfully purchased item(s)!");
+    //   }
+    // })
+    // .catch((error) => {
+    //   alert(`An error occurred: ${error.message}. Check the consnole.`);
+    //   console.log(error);
+    // })
+    setUserCart({});
+    alert("Purchase was successful!")
   }
 
   const handleRemoveItem = (branch_id, product_id) => {
@@ -168,6 +235,7 @@ const ShoppingCart = () => {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
+        user: user.user_id,
         branch_id: branch_id,
         product_id: product_id
        })

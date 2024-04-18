@@ -13,6 +13,9 @@ export default {
       WHERE branch_id = ? AND product_id = ?;
     `,[branch_id, product_id]);
 
+    console.log(cartItem);
+    console.log( user_id, branch_id, product_id, quantity)
+
     if(cartItem.length > 0){
       let q = cartItem[0]?.quantity;
       return await queryDatabase(
@@ -52,17 +55,20 @@ export default {
     );
   },
   delete: async (req, res) => {
-    const { branch_id, product_id } = req.body;
+    const { user_id, branch_id, product_id } = req.body;
 
     const cartId = await queryDatabase(
       `
         SELECT id
         FROM shopping_cart
-        WHERE branch_id = ? AND product_id = ?
+        WHERE branch_id = ? AND product_id = ? AND user_id = ?
       `, [
         branch_id,
-        product_id
+        product_id,
+        user_id
       ])
+
+    console.log(cartId);
 
     return await queryDatabase(`
         DELETE

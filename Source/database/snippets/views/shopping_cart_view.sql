@@ -1,5 +1,6 @@
 CREATE VIEW shopping_cart_view
 AS SELECT 
+	SC.id AS shopping_cart_id,
 	SC.user_id,
     SC.branch_id,
     B.name AS branch_name,
