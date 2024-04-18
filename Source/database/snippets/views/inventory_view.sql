@@ -1,5 +1,6 @@
 CREATE VIEW `inventory_view` 
 AS SELECT 
+	I.id AS inventory_id,
     B.id AS branch_id, 
     B.name AS branch_name, 
     P.name AS product_name, 

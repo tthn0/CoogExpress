@@ -1,15 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
 import { useParams } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
 import NavBar from "../shared/NavBar";
 import styles from "./Inventory.module.css";
 
 const Inventory = () => {
+  const { user } = useContext(AuthContext);
   const [inventory, setInventory] = useState({});
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
-
   const { branchId } = useParams();
+  const [form, setForm] = useState({
+    id: null,
+    branch_id: branchId,
+    product_id: null,
+    quantity_in_stock: null,
+    stock_alert_threshold: null,
+  })
 
   useEffect(() => {
     fetch(`${SERVER_BASE_URL}/inventory?branch_id=${branchId}`, {
@@ -21,7 +29,11 @@ const Inventory = () => {
         return res.json();
       })
       .then((data) => {
-        setInventory(data);
+        const newData = data.map((item) => ({
+          ...item,
+          newStock: 0,
+        }))
+        setInventory(newData);
         setIsPending(false);
         setError(null);
       })
@@ -33,6 +45,43 @@ const Inventory = () => {
         setError(err.message);
       });
   }, []);
+
+  const stockOnChange = (event, inv) => {
+    const updatedInventory = inventory.map((item) => 
+      item.product_id === inv.product_id
+      ? {...item, newStock: parseInt(event.target.value)}
+      : item
+    )
+    setInventory(updatedInventory);
+    setForm((prev) => ({...prev, 
+      id: inv.inventory_id,
+      product_id: inv.product_id,
+      quantity_in_stock: inv.quantity_in_stock + parseInt(event.target.value), //Fix later
+      stock_alert_threshold: 200,
+    }))
+  }
+
+  const onButtonClick = () => {
+    fetch(`${SERVER_BASE_URL}/inventory`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(form)
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.errno) {
+        alert(`An error occurred: ${data.message}. Check the console.`);
+        console.log(data);
+      } else {
+        console.log(data);
+        alert("Inventory successfully updated!");
+      }
+    })
+    .catch((error) => {
+      alert(`An error occurred: ${error.message}. Check the consnole.`);
+      console.log(error);
+    })
+  }
 
   if (isPending) {
     return <div>Loading...</div>;
@@ -77,11 +126,19 @@ const Inventory = () => {
                 <p><strong>Stock Alert:</strong> {inv.stock_alert_threshold}</p>
                 <p><strong>Last Stock Update:</strong> {inv.last_stock_update}</p>
                 <input 
-                  value="0"
-                  type="number"
+                  value={inv.newStock}
+                  onChange={(event) => {
+                    const enteredValue = event.target.value.replace(/\D/, '');
+                    const limitedValue = enteredValue.slice(0, 5);
+                    stockOnChange({ target: { value: limitedValue } }, inv)
+                  }}
+                  id={inv.product_id}
+                  type="text"
                   maxLength="5"
                 />
-                <button>Add Stock</button>
+                <button
+                  onClick={onButtonClick}
+                >Add Stock</button>
               </li>
             ))}
           </ul>

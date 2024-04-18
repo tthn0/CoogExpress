@@ -13,6 +13,7 @@ import routeController from "../controllers/entity/route.js";
 import shipmentController from "../controllers/entity/shipment.js";
 import trackingHistoryController from "../controllers/entity/tracking_history.js";
 import userController from "../controllers/entity/user.js";
+import shoppingCartController from "../controllers/entity/shopping_cart.js";
 
 // Authentication controllers
 import loginController from "../controllers/authentication/login.js";
@@ -60,6 +61,7 @@ router.use("/route", routeController);
 router.use("/shipment", shipmentController);
 router.use("/tracking_history", trackingHistoryController);
 router.use("/user", userController);
+router.use("/shopping_cart", shoppingCartController);
 
 // Authentication controllers
 router.post("/login", loginController.post);

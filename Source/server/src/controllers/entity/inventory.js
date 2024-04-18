@@ -36,8 +36,8 @@ export default {
       product_id,
       quantity_in_stock,
       stock_alert_threshold,
-      last_stock_update,
     } = req.body;
+
     return await queryDatabase(
       `UPDATE inventory
       SET
@@ -45,14 +45,13 @@ export default {
         inventory.product_id = ?,
         inventory.quantity_in_stock = ?,
         inventory.stock_alert_threshold = ?,
-        inventory.last_stock_update = ?
+        inventory.last_stock_update = NOW()
       WHERE inventory.id = ?;`,
       [
         branch_id,
         product_id,
         quantity_in_stock,
         stock_alert_threshold,
-        last_stock_update,
         id,
       ]
     );

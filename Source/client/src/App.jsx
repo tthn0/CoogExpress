@@ -16,6 +16,7 @@ import RedirectIfLoggedIn from "./contexts/RedirectIfLoggedIn";
 import Products from "./components/products/products";
 import Branches from "./components/branches/branches";
 import Inventory from "./components/inventory/inventory";
+import ShoppingCart from "./components/shoppingCart/shoppingCart";
 
 const router = createHashRouter([
   {
@@ -61,7 +62,7 @@ const router = createHashRouter([
 
   {
     path: "/products",
-    element: <Products />,
+    element: <ProtectedRoute children={<Products />} />,
   },
   {
     path: "/branches",
@@ -69,7 +70,11 @@ const router = createHashRouter([
   },
   {
     path: "/inventory/:branchId",
-    element: <Inventory />,
+    element: <ProtectedRoute children={<Inventory />} />,
+  },
+  {
+    path: "/checkout",
+    element: <ProtectedRoute children={<ShoppingCart />} />,
   },
 ]);
 
