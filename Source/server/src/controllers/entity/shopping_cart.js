@@ -13,9 +13,6 @@ export default {
       WHERE branch_id = ? AND product_id = ?;
     `,[branch_id, product_id]);
 
-    console.log(cartItem);
-    console.log( user_id, branch_id, product_id, quantity)
-
     if(cartItem.length > 0){
       let q = cartItem[0]?.quantity;
       return await queryDatabase(
@@ -42,35 +39,46 @@ export default {
     );
   },
   put: async (req, res) => {
-    const { id, quantity } = req.body;
+    const { id, user_id, branch_id, quantity, } = req.body;
 
-    return await queryDatabase(
-      `
+    if(user_id && branch_id){
+      return await queryDatabase(`
         UPDATE shopping_cart
         SET
-            quantity = ?
-        WHERE id = ?
-        `,
-      [quantity, id]
-    );
+          branch_id = ?
+        WHERE user_id = ?
+      `,[branch_id, user_id])
+    } 
+
+    if(quantity){
+      return await queryDatabase(
+        `
+          UPDATE shopping_cart
+          SET
+              quantity = ?
+          WHERE id = ?
+          `,[quantity, id]);
+    }
+    
+    return;
   },
   delete: async (req, res) => {
-    const {branch_id, product_id } = req.body;
+    const { user_id, product_id } = req.body;
 
-    const cartId = await queryDatabase(
-      `
-        SELECT id
-        FROM shopping_cart
-        WHERE branch_id = ? AND product_id = ?
-      `, [
-        branch_id,
-        product_id,
-      ])
-
-    return await queryDatabase(`
+    if(product_id){
+      return await queryDatabase(`
         DELETE
         FROM shopping_cart
-        WHERE id = ?
-    `, [cartId[0].id]);
+        WHERE user_id = ? AND product_id = ?
+    `, [user_id, product_id]);
+    } else {
+      return await queryDatabase(`
+        DELETE
+        FROM shopping_cart
+        WHERE user_id = ?
+    `, [user_id]);
+    }
+
+    return;
   },
 };

@@ -1,12 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
 import { useParams } from "react-router-dom";
-import AuthContext from "../../contexts/AuthContext";
 import NavBar from "../shared/NavBar";
 import styles from "./Inventory.module.css";
 
 const Inventory = () => {
-  const { user } = useContext(AuthContext);
   const [inventory, setInventory] = useState({});
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
@@ -46,6 +44,8 @@ const Inventory = () => {
       });
   }, []);
 
+  useEffect(() => {}, [inventory])
+
   const stockOnChange = (event, inv) => {
     const updatedInventory = inventory.map((item) => 
       item.product_id === inv.product_id
@@ -81,6 +81,12 @@ const Inventory = () => {
       alert(`An error occurred: ${error.message}. Check the consnole.`);
       console.log(error);
     })
+
+    const updatedInv = inventory.map((item) => ({
+      ...item,
+      quantity_in_stock: item.quantity_in_stock + item.newStock,
+    }))
+    setInventory(updatedInv);
   }
 
   if (isPending) {

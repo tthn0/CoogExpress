@@ -7,7 +7,7 @@ import styles from "./Products.module.css";
 const Products = () => {
   const { user } = useContext(AuthContext);
   const [branches, setBranches] = useState({});
-  const [currentBranch_id, setCurrentBranch_id] = useState(14);
+  const [currentBranch_id, setCurrentBranch_id] = useState(1);
   const [products, setProducts] = useState({});
   const [inventory, setInventory] = useState({});
   const [isPending, setIsPending] = useState({
@@ -180,6 +180,25 @@ const Products = () => {
   useEffect(() => updateSubTotal,[cart])
 
   useEffect(() => {
+    fetch(`${SERVER_BASE_URL}/shopping_cart`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: user.user_id, branch_id: currentBranch_id })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.errno) {
+        alert(`An error occurred: ${data.message}. Check the console.`);
+        console.log(data);
+      }
+    })
+    .catch((error) => {
+      alert(`An error occurred: ${error.message}. Check the consnole.`);
+      console.log(error);
+    })
+  }, [currentBranch_id])
+
+  useEffect(() => {
     const newTax = parseFloat(((subTotal + shipping) * 0.0825).toFixed(2));
     setTax(newTax);
     setTotal(parseFloat((subTotal + shipping + newTax).toFixed(2)))
@@ -191,35 +210,44 @@ const Products = () => {
     })
   }
 
-  //cart[branchid][productid].quantity (OR .price)
+  const convertNumberToPrice = (num) => {
+    const price = num.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    })
+    return price;
+  }
+
+  //cart[productid].quantity (OR .price)
   const addToCart = (product_id, quantity, price, sendPOST) => {
     let currentCart = cart;
     let currentSCForm = shoppingCartForm;
 
-    if(!currentCart[currentBranch_id]){
-      currentCart[currentBranch_id] = {};
-      currentSCForm = {
-        ...currentSCForm,
-        user_id: user.user_id,
-        branch_id: currentBranch_id,
-        product_id: product_id,
-        quantity: 0,
-        isNew: true
-      }
-    }
-    const branchCart = currentCart[currentBranch_id]
-    if(branchCart[product_id]){
-      branchCart[product_id].quantity += quantity;
-    } else {
-      branchCart[product_id] = { quantity, price };
-    }
     currentSCForm = {
       ...currentSCForm,
-      quantity: quantity
+      user_id: user.user_id,
+      branch_id: currentBranch_id,
+      product_id: product_id,
+      quantity: quantity,
+      isNew: true
     }
 
+    if(!currentCart[product_id]){
+      currentCart[product_id] = { quantity, price };
+      currentSCForm = {
+        ...currentSCForm,
+        isNew: true
+      }
+    } else {
+      currentCart[product_id].quantity += quantity;
+      currentSCForm = {
+        ...currentSCForm,
+        isNew: false
+      }
+    }
+
+    console.log(currentCart)
     setShipping(4.99);
-    console.log(currentCart);
     setCart(currentCart);
     setShoppingCartForm(currentSCForm);
     updateSubTotal();
@@ -235,9 +263,6 @@ const Products = () => {
         if (data.errno) {
           alert(`An error occurred: ${data.message}. Check the console.`);
           console.log(data);
-        } else {
-          console.log(data);
-          alert("Shopping cart successfully updated!");
         }
       })
       .catch((error) => {
@@ -249,10 +274,9 @@ const Products = () => {
 
   const updateSubTotal = () => {
     let newTotal = 0
-    for (const branch_id in cart){
-      for(const product_id in cart[branch_id])
-        newTotal += cart[branch_id][product_id].price * cart[branch_id][product_id].quantity;
-    }
+    for(const product_id in cart)
+      newTotal += cart[product_id].price * cart[product_id].quantity;
+    
     console.log(newTotal)
     setSubTotal(parseFloat(newTotal.toFixed(2)));
   }
@@ -340,20 +364,20 @@ const Products = () => {
           <div>
             <div className={styles.checkoutBlock}>
             <text>Sub Total: </text>
-            <text className={styles.cost}>${subTotal.toFixed(2)}</text>
+            <text className={styles.cost}>{convertNumberToPrice(subTotal)}</text>
             </div>
             <div className={styles.checkoutBlock}> 
               <text>Shipping: </text>
-              <text className={styles.cost}>${shipping.toFixed(2)}</text>
+              <text className={styles.cost}>{convertNumberToPrice(shipping)}</text>
             </div>
             <div className={styles.checkoutBlock}>
               <text>Tax:  </text>
-              <text className={styles.cost}>${tax.toFixed(2)}</text>
+              <text className={styles.cost}>{convertNumberToPrice(tax)}</text>
             </div>
             <div className={styles.divider} />
             <div className={styles.checkoutBlock}>
               <h3>Total: </h3>
-              <text className={styles.cost}>${total.toFixed(2)}</text>
+              <text className={styles.cost}>{convertNumberToPrice(total)}</text>
             </div>
             <button
             onClick={handleCheckout}

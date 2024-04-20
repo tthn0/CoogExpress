@@ -21,24 +21,28 @@ const processEmailQueue = async () => {
     FROM email_queue 
     WHERE processed = 0`);
 
-  for (const email_msg of unprocessedEmails) {
-    const result = await notifEmail(
-      email_msg.user_email,
-      email_msg.email_subject,
-      email_msg.email_body
-    );
-
-    if (result == true) {
-      const result = await queryDatabase(
-        `
-      UPDATE email_queue
-      SET
-        email_queue.processed = 1
-      WHERE email_queue.id = ?
-       `,
-        [email_msg.id]
+  try{
+    for (const email_msg of unprocessedEmails) {
+      const result = await notifEmail(
+        email_msg.user_email,
+        email_msg.email_subject,
+        email_msg.email_body
       );
+  
+      if (result == true) {
+        queryDatabase(
+          `
+        UPDATE email_queue
+        SET
+          email_queue.processed = 1
+        WHERE email_queue.id = ?
+         `,
+          [email_msg.id]
+        );
+      }
     }
+  } catch(err) {
+    console.log(err.message, "| retrying...")
   }
   // console.log("queue refreshed")
 };

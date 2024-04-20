@@ -41,7 +41,7 @@
   position: sticky;
   top: 20px;
   height: 75%;
-  width: 200px;
+  width: 250px;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -150,6 +150,10 @@
 
 .productItem button:hover {
   background-color: #e6810a;
+}
+
+.productItem button:active {
+  background-color: #59da8f;
 }
 
 .productItem select {
