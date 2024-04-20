@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -17,7 +17,6 @@ import {
 import { Doughnut, Bar, Line } from "react-chartjs-2";
 
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
-import AuthContext from "../../contexts/AuthContext";
 import styles from "./Report.module.scss";
 import emptyImage from "./images/Empty.svg";
 import moment from "moment";
@@ -94,7 +93,6 @@ function Row({ name, sku, upc, amount_bought, total, timestamp }) {
 }
 
 export default function RouteReport() {
-  const { user } = useContext(AuthContext);
   const [receipts, setReceipts] = useState([]);
   const [sortedReceipts, setSortedReceipts] = useState([]);
   const [genereated, setGenerated] = useState(false);
@@ -108,51 +106,57 @@ export default function RouteReport() {
     endDate: null,
   });
 
+  const [showCharts, setShowCharts] = useState(false);
+
   const updateDateRange = (newDate) => {
     setDateRange(newDate);
   };
 
-  const handleGenerateReport = () => {
-    if (
-      !dateRange.startDate ||
-      !dateRange.endDate ||
-      !category ||
-      !sortCriteria ||
-      !orderCriteria
-    ) {
-      alert("Please make sure all parameters have been selected.");
-      return;
-    }
-    setGenerated(true);
+  const handleGenerateReport = ({ showCharts }) => {
+    return () => {
+      if (
+        !dateRange.startDate ||
+        !dateRange.endDate ||
+        !category ||
+        !sortCriteria ||
+        !orderCriteria
+      ) {
+        alert("Please make sure all parameters have been selected.");
+        return;
+      }
 
-    fetch(`${SERVER_BASE_URL}/receipt?category=${category}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setReceipts(data);
-        return data;
-      })
-      .then((receipts) => {
-        console.log(sortCriteria);
-        console.log(receipts[0]);
-        const sortedReceipts = [...receipts].sort((a, b) => {
-          if (sortCriteria === SORT_CRITERIA.TIMESTAMP)
-            return orderCriteria === ORDER_CRITERIA.ASCENDING
-              ? new Date(a.timestamp) - new Date(b.timestamp)
-              : new Date(b.timestamp) - new Date(a.timestamp);
-          else if (
-            sortCriteria === SORT_CRITERIA.AMOUNT_BOUGHT ||
-            sortCriteria === SORT_CRITERIA.TOTAL
-          )
-            return orderCriteria === ORDER_CRITERIA.ASCENDING
-              ? a[sortCriteria] - b[sortCriteria]
-              : b[sortCriteria] - a[sortCriteria];
-          else
-            return orderCriteria === ORDER_CRITERIA.ASCENDING
-              ? a[sortCriteria].localeCompare(b[sortCriteria])
-              : b[sortCriteria].localeCompare(a[sortCriteria]);
+      setGenerated(true);
+      setShowCharts(showCharts);
+
+      fetch(`${SERVER_BASE_URL}/receipt?category=${category}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setReceipts(data);
+          return data;
+        })
+        .then((receipts) => {
+          console.log(sortCriteria);
+          console.log(receipts[0]);
+          const sortedReceipts = [...receipts].sort((a, b) => {
+            if (sortCriteria === SORT_CRITERIA.TIMESTAMP)
+              return orderCriteria === ORDER_CRITERIA.ASCENDING
+                ? new Date(a.timestamp) - new Date(b.timestamp)
+                : new Date(b.timestamp) - new Date(a.timestamp);
+            else if (
+              sortCriteria === SORT_CRITERIA.AMOUNT_BOUGHT ||
+              sortCriteria === SORT_CRITERIA.TOTAL
+            )
+              return orderCriteria === ORDER_CRITERIA.ASCENDING
+                ? a[sortCriteria] - b[sortCriteria]
+                : b[sortCriteria] - a[sortCriteria];
+            else
+              return orderCriteria === ORDER_CRITERIA.ASCENDING
+                ? a[sortCriteria].localeCompare(b[sortCriteria])
+                : b[sortCriteria].localeCompare(a[sortCriteria]);
+          });
+          setSortedReceipts(sortedReceipts);
         });
-        setSortedReceipts(sortedReceipts);
-      });
+    };
   };
 
   const totalTransactions = receipts.length;
@@ -248,7 +252,7 @@ export default function RouteReport() {
     labels: Object.keys(binnedDates),
     datasets: [
       {
-        label: "Routes by Date",
+        label: "Transactions by Date",
         data: Object.values(binnedDates),
         backgroundColor: "rgba(153, 102, 255, 0.33)", // Purple
         borderColor: "rgba(153, 102, 255, 1)", // Purple
@@ -262,7 +266,7 @@ export default function RouteReport() {
     <div id={styles.container}>
       <h1 id={styles.heading}>Product Report</h1>
       <p className={styles.paragraph}>
-        Statistics of the packages meeting the specified criteria will be
+        Statistics of the products meeting the specified criteria will be
         displayed below.
       </p>
 
@@ -275,6 +279,7 @@ export default function RouteReport() {
           <h2 className={styles.subHeading}>Time Period</h2>
           <div
             style={{
+              marginTop: "0.5em",
               width: "min(25em, 100%)",
             }}
           >
@@ -346,11 +351,25 @@ export default function RouteReport() {
 
         <div>
           <h2 className={styles.subHeading}>Generate Report</h2>
-          <div id={styles.generateReport} onClick={handleGenerateReport}>
-            <span>
-              <FontAwesomeIcon icon={faClipboardList} />
-              Generate
-            </span>
+          <div className={styles.generateReportButtonContainer}>
+            <div
+              id={styles.generateReport}
+              onClick={handleGenerateReport({ showCharts: true })}
+            >
+              <span>
+                <FontAwesomeIcon icon={faChartPie} />
+                With Charts
+              </span>
+            </div>
+            <div
+              id={styles.generateReport}
+              onClick={handleGenerateReport({ showCharts: false })}
+            >
+              <span>
+                <FontAwesomeIcon icon={faClipboardList} />
+                No Charts
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -394,7 +413,12 @@ export default function RouteReport() {
           </div>
         </div>
 
-        <div id={styles.chartContainer}>
+        <div
+          id={styles.chartContainer}
+          style={{
+            display: showCharts ? "grid" : "none",
+          }}
+        >
           <div className={styles.chart}>
             <p>Products Per Transaction Histogram</p>
             <Bar data={histogramData} />

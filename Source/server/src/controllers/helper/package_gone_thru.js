@@ -1,6 +1,6 @@
 // Retrieves all packages that are not from the supplied branch but have gone through the supplied branch.
 
-import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
+import { queryDatabase } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {

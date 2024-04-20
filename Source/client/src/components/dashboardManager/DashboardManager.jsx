@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import NavBar from "../shared/NavBar";
@@ -6,8 +6,10 @@ import styles from "./DashboardManager.module.scss";
 import analyticsImage from "./images/Analytics.svg";
 import factoryImage from "./images/Factory.svg";
 import peopleImage from "./images/People.svg";
+import AuthContext from "../../contexts/AuthContext";
 
 export default function DashboardManager() {
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     document.body.style.backgroundColor = "#F5F5F5";
     return () => (document.body.style.backgroundColor = "");
@@ -21,7 +23,9 @@ export default function DashboardManager() {
         <div id={styles.options}>
           <div
             className={styles.option}
-            onClick={() => navigate("/dashboard/manager/inventory")}
+            onClick={() =>
+              navigate(`/dashboard/manager/inventory/${user.branch_id}`)
+            }
           >
             <div className={styles.imageContainer}>
               <img src={factoryImage} alt="Graphic" />

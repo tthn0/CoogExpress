@@ -7,36 +7,37 @@ export default {
   post: async (req, res) => {
     const {
       customer_id,
-      package_id,
       branch_id,
+      product_id,
       billing_id,
+      amount_bought,
       subtotal,
       tax,
       total,
-      timestamp,
       notes,
     } = req.body;
     return await queryDatabase(
       `INSERT INTO receipt(
         customer_id,
-        package_id,
         branch_id,
+        product_id,
         billing_id,
+        amount_bought,
         subtotal,
         tax,
         total,
         timestamp,
         notes
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?);`,
       [
         customer_id,
-        package_id,
         branch_id,
+        product_id,
         billing_id,
+        amount_bought,
         subtotal,
         tax,
         total,
-        timestamp,
         notes,
       ]
     );

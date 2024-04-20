@@ -1,3 +1,6 @@
+// Authentication controllers
+import loginController from "../controllers/authentication/login.js";
+
 // Entity controllers
 import addressController from "../controllers/entity/address.js";
 import billingController from "../controllers/entity/billing.js";
@@ -7,16 +10,17 @@ import employeeController from "../controllers/entity/employee.js";
 import employeeScheduleController from "../controllers/entity/employee_schedule.js";
 import inventoryController from "../controllers/entity/inventory.js";
 import packageController from "../controllers/entity/package.js";
-import packageGoneThruController from "../controllers/entity/package_gone_thru.js";
 import productController from "../controllers/entity/product.js";
 import receiptController from "../controllers/entity/receipt.js";
 import routeController from "../controllers/entity/route.js";
 import shipmentController from "../controllers/entity/shipment.js";
+import shoppingCartController from "../controllers/entity/shopping_cart.js";
 import trackingHistoryController from "../controllers/entity/tracking_history.js";
 import userController from "../controllers/entity/user.js";
 
-// Authentication controllers
-import loginController from "../controllers/authentication/login.js";
+// Helper controllers
+import packageGoneThruController from "../controllers/helper/package_gone_thru.js";
+import processCartController from "../controllers/helper/process_cart.js";
 
 const router = {
   POST: {},
@@ -46,6 +50,9 @@ const router = {
 
 export { router };
 
+// Authentication controllers
+router.post("/login", loginController.post);
+
 // Entity controllers
 router.use("/address", addressController);
 router.use("/billing", billingController);
@@ -55,13 +62,14 @@ router.use("/employee", employeeController);
 router.use("/employee_schedule", employeeScheduleController);
 router.use("/inventory", inventoryController);
 router.use("/package", packageController);
-router.use("/package_gone_thru", packageGoneThruController);
 router.use("/product", productController);
 router.use("/receipt", receiptController);
 router.use("/route", routeController);
 router.use("/shipment", shipmentController);
+router.use("/shopping_cart", shoppingCartController);
 router.use("/tracking_history", trackingHistoryController);
 router.use("/user", userController);
 
-// Authentication controllers
-router.post("/login", loginController.post);
+// Helper controllers
+router.use("/package_gone_thru", packageGoneThruController);
+router.use("/process_cart", processCartController);

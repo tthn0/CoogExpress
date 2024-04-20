@@ -1,9 +1,9 @@
 import { useState } from "react";
-import styles from "./Reports.module.scss";
-import NavBar from "../shared/NavBar";
 import PackageReport from "./PackageReport";
 import RouteReport from "./RouteReport";
 import ProductReport from "./ProductReport";
+import NavBar from "../shared/NavBar";
+import styles from "./DashboardManagerReports.module.scss";
 
 const REPORT_TYPES = Object.freeze({
   PACKAGE: "package",
@@ -11,7 +11,7 @@ const REPORT_TYPES = Object.freeze({
   PRODUCT: "product",
 });
 
-export default function Reports() {
+export default function DashboardManagerReports() {
   const [formType, setFormType] = useState(REPORT_TYPES.PACKAGE);
 
   return (

@@ -101,8 +101,7 @@ export default {
   //     additional_fees,
   //   } = req.body;
   //   return await queryDatabase(
-  //     `
-  //     UPDATE package
+  //     `UPDATE package
   //     SET
   //       package.sender_customer_id = ?,
   //       package.receiver_customer_id = ?,
@@ -118,8 +117,7 @@ export default {
   //       package.delivery_instructions = ?,
   //       package.base_shipping_cost = ?,
   //       package.additional_fees = ?
-  //     WHERE package.id = ?;
-  //     `,
+  //     WHERE package.id = ?;`,
   //     [
   //       sender_customer_id,
   //       receiver_customer_id,

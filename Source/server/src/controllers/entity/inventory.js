@@ -2,7 +2,7 @@ import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    return await getBasedOnQueryParams("inventory", req.params);
+    return await getBasedOnQueryParams("inventory_view", req.params);
   },
   post: async (req, res) => {
     const {
@@ -10,7 +10,6 @@ export default {
       product_id,
       quantity_in_stock,
       stock_alert_threshold,
-      last_stock_update,
     } = req.body;
     return await queryDatabase(
       `INSERT INTO inventory(
@@ -19,13 +18,12 @@ export default {
         quantity_in_stock,
         stock_alert_threshold,
         last_stock_update
-      ) VALUES (?, ?, ?, ?, ?);`,
+      ) VALUES (?, ?, ?, ?, NOW());`,
       [
         branch_id,
         product_id,
         quantity_in_stock,
         stock_alert_threshold,
-        last_stock_update,
       ]
     );
   },
@@ -36,7 +34,6 @@ export default {
       product_id,
       quantity_in_stock,
       stock_alert_threshold,
-      last_stock_update,
     } = req.body;
     return await queryDatabase(
       `UPDATE inventory
@@ -45,16 +42,9 @@ export default {
         product_id = ?,
         quantity_in_stock = ?,
         stock_alert_threshold = ?,
-        last_stock_update = ?
+        last_stock_update = NOW()
       WHERE id = ?;`,
-      [
-        branch_id,
-        product_id,
-        quantity_in_stock,
-        stock_alert_threshold,
-        last_stock_update,
-        id,
-      ]
+      [branch_id, product_id, quantity_in_stock, stock_alert_threshold, id]
     );
   },
   // delete: async (req, res) => {

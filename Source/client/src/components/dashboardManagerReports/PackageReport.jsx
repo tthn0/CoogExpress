@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Datepicker from "react-tailwindcss-datepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faChartPie,
   faClipboardList,
   faSearch,
   faChevronDown,
@@ -215,6 +216,8 @@ export default function PackageReport() {
     endDate: null,
   });
 
+  const [showCharts, setShowCharts] = useState(false);
+
   useEffect(() => {
     const searchables = Array.from(
       document.getElementsByClassName(SEARCHABLE_CLASS_NAME)
@@ -344,31 +347,35 @@ export default function PackageReport() {
     ],
   };
 
-  const handleGenerateReport = () => {
-    if (!dateRange.startDate || !dateRange.endDate || !packageOrigin) {
-      alert("Please select a time period and package origin.");
-      return;
-    }
-    setGenerated(true);
+  const handleGenerateReport = ({ showCharts }) => {
+    return () => {
+      if (!dateRange.startDate || !dateRange.endDate || !packageOrigin) {
+        alert("Please select a time period and package origin.");
+        return;
+      }
 
-    const url =
-      packageOrigin === PACKAGE_ORIGIN.INTERNAL
-        ? `${SERVER_BASE_URL}/package?source_branch_id=${user.branch_id}`
-        : `${SERVER_BASE_URL}/package_gone_thru?branch_id=${user.branch_id}`;
+      setGenerated(true);
+      setShowCharts(showCharts);
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        return data.filter((pkg) => {
-          return (
-            new Date(pkg.initiated_at) >= new Date(dateRange.startDate) &&
-            new Date(pkg.initiated_at) <= new Date(dateRange.endDate)
-          );
+      const url =
+        packageOrigin === PACKAGE_ORIGIN.INTERNAL
+          ? `${SERVER_BASE_URL}/package?source_branch_id=${user.branch_id}`
+          : `${SERVER_BASE_URL}/package_gone_thru?branch_id=${user.branch_id}`;
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          return data.filter((pkg) => {
+            return (
+              new Date(pkg.initiated_at) >= new Date(dateRange.startDate) &&
+              new Date(pkg.initiated_at) <= new Date(dateRange.endDate)
+            );
+          });
+        })
+        .then((data) => {
+          setPackages(data);
         });
-      })
-      .then((data) => {
-        setPackages(data);
-      });
+    };
   };
 
   const formatDateAndTime = (date) => {
@@ -540,6 +547,7 @@ export default function PackageReport() {
           <h2 className={styles.subHeading}>Time Period</h2>
           <div
             style={{
+              marginTop: "0.5em",
               width: "min(25em, 100%)",
             }}
           >
@@ -552,6 +560,7 @@ export default function PackageReport() {
             />
           </div>
         </div>
+
         <div>
           <h2 className={styles.subHeading}>Package Origin</h2>
           <select
@@ -565,13 +574,28 @@ export default function PackageReport() {
             <option value={PACKAGE_ORIGIN.EXTERNAL}>Externally Sourced</option>
           </select>
         </div>
+
         <div>
           <h2 className={styles.subHeading}>Generate Report</h2>
-          <div id={styles.generateReport} onClick={handleGenerateReport}>
-            <span>
-              <FontAwesomeIcon icon={faClipboardList} />
-              Generate
-            </span>
+          <div className={styles.generateReportButtonContainer}>
+            <div
+              id={styles.generateReport}
+              onClick={handleGenerateReport({ showCharts: true })}
+            >
+              <span>
+                <FontAwesomeIcon icon={faChartPie} />
+                With Charts
+              </span>
+            </div>
+            <div
+              id={styles.generateReport}
+              onClick={handleGenerateReport({ showCharts: false })}
+            >
+              <span>
+                <FontAwesomeIcon icon={faClipboardList} />
+                No Charts
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -615,7 +639,12 @@ export default function PackageReport() {
           </div>
         </div>
 
-        <div id={styles.chartContainer}>
+        <div
+          id={styles.chartContainer}
+          style={{
+            display: showCharts ? "grid" : "none",
+          }}
+        >
           <div className={styles.chart}>
             <p>Package Speed Statistics</p>
             <Doughnut data={speedData} />

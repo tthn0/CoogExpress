@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -155,6 +155,8 @@ export default function RouteReport() {
   const [sortCriteria, setCriteria] = useState(null);
   const [orderCriteria, setOrderCriteria] = useState(null);
 
+  const [showCharts, setShowCharts] = useState(false);
+
   useEffect(() => {
     fetch(`${SERVER_BASE_URL}/branch`)
       .then((res) => res.json())
@@ -173,61 +175,66 @@ export default function RouteReport() {
     setDateRange(newDate);
   };
 
-  const handleGenerateReport = () => {
-    if (
-      !dateRange.startDate ||
-      !dateRange.endDate ||
-      !driverId ||
-      !branchId ||
-      !sortCriteria ||
-      !orderCriteria
-    ) {
-      alert("Please make sure all parameters have been selected.");
-      return;
-    }
-    setGenerated(true);
+  const handleGenerateReport = ({ showCharts }) => {
+    return () => {
+      if (
+        !dateRange.startDate ||
+        !dateRange.endDate ||
+        !driverId ||
+        !branchId ||
+        !sortCriteria ||
+        !orderCriteria
+      ) {
+        alert("Please make sure all parameters have been selected.");
+        return;
+      }
 
-    fetch(`${SERVER_BASE_URL}/employee?employee_id=${driverId}`)
-      .then((res) => res.json())
-      .then((data) => setDriver(data[0]));
-    fetch(`${SERVER_BASE_URL}/branch?branch_id=${branchId}`)
-      .then((res) => res.json())
-      .then((data) => setBranch(data[0]));
+      setGenerated(true);
+      setShowCharts(showCharts);
 
-    fetch(
-      `${SERVER_BASE_URL}/route?driver_employee_id=${driverId}&destination_branch_id=${branchId}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        return data.filter((route) => {
-          return (
-            route.end_timestamp &&
-            new Date(route.start_timestamp) >= new Date(dateRange.startDate) &&
-            new Date(route.end_timestamp) <= new Date(dateRange.endDate)
-          );
+      fetch(`${SERVER_BASE_URL}/employee?employee_id=${driverId}`)
+        .then((res) => res.json())
+        .then((data) => setDriver(data[0]));
+      fetch(`${SERVER_BASE_URL}/branch?branch_id=${branchId}`)
+        .then((res) => res.json())
+        .then((data) => setBranch(data[0]));
+
+      fetch(
+        `${SERVER_BASE_URL}/route?driver_employee_id=${driverId}&destination_branch_id=${branchId}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          return data.filter((route) => {
+            return (
+              route.end_timestamp &&
+              new Date(route.start_timestamp) >=
+                new Date(dateRange.startDate) &&
+              new Date(route.end_timestamp) <= new Date(dateRange.endDate)
+            );
+          });
+        })
+        .then((data) => {
+          setRoutes(data);
+          return data;
+        })
+        .then((routes) => {
+          const sortedRoutes = [...routes].sort((a, b) => {
+            if (sortCriteria === SORT_CRITERIA.START_TIMESTAMP)
+              return orderCriteria === ORDER_CRITERIA.ASCENDING
+                ? new Date(a.start_timestamp) - new Date(b.start_timestamp)
+                : new Date(b.start_timestamp) - new Date(a.start_timestamp);
+            else if (sortCriteria === SORT_CRITERIA.END_TIMESTAMP)
+              return orderCriteria === ORDER_CRITERIA.ASCENDING
+                ? new Date(a.end_timestamp) - new Date(b.end_timestamp)
+                : new Date(b.end_timestamp) - new Date(a.end_timestamp);
+            else
+              return orderCriteria === ORDER_CRITERIA.ASCENDING
+                ? a[sortCriteria] - b[sortCriteria]
+                : b[sortCriteria] - a[sortCriteria];
+          });
+          setSortedRoutes(sortedRoutes);
         });
-      })
-      .then((data) => {
-        setRoutes(data);
-        return data;
-      })
-      .then((routes) => {
-        const sortedRoutes = [...routes].sort((a, b) => {
-          if (sortCriteria === SORT_CRITERIA.START_TIMESTAMP)
-            return orderCriteria === ORDER_CRITERIA.ASCENDING
-              ? new Date(a.start_timestamp) - new Date(b.start_timestamp)
-              : new Date(b.start_timestamp) - new Date(a.start_timestamp);
-          else if (sortCriteria === SORT_CRITERIA.END_TIMESTAMP)
-            return orderCriteria === ORDER_CRITERIA.ASCENDING
-              ? new Date(a.end_timestamp) - new Date(b.end_timestamp)
-              : new Date(b.end_timestamp) - new Date(a.end_timestamp);
-          else
-            return orderCriteria === ORDER_CRITERIA.ASCENDING
-              ? a[sortCriteria] - b[sortCriteria]
-              : b[sortCriteria] - a[sortCriteria];
-        });
-        setSortedRoutes(sortedRoutes);
-      });
+    };
   };
 
   const routeType =
@@ -354,6 +361,7 @@ export default function RouteReport() {
           <h2 className={styles.subHeading}>Time Period</h2>
           <div
             style={{
+              marginTop: "0.5em",
               width: "min(25em, 100%)",
             }}
           >
@@ -439,11 +447,25 @@ export default function RouteReport() {
 
         <div>
           <h2 className={styles.subHeading}>Generate Report</h2>
-          <div id={styles.generateReport} onClick={handleGenerateReport}>
-            <span>
-              <FontAwesomeIcon icon={faClipboardList} />
-              Generate
-            </span>
+          <div className={styles.generateReportButtonContainer}>
+            <div
+              id={styles.generateReport}
+              onClick={handleGenerateReport({ showCharts: true })}
+            >
+              <span>
+                <FontAwesomeIcon icon={faChartPie} />
+                With Charts
+              </span>
+            </div>
+            <div
+              id={styles.generateReport}
+              onClick={handleGenerateReport({ showCharts: false })}
+            >
+              <span>
+                <FontAwesomeIcon icon={faClipboardList} />
+                No Charts
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -530,7 +552,12 @@ export default function RouteReport() {
           </div>
         </div>
 
-        <div id={styles.chartContainer}>
+        <div
+          id={styles.chartContainer}
+          style={{
+            display: showCharts ? "grid" : "none",
+          }}
+        >
           <div className={styles.chart}>
             <p>Package Histogram</p>
             <Bar data={histogramData} />

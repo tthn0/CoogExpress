@@ -16,7 +16,7 @@ import {
   faCar,
 } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./Employees.module.scss";
+import styles from "./DashboardManagerEmployees.module.scss";
 import Button from "../shared/Button";
 import NavBar from "../shared/NavBar";
 import Input, { VALIDATORS } from "../shared/Input";
@@ -81,7 +81,7 @@ const UserCard = ({
   );
 };
 
-export default function Employee() {
+export default function DashboardManagerEmployees() {
   const { user } = useContext(AuthContext);
   const [employees, setEmployees] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

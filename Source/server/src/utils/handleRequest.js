@@ -9,9 +9,7 @@ const handleRequest = async (req, res) => {
 
 export { handleRequest };
 
-const logRequest = (req) => {
-  console.log(req.method, req.url);
-};
+const logRequest = (req) => console.log(req.method, req.url);
 
 const parseRequest = async (req) => {
   const parseParams = (req) => url.parse(req.url, true).query;

@@ -337,7 +337,7 @@ export default function Profile() {
                 className={styles.formInput}
                 placeholder="Expiration Month"
                 name="expiration_month"
-                minLength={1}
+                minLength={2}
                 maxLength={2}
               />
               <input

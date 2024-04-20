@@ -9,8 +9,8 @@ import AuthContext from "../../contexts/AuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: false },
-  { name: "Branches", href: "#", current: false },
-  { name: "Products", href: "#", current: false },
+  { name: "Branches", href: "/branches", current: false },
+  { name: "Products", href: "/products", current: false },
 ];
 
 function classNames(...classes) {
