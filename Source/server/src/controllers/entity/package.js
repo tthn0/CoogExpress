@@ -26,78 +26,49 @@ export default {
       destination_address_zip,
     } = req.body;
 
-    const [sender, receiver, address] = await Promise.all([
+    const [sender, receiver] = await Promise.all([
       queryDatabase("SELECT * FROM customer_view WHERE username = ?", [
         sender_username,
       ]),
       queryDatabase("SELECT * FROM customer_view WHERE username = ?", [
         receiver_username,
       ]),
-      queryDatabase(
-        `SELECT * 
-        FROM address 
-        WHERE
-          line1 = ? AND
-          line2 = ? AND
-          city = ? AND
-          state = ? AND
-          zip = ?;`,
-        [
-          destination_address_line1,
-          destination_address_line2,
-          destination_address_city,
-          destination_address_state,
-          destination_address_zip,
-        ]
-      ),
     ]);
 
-    let address_id;
-
-    if (address.length > 0) {
-      address_id = address[0].id;
-    } else {
-      const address = await queryDatabase(
-        `INSERT INTO address(
-          line1,
-          line2,
-          city,
-          state,
-          zip
-        ) VALUES (?, ?, ?, ?, ?);`,
-        [
-          destination_address_line1,
-          destination_address_line2,
-          destination_address_city,
-          destination_address_state,
-          destination_address_zip,
-        ]
-      );
-      address_id = address.insertId;
-    }
-
     return await queryDatabase(
-      `INSERT INTO package(
-        sender_customer_id,
-        receiver_customer_id,
-        source_branch_id,
-        destination_address_id,
-        type,
-        width,
-        length,
-        height,
-        weight,
-        special_handling_instructions,
-        delivery_instructions,
-        base_shipping_cost,
-        additional_fees,
-        speed
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      `START TRANSACTION;
+
+        INSERT INTO address (line1, line2, city, state, zip)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
+
+        INSERT INTO package(
+          sender_customer_id,
+          receiver_customer_id,
+          source_branch_id,
+          destination_address_id,
+          type,
+          width,
+          length,
+          height,
+          weight,
+          special_handling_instructions,
+          delivery_instructions,
+          base_shipping_cost,
+          additional_fees,
+          speed
+        ) VALUES (?, ?, ?, LAST_INSERT_ID(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        
+        COMMIT;`,
       [
-        sender[0]?.customer_id,
-        receiver[0]?.customer_id,
+        destination_address_line1,
+        destination_address_line2,
+        destination_address_city,
+        destination_address_state,
+        destination_address_zip,
+        sender[0].customer_id,
+        receiver[0].customer_id,
         source_branch_id,
-        address_id,
         type,
         width,
         length,
@@ -130,8 +101,7 @@ export default {
   //     additional_fees,
   //   } = req.body;
   //   return await queryDatabase(
-  //     `
-  //     UPDATE package
+  //     `UPDATE package
   //     SET
   //       package.sender_customer_id = ?,
   //       package.receiver_customer_id = ?,
@@ -147,8 +117,7 @@ export default {
   //       package.delivery_instructions = ?,
   //       package.base_shipping_cost = ?,
   //       package.additional_fees = ?
-  //     WHERE package.id = ?;
-  //     `,
+  //     WHERE package.id = ?;`,
   //     [
   //       sender_customer_id,
   //       receiver_customer_id,

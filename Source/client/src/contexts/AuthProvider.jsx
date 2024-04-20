@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import moment from "moment";
 import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
 import AuthContext from "./AuthContext";
@@ -85,9 +86,6 @@ export default function AuthProvider({ children }) {
   };
 
   const updateUser = async (newUser) => {
-    const dateToSqlDatetime = (date) =>
-      date.toISOString().slice(0, 19).replace("T", " ");
-
     const endpoint = user.role ? "employee" : "customer";
     try {
       const response = await fetch(`${SERVER_BASE_URL}/${endpoint}`, {
@@ -97,7 +95,7 @@ export default function AuthProvider({ children }) {
           ...newUser,
           id: user.role ? user.employee_id : user.customer_id,
           date_of_birth: user.role
-            ? dateToSqlDatetime(new Date(user.date_of_birth))
+            ? moment(user.date_of_birth).format("YYYY-MM-DD")
             : null,
         }),
       });

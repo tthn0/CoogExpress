@@ -50,16 +50,16 @@ export default {
     return await queryDatabase(
       `UPDATE product
       SET
-        product.sku = ?,
-        product.upc = ?,
-        product.price = ?,
-        product.description = ?,
-        product.width = ?,
-        product.length = ?,
-        product.height = ?,
-        product.weight = ?,
-        product.image = ?
-      WHERE product.id = ?;`,
+        sku = ?,
+        upc = ?,
+        price = ?,
+        description = ?,
+        width = ?,
+        length = ?,
+        height = ?,
+        weight = ?,
+        image = ?
+      WHERE id = ?;`,
       [sku, upc, price, description, width, length, height, weight, image, id]
     );
   },
@@ -67,8 +67,8 @@ export default {
     const { id } = req.body;
     return await queryDatabase(
       `UPDATE product
-      SET product.deleted = 1
-      WHERE product.id = ?;`,
+      SET deleted = 1
+      WHERE id = ?;`,
       [id]
     );
   },

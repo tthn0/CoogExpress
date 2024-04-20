@@ -25,6 +25,11 @@
   color: grey;
 }
 
+#deliveredImage {
+  width: 50%;
+  margin: 4em auto;
+}
+
 .subHeading {
   font-size: 1.5em;
   font-weight: 550;
@@ -55,8 +60,9 @@
 }
 
 #tableContainer {
-  overflow-x: scroll;
-  padding-top: 1em;
+  overflow-x: auto;
+  margin-top: 1em;
+  padding-bottom: 1px; // (Bug workaround) show bottom border
 }
 
 #table {

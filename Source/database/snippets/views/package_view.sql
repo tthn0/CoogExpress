@@ -34,11 +34,18 @@ AS SELECT
 
     b.name AS source_branch_name,
 
-    a.line1 AS destination_address_line1,
-    a.line2 AS destination_address_line2,
-    a.city AS destination_address_city,
-    a.state AS destination_address_state,
-    a.zip AS destination_address_zip,
+    destination_address.line1 AS destination_address_line1,
+    destination_address.line2 AS destination_address_line2,
+    destination_address.city AS destination_address_city,
+    destination_address.state AS destination_address_state,
+    destination_address.zip AS destination_address_zip,
+
+    current_address.id AS current_address_id,
+    current_address.line1 AS current_address_line1,
+    current_address.line2 AS current_address_line2,
+    current_address.city AS current_address_city,
+    current_address.state AS current_address_state,
+    current_address.zip AS current_address_zip,
 
     (SELECT status
     FROM tracking_history AS th
@@ -62,10 +69,15 @@ FROM
     customer_view AS sender,
     customer_view AS receiver,
     branch AS b,
-    address AS a
+    address AS destination_address,
+    address AS current_address,
+    tracking_history AS th
 WHERE
     p.sender_customer_id = sender.customer_id AND
     p.receiver_customer_id = receiver.customer_id AND
     p.source_branch_id = b.id AND
-    p.destination_address_id = a.id
+    p.destination_address_id = destination_address.id AND
+    th.package_id = p.id AND
+    th.timestamp = (SELECT MAX(timestamp) FROM tracking_history WHERE package_id = p.id) AND
+    th.address_id = current_address.id
 ORDER BY p.id;

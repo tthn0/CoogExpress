@@ -1,27 +1,48 @@
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import "./components/shared/_reset.scss";
+
+import Branches from "./components/branches";
+import Cart from "./components/cart";
 import Dashboard from "./components/dashboard";
 import DashboardAssociate from "./components/dashboardAssociate";
 import DashboardCustomer from "./components/dashboardCustomer";
 import DashboardDriver from "./components/dashboardDriver";
-// import DashboardManager from "./components/dashboardManager";
-import Home from "./components/home";
-import Login from "./components/login";
-import Register from "./components/register";
+import DashboardManager from "./components/dashboardManager";
+import DashboardManagerEmployees from "./components/dashboardManagerEmployees";
+import DashboardManagerInventory from "./components/dashboardManagerInventory";
+import DashboardManagerReports from "./components/dashboardManagerReports";
+import Package from "./components/package";
+import Products from "./components/products";
 import Profile from "./components/profile";
+
 import AuthProvider from "./contexts/AuthProvider";
 import ProtectedRoute from "./contexts/ProtectedRoute";
 import RedirectIfLoggedIn from "./contexts/RedirectIfLoggedIn";
+import Home from "./components/home";
+import Login from "./components/login";
+import Register from "./components/register";
 
-import Products from "./components/products/products";
-import Branches from "./components/branches/branches";
-import Inventory from "./components/inventory/inventory";
-import ShoppingCart from "./components/shoppingCart/shoppingCart";
+import "./components/shared/_reset.scss";
 
 const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <RedirectIfLoggedIn children={<Login />} />,
+  },
+  {
+    path: "/register",
+    element: <RedirectIfLoggedIn children={<Register />} />,
+  },
+  {
+    path: "/branches",
+    element: <Branches />,
+  },
+  {
+    path: "/cart",
+    element: <ProtectedRoute children={<Cart />} />,
   },
   {
     path: "/dashboard",
@@ -43,43 +64,37 @@ const router = createHashRouter([
     path: "/dashboard/driver/route/:routeId",
     element: <ProtectedRoute children={<DashboardDriver />} />,
   },
-  // {
-  //   path: "/dashboard/manager",
-  //   element: <ProtectedRoute children={<DashboardManager />} />,
-  // },
   {
-    path: "/profile",
-    element: <ProtectedRoute children={<Profile />} />,
+    path: "/dashboard/manager",
+    element: <ProtectedRoute children={<DashboardManager />} />,
   },
   {
-    path: "/login",
-    element: <RedirectIfLoggedIn children={<Login />} />,
+    path: "/dashboard/manager/employees",
+    element: <ProtectedRoute children={<DashboardManagerEmployees />} />,
   },
   {
-    path: "/register",
-    element: <RedirectIfLoggedIn children={<Register />} />,
+    path: "/dashboard/manager/inventory/:branchId",
+    element: <ProtectedRoute children={<DashboardManagerInventory />} />,
   },
-
+  {
+    path: "/dashboard/manager/reports",
+    element: <ProtectedRoute children={<DashboardManagerReports />} />,
+  },
+  {
+    path: "/package/:packageId",
+    element: <ProtectedRoute children={<Package />} />,
+  },
   {
     path: "/products",
     element: <ProtectedRoute children={<Products />} />,
   },
   {
-    path: "/branches",
-    element: <Branches />,
-  },
-  {
-    path: "/inventory/:branchId",
-    element: <ProtectedRoute children={<Inventory />} />,
-  },
-  {
-    path: "/checkout",
-    element: <ProtectedRoute children={<ShoppingCart />} />,
+    path: "/profile",
+    element: <ProtectedRoute children={<Profile />} />,
   },
 ]);
 
-// TODO
-// Improve authentication router:
+// Authentication router potential improvement:
 // https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c
 
 export default function App() {

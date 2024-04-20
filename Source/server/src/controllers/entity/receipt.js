@@ -2,7 +2,7 @@ import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    return await getBasedOnQueryParams("receipt", req.params);
+    return await getBasedOnQueryParams("receipt_view", req.params);
   },
   post: async (req, res) => {
     const {
@@ -42,46 +42,46 @@ export default {
       ]
     );
   },
-  // put: async (req, res) => {
-  //   const {
-  //     id,
-  //     customer_id,
-  //     package_id,
-  //     branch_id,
-  //     billing_id,
-  //     subtotal,
-  //     tax,
-  //     total,
-  //     timestamp,
-  //     notes,
-  //   } = req.body;
-  //   return await queryDatabase(
-  //     `UPDATE receipt
-  //     SET
-  //       receipt.customer_id = ?,
-  //       receipt.package_id = ?,
-  //       receipt.branch_id = ?,
-  //       receipt.billing_id = ?,
-  //       receipt.subtotal = ?,
-  //       receipt.tax = ?,
-  //       receipt.total = ?,
-  //       receipt.timestamp = ?,
-  //       receipt.notes = ?
-  //     WHERE receipt.id = ?;`,
-  //     [
-  //       customer_id,
-  //       package_id,
-  //       branch_id,
-  //       billing_id,
-  //       subtotal,
-  //       tax,
-  //       total,
-  //       timestamp,
-  //       notes,
-  //       id,
-  //     ]
-  //   );
-  // },
+  put: async (req, res) => {
+    const {
+      id,
+      customer_id,
+      package_id,
+      branch_id,
+      billing_id,
+      subtotal,
+      tax,
+      total,
+      timestamp,
+      notes,
+    } = req.body;
+    return await queryDatabase(
+      `UPDATE receipt
+      SET
+        customer_id = ?,
+        package_id = ?,
+        branch_id = ?,
+        billing_id = ?,
+        subtotal = ?,
+        tax = ?,
+        total = ?,
+        timestamp = ?,
+        notes = ?
+      WHERE id = ?;`,
+      [
+        customer_id,
+        package_id,
+        branch_id,
+        billing_id,
+        subtotal,
+        tax,
+        total,
+        timestamp,
+        notes,
+        id,
+      ]
+    );
+  },
   // delete: async (req, res) => {
   //   return;
   // },

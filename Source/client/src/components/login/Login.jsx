@@ -5,7 +5,7 @@ import { styles } from "../shared/AuthPageRight";
 import AuthContext from "../../contexts/AuthContext";
 import AuthPage from "../shared/AuthPage";
 import Button from "../shared/Button";
-import Input from "../shared/Input";
+import Input, { VALIDATORS } from "../shared/Input";
 
 export default function Login() {
   const { attemptLogin } = useContext(AuthContext);
@@ -28,6 +28,7 @@ export default function Login() {
         name="username"
         label="Username"
         icon={faUserCircle}
+        {...VALIDATORS.USERNAME}
       />
       <Input
         containerClassName={styles.input}
@@ -35,6 +36,7 @@ export default function Login() {
         name="password"
         label="Password"
         icon={faLock}
+        {...VALIDATORS.PASSWORD}
       />
       <p id={styles.prompt}>
         <Link to="#" className={styles.link}>

@@ -5,7 +5,6 @@ export default {
     return await getBasedOnQueryParams("route_view", req.params);
   },
   post: async (req, res) => {
-    console.log(req.body);
     const { source_branch_id, destination_branch_id, packages } = req.body;
     const route = await queryDatabase(
       `INSERT INTO route(
@@ -47,7 +46,7 @@ export default {
         destination_branch_id = ?,
         driver_employee_id = ?,
         start_timestamp = ?,
-        end_timestamp = ?,
+        end_timestamp = ?
       WHERE id = ?;`,
       [
         source_branch_id,

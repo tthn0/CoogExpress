@@ -2,48 +2,26 @@ import { queryDatabase, getBasedOnQueryParams } from "../../utils/database.js";
 
 export default {
   get: async (req, res) => {
-    return await getBasedOnQueryParams("tracking_history", req.params);
+    return await getBasedOnQueryParams("tracking_history_view", req.params);
   },
   post: async (req, res) => {
     const { package_id, line1, line2, city, state, zip, status } = req.body;
-
-    const address = await queryDatabase(
-      `SELECT * FROM address 
-      WHERE
-        line1 = ? AND
-        line2 = ? AND
-        city = ? AND
-        state = ? AND
-        zip = ?;`,
-      [line1, line2, city, state, zip]
-    );
-
-    let address_id;
-
-    if (address.length > 0) {
-      address_id = address[0].id;
-    } else {
-      const address = await queryDatabase(
-        `INSERT INTO address(
-          line1,
-          line2,
-          city,
-          state,
-          zip
-        ) VALUES (?, ?, ?, ?, ?);`,
-        [line1, line2, city, state, zip]
-      );
-      address_id = address.insertId;
-    }
-
     return await queryDatabase(
-      `INSERT INTO tracking_history(
-        package_id,
-        address_id,
-        timestamp,
-        status
-      ) VALUES (?, ?, NOW(), ?);`,
-      [package_id, address_id, status]
+      `START TRANSACTION;
+
+        INSERT INTO address (line1, line2, city, state, zip)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
+
+        INSERT INTO tracking_history(
+          package_id,
+          address_id,
+          timestamp,
+          status
+        ) VALUES (?, LAST_INSERT_ID(), NOW(), ?);
+
+      COMMIT;`,
+      [line1, line2, city, state, zip, package_id, status]
     );
   },
   // put: async (req, res) => {

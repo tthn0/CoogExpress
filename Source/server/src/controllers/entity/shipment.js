@@ -19,9 +19,9 @@ export default {
     return await queryDatabase(
       `UPDATE shipment
       SET
-        shipment.package_id = ?,
-        shipment.route_id = ?
-      WHERE shipment.id = ?;`,
+        package_id = ?,
+        route_id = ?
+      WHERE id = ?;`,
       [package_id, route_id, id]
     );
   },

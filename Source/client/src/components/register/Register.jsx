@@ -17,7 +17,7 @@ import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
 import AuthContext from "../../contexts/AuthContext";
 import AuthPage from "../shared/AuthPage";
 import Button from "../shared/Button";
-import Input from "../shared/Input";
+import Input, { VALIDATORS } from "../shared/Input";
 
 export default function Register() {
   const { attemptLogin } = useContext(AuthContext);
@@ -76,33 +76,24 @@ export default function Register() {
           type="text"
           name="username"
           label="Username"
-          minLength="2"
-          maxLength="30"
-          // pattern="^[a-zA-Z]+$"
-          // title="Alphabetic characters only"
           icon={faCircleUser}
+          {...VALIDATORS.USERNAME}
         />
         <Input
           containerClassName={styles.input}
           type="email"
           name="email"
           label="Email"
-          minLength="2"
-          maxLength="60"
-          // pattern="^[a-zA-Z]+$"
-          // title="Alphabetic characters only"
           icon={faEnvelope}
+          {...VALIDATORS.EMAIL}
         />
         <Input
           containerClassName={styles.input}
           type="password"
           name="password"
           label="Password"
-          minLength="8"
-          maxLength="30"
-          // pattern="^[a-zA-Z]+$"
-          // title="Alphabetic characters only"
           icon={faLock}
+          {...VALIDATORS.PASSWORD}
         />
         <Button
           className={styles.submit}
@@ -137,44 +128,32 @@ export default function Register() {
           type="text"
           name="first_name"
           label="First Name"
-          minLength="2"
-          maxLength="30"
-          pattern="^[a-zA-Z]+$"
-          title="Alphabetic characters only"
           icon={faUser}
+          {...VALIDATORS.NAME}
         />
         <Input
           containerClassName={styles.input}
           type="text"
           name="last_name"
           label="Last Name"
-          minLength="2"
-          maxLength="30"
-          pattern="^[a-zA-Z]+$"
-          title="Alphabetic characters only"
           icon={faUser}
+          {...VALIDATORS.NAME}
         />
         <Input
           containerClassName={styles.input}
           type="tel"
           name="phone_number"
           label="Phone Number"
-          minLength="10"
-          maxLength="10"
-          pattern="^[0-9]{10}"
-          title="Numeric characters only"
           icon={faPhone}
+          {...VALIDATORS.PHONE}
         />
         <Input
           containerClassName={styles.input}
           type="text"
           name="phone_country_code"
           label="Country Code"
-          minLength="1"
-          maxLength="3"
-          pattern="^[0-9]{1,3}"
-          title="Numeric characters only"
           icon={faPhone}
+          {...VALIDATORS.PHONE_COUNTRY_CODE}
         />
         <Button
           className={styles.submit}
@@ -211,56 +190,41 @@ export default function Register() {
           type="text"
           name="line_1"
           label="Address Line 1"
-          minLength="2"
-          maxLength="30"
-          // pattern="^[a-zA-Z]+$"
-          // title="Alphanumeric characters only"
           icon={faHome}
+          {...VALIDATORS.ADDRESS_LINE_1}
         />
         <Input
           containerClassName={styles.input}
           type="text"
           name="line_2"
           label="Address Line 2"
-          minLength="2"
-          maxLength="30"
-          // pattern="^[a-zA-Z]+$"
-          // title="Alphanumeric characters only"
-          icon={faBuilding}
           required={false}
+          icon={faBuilding}
+          {...VALIDATORS.ADDRESS_LINE_2}
         />
         <Input
           containerClassName={styles.input}
           type="text"
           name="city"
           label="City"
-          minLength="2"
-          maxLength="30"
-          // pattern="^[a-zA-Z]+$"
-          // title="Alphabetic characters only"
           icon={faLocationDot}
+          {...VALIDATORS.CITY}
         />
         <Input
           containerClassName={styles.input}
           type="text"
           name="state"
           label="State"
-          minLength="2"
-          maxLength="2"
-          pattern="^[a-zA-Z]+$"
-          title="Alphabetic characters only"
           icon={faMapPin}
+          {...VALIDATORS.STATE}
         />
         <Input
           containerClassName={styles.input}
           type="text"
           name="zip"
           label="Zip Code"
-          minLength="5"
-          maxLength="5"
-          pattern="^[0-9]{5}"
-          title="Numeric characters only"
           icon={faLocationArrow}
+          {...VALIDATORS.ZIP}
         />
         <p id={styles.prompt}>
           By registering, you accept our{" "}

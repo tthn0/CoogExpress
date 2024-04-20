@@ -31,8 +31,8 @@ export default {
       `START TRANSACTION;
 
         INSERT INTO address (line1, line2, city, state, zip)
-        SELECT ?, ?, ?, ?, ?
-        FROM dual ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
 
         INSERT INTO user (
           first_name,
@@ -113,8 +113,8 @@ export default {
       `START TRANSACTION;
 
         INSERT INTO address (line1, line2, city, state, zip)
-        SELECT ?, ?, ?, ?, ?
-        FROM dual ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
 
         UPDATE user
         JOIN employee ON user.id = employee.user_id

@@ -1,0 +1,41 @@
+@use "./fonts" as fonts;
+
+#container {
+  font-family: fonts.$inter;
+  font-size: fonts.$fluidFontSize;
+  background: #f0f0f0;
+  padding: 4em 0;
+}
+
+#innerContainer {
+  width: min(80em, 95%);
+  margin: 0 auto;
+}
+
+.option {
+  color: white;
+  padding: 0.75em 1.5em;
+  border-radius: 0.75em;
+  transition: 0.3s ease;
+  font-weight: 450;
+
+  &:not(:first-of-type) {
+    margin-left: 1em;
+  }
+
+  &:nth-of-type(1) {
+    background: linear-gradient(45deg, #31e4bd, #13e463);
+  }
+
+  &:nth-of-type(2) {
+    background: linear-gradient(45deg, #4fa2f8, #63d2f6);
+  }
+
+  &:nth-of-type(3) {
+    background: linear-gradient(45deg, #ee8936, #f6c755);
+  }
+
+  &:hover {
+    filter: hue-rotate(-20deg);
+  }
+}

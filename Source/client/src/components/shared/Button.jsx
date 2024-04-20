@@ -1,8 +1,16 @@
 import styles from "./Button.module.scss";
 
-export default function Button({ className, text, type, onClick, isLoading }) {
+export default function Button({
+  id,
+  className,
+  text,
+  type,
+  onClick,
+  isLoading,
+}) {
   return (
     <button
+      id={id}
       className={`${className} ${styles.button} ${
         isLoading ? styles.disabled : ""
       }`}
