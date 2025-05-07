@@ -1,9 +1,9 @@
-import { useContext, useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreditCard, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../contexts/AuthContext";
-import NavBar from "../shared/NavBar";
 import { VALIDATORS } from "../shared/Input";
+import NavBar from "../shared/NavBar";
 import styles from "./Profile.module.scss";
 
 import { SERVER_BASE_URL } from "../../contexts/AuthProvider";

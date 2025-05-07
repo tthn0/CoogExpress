@@ -1,0 +1,12 @@
+name: coog-express-database
+services:
+  database:
+    container_name: database
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    build:
+      context: ../database
+    volumes:
+      - "./volume:/var/lib/mysql"

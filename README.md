@@ -129,11 +129,11 @@
 
 ### Database
 
-<img src="https://img.shields.io/badge/-MySQL-105970?style=for-the-badge&logo=mysql&logoColor=105970&labelColor=black"> <img src="https://img.shields.io/badge/-Azure_Database_for_MySQL_Flexible_Server-0273C6?style=for-the-badge&logo=microsoft-azure&logoColor=0273C6&labelColor=black">
+<img src="https://img.shields.io/badge/-MySQL-105970?style=for-the-badge&logo=mysql&logoColor=105970&labelColor=black"> <img src="https://img.shields.io/badge/-Azure_Database_for_MySQL_Flexible_Server-0273C6?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDk2IDk2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPGRlZnM+CiAgICAgICAgPGxpbmVhckdyYWRpZW50IGlkPSJlMzk5YzE5Zi1iNjhmLTQyOWQtYjE3Ni0xOGMyMTE3ZmY3M2MiIHgxPSItMTAzMi4xNzIiIHgyPSItMTA1OS4yMTMiIHkxPSIxNDUuMzEyIiB5Mj0iNjUuNDI2IiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIC0xIDEwNzUgMTU4KSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICAgICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTRhOGIiLz4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDY2OWJjIi8+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImFjMmE2ZmMyLWNhNDgtNDMyNy05YTNjLWQ0ZGNjMzI1NmUxNSIgeDE9Ii0xMDIzLjcyNSIgeDI9Ii0xMDI5Ljk4IiB5MT0iMTA4LjA4MyIgeTI9IjEwNS45NjgiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoMSAwIDAgLTEgMTA3NSAxNTgpIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1vcGFjaXR5PSIuMyIvPgogICAgICAgICAgICA8c3RvcCBvZmZzZXQ9Ii4wNzEiIHN0b3Atb3BhY2l0eT0iLjIiLz4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIuMzIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iLjYyMyIgc3RvcC1vcGFjaXR5PSIuMDUiLz4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYTdmZWU5NzAtYTc4NC00YmIxLWFmOGQtNjNkMThlNWY3ZGI5IiB4MT0iLTEwMjcuMTY1IiB4Mj0iLTk5Ny40ODIiIHkxPSIxNDcuNjQyIiB5Mj0iNjguNTYxIiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIC0xIDEwNzUgMTU4KSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICAgICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMzY2NiZjQiLz4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMjg5MmRmIi8+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDwvZGVmcz4KICAgIDxwYXRoIGZpbGw9InVybCgjZTM5OWMxOWYtYjY4Zi00MjlkLWIxNzYtMThjMjExN2ZmNzNjKSIgZD0iTTMzLjMzOCA2LjU0NGgyNi4wMzhsLTI3LjAzIDgwLjA4N2E0LjE1MiA0LjE1MiAwIDAgMS0zLjkzMyAyLjgyNEg4LjE0OWE0LjE0NSA0LjE0NSAwIDAgMS0zLjkyOC01LjQ3TDI5LjQwNCA5LjM2OGE0LjE1MiA0LjE1MiAwIDAgMSAzLjkzNC0yLjgyNXoiLz4KICAgIDxwYXRoIGZpbGw9IiMwMDc4ZDQiIGQ9Ik03MS4xNzUgNjAuMjYxaC00MS4yOWExLjkxMSAxLjkxMSAwIDAgMC0xLjMwNSAzLjMwOWwyNi41MzIgMjQuNzY0YTQuMTcxIDQuMTcxIDAgMCAwIDIuODQ2IDEuMTIxaDIzLjM4eiIvPgogICAgPHBhdGggZmlsbD0idXJsKCNhYzJhNmZjMi1jYTQ4LTQzMjctOWEzYy1kNGRjYzMyNTZlMTUpIiBkPSJNMzMuMzM4IDYuNTQ0YTQuMTE4IDQuMTE4IDAgMCAwLTMuOTQzIDIuODc5TDQuMjUyIDgzLjkxN2E0LjE0IDQuMTQgMCAwIDAgMy45MDggNS41MzhoMjAuNzg3YTQuNDQzIDQuNDQzIDAgMCAwIDMuNDEtMi45bDUuMDE0LTE0Ljc3NyAxNy45MSAxNi43MDVhNC4yMzcgNC4yMzcgMCAwIDAgMi42NjYuOTcySDgxLjI0TDcxLjAyNCA2MC4yNjFsLTI5Ljc4MS4wMDdMNTkuNDcgNi41NDR6Ii8+CiAgICA8cGF0aCBmaWxsPSJ1cmwoI2E3ZmVlOTcwLWE3ODQtNGJiMS1hZjhkLTYzZDE4ZTVmN2RiOSkiIGQ9Ik02Ni41OTUgOS4zNjRhNC4xNDUgNC4xNDUgMCAwIDAtMy45MjgtMi44MkgzMy42NDhhNC4xNDYgNC4xNDYgMCAwIDEgMy45MjggMi44MmwyNS4xODQgNzQuNjJhNC4xNDYgNC4xNDYgMCAwIDEtMy45MjggNS40NzJoMjkuMDJhNC4xNDYgNC4xNDYgMCAwIDAgMy45MjctNS40NzJ6Ii8+Cjwvc3ZnPg==&logoColor=0273C6&labelColor=black">
 
 ### Deployment
 
-<img src="https://img.shields.io/badge/-Oracle_Cloud_Infrastructure-E42A2C?style=for-the-badge&logo=oracle&logoColor=E42A2C&labelColor=black">
+<img src="https://img.shields.io/badge/-Oracle_Cloud_Infrastructure-C74634?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIxMDAiIHZpZXdCb3g9IjAgMCAzMiAyMSIgd2lkdGg9IjMyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTkuOSAyMC4xYy01LjUgMC05LjktNC40LTkuOS05LjlzNC40LTkuOSA5LjktOS45aDExLjZjNS41IDAgOS45IDQuNCA5LjkgOS45cy00LjQgOS45LTkuOSA5Ljl6bTExLjMtMy41YzMuNiAwIDYuNC0yLjkgNi40LTYuNCAwLTMuNi0yLjktNi40LTYuNC02LjRoLTExYy0zLjYgMC02LjQgMi45LTYuNCA2LjRzMi45IDYuNCA2LjQgNi40eiIgZmlsbD0iI2M3NDYzNCIvPjwvc3ZnPg==&logoColor=E42A2C&labelColor=black">
 
 ### Operating System
 
@@ -164,14 +164,24 @@ cd CoogExpress
 ```
 
 > [!IMPORTANT]
-> Ensure sure both `Source/client/example.env` and `Source/client/server.env` are renamed to `.env` and are properly configured before hosting locally.
+> Ensure the `example.env` files in `Source/client`, `Source/server`, and `Source/database` are renamed to `.env` and are properly configured before hosting.
+
+### Starting The Database
+
+```bash
+cd Source/database
+docker-compose up -d
+```
+
+> [!IMPORTANT]
+> After the database is up and running, you can import the dump file located inside `Source/database/backup` into the database using your preferred MySQL client.
 
 ### Starting The Client
 
 ```bash
-cd Source/client # If not already in the client directory.
-npm i -y         # Install dependencies.
-npm start        # Start the client.
+cd Source/client
+npm i -y
+npm start
 ```
 
 > [!NOTE]
@@ -180,15 +190,15 @@ npm start        # Start the client.
 ### Starting The Server
 
 ```bash
-cd Source/server # If not already in the server directory.
-npm i -y         # Install dependencies.
-npm start        # Start the server.
+cd Source/server
+npm i -y
+npm start
 ```
 
 # Hosting On A Linux Server
 
-- Install [Git](https://git-scm.com) on your machine if you haven't already.
-- Make sure [Node.js](https://nodejs.org/en/) version `20.11+` is installed on your machine. Some features may not work on older versions of Node.js.
+- Install [Git](https://git-scm.com) and [Docker](https://www.docker.com) if you haven't already.
+- Make sure [Node.js](https://nodejs.org/en/) version `20.11+` is installed. Some features may not work on older versions of Node.js.
 
 ### Cloning The Repository
 
@@ -198,36 +208,52 @@ cd CoogExpress
 ```
 
 > [!IMPORTANT]
-> Ensure sure both `Source/client/example.env` and `Source/client/server.env` are renamed to `.env` and are properly configured before hosting locally.
+> Ensure the `example.env` files in `Source/client`, `Source/server`, and `Source/database` are renamed to `.env` and are properly configured before hosting.
 
 ### Install Global Dependencies
 
 ```bash
-sudo npm i -g serve   # Install the `serve` package globally.
-sudo npm i -g pm2     # Install the `pm2` package globally.
+sudo npm i -g serve
+sudo npm i -g pm2
 ```
+
+### Starting The Database
+
+```bash
+cd Source/database
+docker-compose up -d
+```
+
+> [!IMPORTANT]
+> After the database is up and running, you can import the dump file located inside `Source/database/backup` into the database using your preferred MySQL client.
 
 ### Starting The Client
 
 ```bash
-cd Source/client                   # If not already in the client directory.
-npm i -y                           # Install dependencies.
-npm run build                      # Build the client.
-pm2 start "serve -s build -l 3000" # Start the client on port 3000.
+cd Source/client
+npm i -y
+npm run build
+pm2 start "serve -s build -l 3000"
 ```
 
 ### Starting The Server
 
 ```bash
-cd Source/server      # If not already in the server directory.
-npm i -y              # Install dependencies.
-pm2 start "npm start" # Start the server.
+cd Source/server
+npm i -y
+pm2 start "npm start"
 ```
 
 # Notes
 
 Some low priority items that don't really need to be fixed but are just noted here for documentation. They are in no particular order.
 
+- Whenever a dump file generated from the Sequel Ace app (on macOS) is being imported, it will fail because:
+  - The order of the views aren't properly exported.
+    - To fix this, move the create statements for `package_view`, `branch_view`, `route_view`, and `receipt_view` down to the bottom, such that the last 4 views created are in that order.
+  - The definer `wizard` doesn't exist.
+    - To fix this, remove all `` `DEFINER=`wizard`@`%` `` statements from the dump file.
+- If the database is hosted on Azure Database for MySQL Flexible Server, make sure to [disable the SSL flag](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/how-to-connect-tls-ssl) in server parameters.
 - The styling is inconsistent between browsers, specifically with select dropdowns.
 - The `Products Per Transaction Histogram` horizontal axis isn't ordered properly.
   - This is possibly because it sorted as a string instead of a number, but it may not be the case since it hasn't been investigated yet.
@@ -274,9 +300,6 @@ Some low priority items that don't really need to be fixed but are just noted he
 - Email notifications for package deliveries reference `localhost:3000`.
   - This should be replaced with the domain name and port number of the actual website when it's hosted.
   - To change this, update the trigger in the `tracking_history` table.
-- Inside `./Source/database/backup`, there is an SQL dump file.
-  - When attempting to import this file, it will fail because the order of the views aren't properly exported.
-  - To fix this, move the create statements for `package_view`, `branch_view`, `route_view`, and `receipt_view` down to the bottom, such that the last 4 views created are in that order.
 - Some parts of the database are unused.
   - The `employee_schedule` table is unused.
   - The `preferred_branch_id` and `preferred_communication_method` columns in the `customer` table are unused.

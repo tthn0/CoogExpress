@@ -243,7 +243,7 @@ UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `branch_inventory_trigger` AFTER INSERT ON `branch` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `branch_inventory_trigger` AFTER INSERT ON `branch` FOR EACH ROW BEGIN
     DECLARE product_id INT;
     DECLARE done BOOLEAN DEFAULT FALSE;
     DECLARE product_cursor CURSOR FOR 
@@ -317,7 +317,7 @@ UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `ensure_single_reference_customer` BEFORE INSERT ON `customer` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `ensure_single_reference_customer` BEFORE INSERT ON `customer` FOR EACH ROW BEGIN
     DECLARE user_count INT;
     
     -- Check if the user already exists in the employee table
@@ -330,7 +330,7 @@ DELIMITER ;;
     END IF;
 END */;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `ensure_single_reference_customer_update` BEFORE UPDATE ON `customer` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `ensure_single_reference_customer_update` BEFORE UPDATE ON `customer` FOR EACH ROW BEGIN
     DECLARE user_count INT;
     
     -- Check if the user already exists in the employee table
@@ -424,7 +424,7 @@ UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `ensure_single_reference_employee` BEFORE INSERT ON `employee` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `ensure_single_reference_employee` BEFORE INSERT ON `employee` FOR EACH ROW BEGIN
     DECLARE user_count INT;
     
     -- Check if the user already exists in the customer table
@@ -437,7 +437,7 @@ DELIMITER ;;
     END IF;
 END */;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `ensure_single_reference_employee_update` BEFORE UPDATE ON `employee` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `ensure_single_reference_employee_update` BEFORE UPDATE ON `employee` FOR EACH ROW BEGIN
     DECLARE user_count INT;
     
     -- Check if the user already exists in the customer table
@@ -669,7 +669,7 @@ UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `notify_manager_inventory` BEFORE UPDATE ON `inventory` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `notify_manager_inventory` BEFORE UPDATE ON `inventory` FOR EACH ROW BEGIN
     DECLARE product_name VARCHAR(63);
     DECLARE branch_name VARCHAR(63);
     DECLARE manager_email VARCHAR(255);
@@ -830,7 +830,7 @@ UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `package_insert_trigger` AFTER INSERT ON `package` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `package_insert_trigger` AFTER INSERT ON `package` FOR EACH ROW BEGIN
     DECLARE source_branch_address_id INT;
 
     -- Lookup the address_id of the branch associated with the package
@@ -1130,7 +1130,7 @@ UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `shipment_insert_trigger` AFTER INSERT ON `shipment` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `shipment_insert_trigger` AFTER INSERT ON `shipment` FOR EACH ROW BEGIN
     DECLARE current_address_id INT;
 
     SELECT address_id
@@ -1389,7 +1389,7 @@ UNLOCK TABLES;
 
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wizard`@`%` */ /*!50003 TRIGGER `notify_customer` AFTER INSERT ON `tracking_history` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 */ /*!50003 TRIGGER `notify_customer` AFTER INSERT ON `tracking_history` FOR EACH ROW BEGIN
 	DECLARE customer_email VARCHAR(255);
 	DECLARE customer_first_name VARCHAR(63);
 	DECLARE email_subject VARCHAR(255);
@@ -1527,12 +1527,153 @@ VALUES
 UNLOCK TABLES;
 
 
+
+# Dump of view employee_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `employee_view`; DROP VIEW IF EXISTS `employee_view`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `employee_view`
+AS SELECT
+   `u`.`id` AS `user_id`,
+   `u`.`first_name` AS `first_name`,
+   `u`.`last_name` AS `last_name`,
+   `u`.`username` AS `username`,
+   `u`.`email` AS `email`,
+   `u`.`password_hash` AS `password_hash`,
+   `u`.`phone_number` AS `phone_number`,
+   `u`.`phone_country_code` AS `phone_country_code`,
+   `u`.`profile_picture` AS `profile_picture`,
+   `u`.`created_at` AS `created_at`,
+   `u`.`last_login` AS `last_login`,
+   `u`.`deleted` AS `deleted`,
+   `e`.`id` AS `employee_id`,
+   `e`.`supervisor_employee_id` AS `supervisor_employee_id`,
+   `e`.`date_of_birth` AS `date_of_birth`,
+   `e`.`gender` AS `gender`,
+   `e`.`driver_license_number` AS `driver_license_number`,
+   `e`.`role` AS `role`,
+   `e`.`shirt_size` AS `shirt_size`,
+   `a`.`id` AS `address_id`,
+   `a`.`line1` AS `line1`,
+   `a`.`line2` AS `line2`,
+   `a`.`city` AS `city`,
+   `a`.`state` AS `state`,
+   `a`.`zip` AS `zip`,
+   `su`.`first_name` AS `supervisor_first_name`,
+   `su`.`last_name` AS `supervisor_last_name`,
+   `su`.`profile_picture` AS `supervisor_profile_picture`,
+   `b`.`id` AS `branch_id`,
+   `b`.`name` AS `branch_name`,
+   `b`.`address_id` AS `branch_address_id`
+FROM (((((`user` `u` join `address` `a`) join `employee` `e`) join `employee` `s`) join `user` `su`) join `branch` `b`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`) and (`e`.`supervisor_employee_id` = `s`.`id`) and (`s`.`user_id` = `su`.`id`) and (`e`.`branch_id` = `b`.`id`));
+
+# Dump of view inventory_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `inventory_view`; DROP VIEW IF EXISTS `inventory_view`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `inventory_view`
+AS SELECT
+   `i`.`id` AS `inventory_id`,
+   `b`.`id` AS `branch_id`,
+   `b`.`name` AS `branch_name`,
+   `p`.`name` AS `product_name`,
+   `p`.`image` AS `product_image`,
+   `i`.`product_id` AS `product_id`,
+   `i`.`quantity_in_stock` AS `quantity_in_stock`,
+   `i`.`stock_alert_threshold` AS `stock_alert_threshold`,
+   `i`.`last_stock_update` AS `last_stock_update`,
+   `p`.`deleted` AS `product_deleted`
+FROM ((`inventory` `i` join `branch` `b`) join `product` `p`) where ((`b`.`id` = `i`.`branch_id`) and (`p`.`id` = `i`.`product_id`));
+
+# Dump of view customer_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `customer_view`; DROP VIEW IF EXISTS `customer_view`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `customer_view`
+AS SELECT
+   `u`.`id` AS `user_id`,
+   `u`.`first_name` AS `first_name`,
+   `u`.`last_name` AS `last_name`,
+   `u`.`username` AS `username`,
+   `u`.`email` AS `email`,
+   `u`.`password_hash` AS `password_hash`,
+   `u`.`phone_number` AS `phone_number`,
+   `u`.`phone_country_code` AS `phone_country_code`,
+   `u`.`profile_picture` AS `profile_picture`,
+   `u`.`created_at` AS `created_at`,
+   `u`.`last_login` AS `last_login`,
+   `u`.`deleted` AS `deleted`,
+   `c`.`id` AS `customer_id`,
+   `c`.`preferred_branch_id` AS `preferred_branch_id`,
+   `c`.`preferred_communication_method` AS `preferred_communication_method`,
+   `a`.`id` AS `address_id`,
+   `a`.`line1` AS `line1`,
+   `a`.`line2` AS `line2`,
+   `a`.`city` AS `city`,
+   `a`.`state` AS `state`,
+   `a`.`zip` AS `zip`,
+   `b`.`id` AS `billing_id`,
+   `b`.`card_number` AS `card_number`,
+   `b`.`cvc` AS `cvc`,
+   `b`.`expiration_month` AS `expiration_month`,
+   `b`.`expiration_year` AS `expiration_year`,
+   `b`.`cardholder_name` AS `cardholder_name`,
+   `ba`.`id` AS `billing_address_id`,
+   `ba`.`line1` AS `billing_line1`,
+   `ba`.`line2` AS `billing_line2`,
+   `ba`.`city` AS `billing_city`,
+   `ba`.`state` AS `billing_state`,
+   `ba`.`zip` AS `billing_zip`
+FROM ((((`user` `u` join `customer` `c` on((`u`.`id` = `c`.`user_id`))) join `address` `a` on((`u`.`address_id` = `a`.`id`))) left join `billing` `b` on(((`b`.`customer_id` = `c`.`id`) and (`b`.`preferred` = 1)))) left join `address` `ba` on((`b`.`address_id` = `ba`.`id`)));
+
+# Dump of view shopping_cart_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `shopping_cart_view`; DROP VIEW IF EXISTS `shopping_cart_view`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `shopping_cart_view`
+AS SELECT
+   `sc`.`id` AS `shopping_cart_id`,
+   `sc`.`user_id` AS `user_id`,
+   `sc`.`branch_id` AS `branch_id`,
+   `b`.`name` AS `branch_name`,
+   `sc`.`product_id` AS `product_id`,
+   `p`.`name` AS `product_name`,
+   `p`.`description` AS `product_desc`,
+   `p`.`image` AS `product_image`,
+   `sc`.`quantity` AS `product_quantity`,
+   `p`.`price` AS `price`
+FROM ((`shopping_cart` `sc` join `branch` `b`) join `product` `p`) where ((`sc`.`branch_id` = `b`.`id`) and (`sc`.`product_id` = `p`.`id`));
+
+# Dump of view tracking_history_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tracking_history_view`; DROP VIEW IF EXISTS `tracking_history_view`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `tracking_history_view`
+AS SELECT
+   `t`.`id` AS `tracking_history_id`,
+   `t`.`package_id` AS `package_id`,
+   `t`.`timestamp` AS `timestamp`,
+   `t`.`status` AS `status`,
+   `a`.`id` AS `address_id`,
+   `a`.`line1` AS `line1`,
+   `a`.`line2` AS `line2`,
+   `a`.`city` AS `city`,
+   `a`.`state` AS `state`,
+   `a`.`zip` AS `zip`
+FROM (`tracking_history` `t` join `address` `a`) where (`t`.`address_id` = `a`.`id`) order by `t`.`timestamp` desc;
+
+
 # Dump of view package_view
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `package_view`; DROP VIEW IF EXISTS `package_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `package_view`
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `package_view`
 AS SELECT
    `p`.`id` AS `package_id`,
    `p`.`sender_customer_id` AS `sender_customer_id`,
@@ -1577,12 +1718,44 @@ AS SELECT
    `current_address`.`zip` AS `current_address_zip`,(select `th`.`status`
 FROM `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` desc limit 1) AS `status`,(select `th`.`timestamp` from `tracking_history` `th` where (`th`.`package_id` = `p`.`id`) order by `th`.`timestamp` limit 1) AS `initiated_at`,(select `th`.`timestamp` from `tracking_history` `th` where ((`th`.`package_id` = `p`.`id`) and (`th`.`status` = 'Delivered')) order by `th`.`timestamp` desc limit 1) AS `delivered_at` from ((((((`package` `p` join `customer_view` `sender`) join `customer_view` `receiver`) join `branch` `b`) join `address` `destination_address`) join `address` `current_address`) join `tracking_history` `th`) where ((`p`.`sender_customer_id` = `sender`.`customer_id`) and (`p`.`receiver_customer_id` = `receiver`.`customer_id`) and (`p`.`source_branch_id` = `b`.`id`) and (`p`.`destination_address_id` = `destination_address`.`id`) and (`th`.`package_id` = `p`.`id`) and (`th`.`timestamp` = (select max(`tracking_history`.`timestamp`) from `tracking_history` where (`tracking_history`.`package_id` = `p`.`id`))) and (`th`.`address_id` = `current_address`.`id`)) order by `p`.`id`;
 
+
+# Dump of view branch_view
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `branch_view`; DROP VIEW IF EXISTS `branch_view`;
+
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `branch_view`
+AS SELECT
+   `b`.`id` AS `branch_id`,
+   `b`.`name` AS `name`,
+   `b`.`phone_number` AS `phone_number`,
+   `b`.`email` AS `email`,
+   `b`.`opening_time` AS `opening_time`,
+   `b`.`closing_time` AS `closing_time`,
+   `b`.`image` AS `image`,
+   `a`.`id` AS `address_id`,
+   `a`.`line1` AS `line1`,
+   `a`.`line2` AS `line2`,
+   `a`.`city` AS `city`,
+   `a`.`state` AS `state`,
+   `a`.`zip` AS `zip`,
+   `e`.`employee_id` AS `manager_employee_id`,
+   `e`.`first_name` AS `manager_first_name`,
+   `e`.`last_name` AS `manager_last_name`,
+   `e`.`username` AS `manager_username`,
+   `e`.`email` AS `manager_email`,
+   `e`.`phone_number` AS `manager_phone_number`,
+   `e`.`phone_country_code` AS `manager_phone_country_code`,
+   `e`.`profile_picture` AS `manager_profile_picture`
+FROM ((`branch` `b` join `address` `a` on((`b`.`address_id` = `a`.`id`))) left join `employee_view` `e` on((`b`.`manager_employee_id` = `e`.`employee_id`)));
+
+
 # Dump of view route_view
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `route_view`; DROP VIEW IF EXISTS `route_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `route_view`
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `route_view`
 AS SELECT
    `r`.`id` AS `route_id`,
    `r`.`start_timestamp` AS `start_timestamp`,
@@ -1610,101 +1783,13 @@ AS SELECT
    `driver`.`branch_id` AS `driver_branch_id`,(select count(0)
 FROM `shipment` `s` where (`s`.`route_id` = `r`.`id`)) AS `package_count`,(select round(((((count(0) * 1) + (rand(`r`.`id`) * pow(10,12))) - floor((rand(`r`.`id`) * pow(10,12)))) - 0.5),2) from `shipment` `s` where (`s`.`route_id` = `r`.`id`)) AS `estimated_fuel`,(select ((count(0) * 20) + floor(((((rand(`r`.`id`) * pow(10,12)) - floor((rand(`r`.`id`) * pow(10,12)))) * (10 + 1)) - 5))) from `shipment` `s` where (`s`.`route_id` = `r`.`id`)) AS `estimated_distance`,(select count(0) from (`tracking_history` `t` join `shipment` `s` on((`t`.`package_id` = `s`.`package_id`))) where ((`t`.`status` = 'Lost') and (`s`.`route_id` = `r`.`id`))) AS `lost_count` from (((`route` `r` left join `branch_view` `b1` on((`r`.`source_branch_id` = `b1`.`branch_id`))) left join `branch_view` `b2` on((`r`.`destination_branch_id` = `b2`.`branch_id`))) left join `employee_view` `driver` on((`r`.`driver_employee_id` = `driver`.`employee_id`)));
 
-# Dump of view branch_view
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `branch_view`; DROP VIEW IF EXISTS `branch_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `branch_view`
-AS SELECT
-   `b`.`id` AS `branch_id`,
-   `b`.`name` AS `name`,
-   `b`.`phone_number` AS `phone_number`,
-   `b`.`email` AS `email`,
-   `b`.`opening_time` AS `opening_time`,
-   `b`.`closing_time` AS `closing_time`,
-   `b`.`image` AS `image`,
-   `a`.`id` AS `address_id`,
-   `a`.`line1` AS `line1`,
-   `a`.`line2` AS `line2`,
-   `a`.`city` AS `city`,
-   `a`.`state` AS `state`,
-   `a`.`zip` AS `zip`,
-   `e`.`employee_id` AS `manager_employee_id`,
-   `e`.`first_name` AS `manager_first_name`,
-   `e`.`last_name` AS `manager_last_name`,
-   `e`.`username` AS `manager_username`,
-   `e`.`email` AS `manager_email`,
-   `e`.`phone_number` AS `manager_phone_number`,
-   `e`.`phone_country_code` AS `manager_phone_country_code`,
-   `e`.`profile_picture` AS `manager_profile_picture`
-FROM ((`branch` `b` join `address` `a` on((`b`.`address_id` = `a`.`id`))) left join `employee_view` `e` on((`b`.`manager_employee_id` = `e`.`employee_id`)));
-
-# Dump of view employee_view
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `employee_view`; DROP VIEW IF EXISTS `employee_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `employee_view`
-AS SELECT
-   `u`.`id` AS `user_id`,
-   `u`.`first_name` AS `first_name`,
-   `u`.`last_name` AS `last_name`,
-   `u`.`username` AS `username`,
-   `u`.`email` AS `email`,
-   `u`.`password_hash` AS `password_hash`,
-   `u`.`phone_number` AS `phone_number`,
-   `u`.`phone_country_code` AS `phone_country_code`,
-   `u`.`profile_picture` AS `profile_picture`,
-   `u`.`created_at` AS `created_at`,
-   `u`.`last_login` AS `last_login`,
-   `u`.`deleted` AS `deleted`,
-   `e`.`id` AS `employee_id`,
-   `e`.`supervisor_employee_id` AS `supervisor_employee_id`,
-   `e`.`date_of_birth` AS `date_of_birth`,
-   `e`.`gender` AS `gender`,
-   `e`.`driver_license_number` AS `driver_license_number`,
-   `e`.`role` AS `role`,
-   `e`.`shirt_size` AS `shirt_size`,
-   `a`.`id` AS `address_id`,
-   `a`.`line1` AS `line1`,
-   `a`.`line2` AS `line2`,
-   `a`.`city` AS `city`,
-   `a`.`state` AS `state`,
-   `a`.`zip` AS `zip`,
-   `su`.`first_name` AS `supervisor_first_name`,
-   `su`.`last_name` AS `supervisor_last_name`,
-   `su`.`profile_picture` AS `supervisor_profile_picture`,
-   `b`.`id` AS `branch_id`,
-   `b`.`name` AS `branch_name`,
-   `b`.`address_id` AS `branch_address_id`
-FROM (((((`user` `u` join `address` `a`) join `employee` `e`) join `employee` `s`) join `user` `su`) join `branch` `b`) where ((`u`.`id` = `e`.`user_id`) and (`u`.`address_id` = `a`.`id`) and (`e`.`supervisor_employee_id` = `s`.`id`) and (`s`.`user_id` = `su`.`id`) and (`e`.`branch_id` = `b`.`id`));
-
-# Dump of view inventory_view
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `inventory_view`; DROP VIEW IF EXISTS `inventory_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `inventory_view`
-AS SELECT
-   `i`.`id` AS `inventory_id`,
-   `b`.`id` AS `branch_id`,
-   `b`.`name` AS `branch_name`,
-   `p`.`name` AS `product_name`,
-   `p`.`image` AS `product_image`,
-   `i`.`product_id` AS `product_id`,
-   `i`.`quantity_in_stock` AS `quantity_in_stock`,
-   `i`.`stock_alert_threshold` AS `stock_alert_threshold`,
-   `i`.`last_stock_update` AS `last_stock_update`,
-   `p`.`deleted` AS `product_deleted`
-FROM ((`inventory` `i` join `branch` `b`) join `product` `p`) where ((`b`.`id` = `i`.`branch_id`) and (`p`.`id` = `i`.`product_id`));
 
 # Dump of view receipt_view
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `receipt_view`; DROP VIEW IF EXISTS `receipt_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `receipt_view`
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `receipt_view`
 AS SELECT
    `p`.`id` AS `product_id`,
    `p`.`sku` AS `sku`,
@@ -1729,87 +1814,6 @@ AS SELECT
    `b`.`id` AS `branch_id`,
    `b`.`name` AS `branch_name`
 FROM (((`receipt` `r` join `product` `p` on((`r`.`product_id` = `p`.`id`))) join `customer_view` `c` on((`r`.`customer_id` = `c`.`customer_id`))) join `branch` `b` on((`r`.`branch_id` = `b`.`id`)));
-
-# Dump of view customer_view
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `customer_view`; DROP VIEW IF EXISTS `customer_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `customer_view`
-AS SELECT
-   `u`.`id` AS `user_id`,
-   `u`.`first_name` AS `first_name`,
-   `u`.`last_name` AS `last_name`,
-   `u`.`username` AS `username`,
-   `u`.`email` AS `email`,
-   `u`.`password_hash` AS `password_hash`,
-   `u`.`phone_number` AS `phone_number`,
-   `u`.`phone_country_code` AS `phone_country_code`,
-   `u`.`profile_picture` AS `profile_picture`,
-   `u`.`created_at` AS `created_at`,
-   `u`.`last_login` AS `last_login`,
-   `u`.`deleted` AS `deleted`,
-   `c`.`id` AS `customer_id`,
-   `c`.`preferred_branch_id` AS `preferred_branch_id`,
-   `c`.`preferred_communication_method` AS `preferred_communication_method`,
-   `a`.`id` AS `address_id`,
-   `a`.`line1` AS `line1`,
-   `a`.`line2` AS `line2`,
-   `a`.`city` AS `city`,
-   `a`.`state` AS `state`,
-   `a`.`zip` AS `zip`,
-   `b`.`id` AS `billing_id`,
-   `b`.`card_number` AS `card_number`,
-   `b`.`cvc` AS `cvc`,
-   `b`.`expiration_month` AS `expiration_month`,
-   `b`.`expiration_year` AS `expiration_year`,
-   `b`.`cardholder_name` AS `cardholder_name`,
-   `ba`.`id` AS `billing_address_id`,
-   `ba`.`line1` AS `billing_line1`,
-   `ba`.`line2` AS `billing_line2`,
-   `ba`.`city` AS `billing_city`,
-   `ba`.`state` AS `billing_state`,
-   `ba`.`zip` AS `billing_zip`
-FROM ((((`user` `u` join `customer` `c` on((`u`.`id` = `c`.`user_id`))) join `address` `a` on((`u`.`address_id` = `a`.`id`))) left join `billing` `b` on(((`b`.`customer_id` = `c`.`id`) and (`b`.`preferred` = 1)))) left join `address` `ba` on((`b`.`address_id` = `ba`.`id`)));
-
-# Dump of view shopping_cart_view
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `shopping_cart_view`; DROP VIEW IF EXISTS `shopping_cart_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `shopping_cart_view`
-AS SELECT
-   `sc`.`id` AS `shopping_cart_id`,
-   `sc`.`user_id` AS `user_id`,
-   `sc`.`branch_id` AS `branch_id`,
-   `b`.`name` AS `branch_name`,
-   `sc`.`product_id` AS `product_id`,
-   `p`.`name` AS `product_name`,
-   `p`.`description` AS `product_desc`,
-   `p`.`image` AS `product_image`,
-   `sc`.`quantity` AS `product_quantity`,
-   `p`.`price` AS `price`
-FROM ((`shopping_cart` `sc` join `branch` `b`) join `product` `p`) where ((`sc`.`branch_id` = `b`.`id`) and (`sc`.`product_id` = `p`.`id`));
-
-# Dump of view tracking_history_view
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `tracking_history_view`; DROP VIEW IF EXISTS `tracking_history_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`wizard`@`%` SQL SECURITY DEFINER VIEW `tracking_history_view`
-AS SELECT
-   `t`.`id` AS `tracking_history_id`,
-   `t`.`package_id` AS `package_id`,
-   `t`.`timestamp` AS `timestamp`,
-   `t`.`status` AS `status`,
-   `a`.`id` AS `address_id`,
-   `a`.`line1` AS `line1`,
-   `a`.`line2` AS `line2`,
-   `a`.`city` AS `city`,
-   `a`.`state` AS `state`,
-   `a`.`zip` AS `zip`
-FROM (`tracking_history` `t` join `address` `a`) where (`t`.`address_id` = `a`.`id`) order by `t`.`timestamp` desc;
-
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -1,21 +1,21 @@
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import {
+  faBuilding,
   faCircleUser,
   faEnvelope,
-  faLock,
-  faUser,
-  faPhone,
   faHome,
-  faBuilding,
-  faLocationDot,
-  faMapPin,
   faLocationArrow,
+  faLocationDot,
+  faLock,
+  faMapPin,
+  faPhone,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { styles } from "../shared/AuthPageRight";
-import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
+import { SERVER_BASE_URL } from "../../contexts/AuthProvider";
 import AuthPage from "../shared/AuthPage";
+import { styles } from "../shared/AuthPageRight";
 import Button from "../shared/Button";
 import Input, { VALIDATORS } from "../shared/Input";
 
@@ -49,7 +49,7 @@ export default function Register() {
         alert("There's an error with the fetch request. Check the console.");
         return console.log(err);
       });
-  }, [formIndex]);
+  }, [formIndex, attemptLogin, customer]);
   const children = (
     <>
       <form
